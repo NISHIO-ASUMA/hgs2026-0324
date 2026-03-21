@@ -1,0 +1,19 @@
+[
+  { "XFile": "data/MODEL/STAGEOBJ/block000.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/block001.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/block002.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/Shadowmodel.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/Reef.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/Wall.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/Wall_Side.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/wallback.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/EnemySpawn.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/WorkerBase.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/yajirusi.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/AlphaWall.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/Side_Alpha.x" },
+  { "XFile": "data/MODEL/STAGEOBJ/SpawnBase.x" },
+  { "XFile": "data/MODEL/FEED/Lemon.x" },
+  { "XFile": "data/MODEL/FEED/Solt.x" },
+  { "XFile": "data/MODEL/FEED/Suger.x" }
+]

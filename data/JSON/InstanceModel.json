@@ -1,0 +1,130 @@
+[
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Long_Left.x",
+    "Instancing": true},
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_BackBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_CenterBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Face.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_FrontBody.x",
+    "Instancing": true
+  },
+
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_BackBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_CenterBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Face.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_FrontBody.x",
+    "Instancing": true
+  }
+]

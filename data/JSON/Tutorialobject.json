@@ -1,0 +1,50 @@
+[
+  {
+    "ObjectTag": "MeshField",
+    "Pos": [ 0.0, 0.0, 0.0 ],
+    "RadiusX": 4000.0,
+    "RadiusZ": 2000.0,
+    "SegmentX": 1,
+    "SegmentZ": 1
+  },
+  {
+    "ObjectTag": "Ui",
+    "Pos": [ 1080.0, 640.0, 0.0 ],
+    "FlashFrame": 0,
+    "Width": 180.0,
+    "Height": 60.0,
+    "Texture": "Skip.png",
+    "AlphaTest": false,
+    "IsFlash": false,
+    "EnableAlpha": false,
+    "AlphaFrame": 0
+  },
+  {
+    "ObjectTag": "NormalBlock",
+    "filepath": "STAGEOBJ/SpawnBase.x",
+    "pos": [ -555.0, 0.0, -700.0 ],
+    "rot": [ 0.0, -1.57, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "NormalBlock",
+    "filepath": "STAGEOBJ/SpawnBase.x",
+    "pos": [ 885.0, 0.0, -450.0 ],
+    "rot": [ 0.0, -3.14, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "NormalBlock",
+    "filepath": "STAGEOBJ/SpawnBase.x",
+    "pos": [ 665.0, 0.0, 540.0 ],
+    "rot": [ 0.0, 1.57, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "NormalBlock",
+    "filepath": "STAGEOBJ/SpawnBase.x",
+    "pos": [ -890.0, 0.0, 325.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  }
+]

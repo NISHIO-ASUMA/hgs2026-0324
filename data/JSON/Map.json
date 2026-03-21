@@ -1,0 +1,79 @@
+[
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Wall.x",
+    "pos": [ 0.0, 35.0, -800.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Wall.x",
+    "pos": [ 0.0, 35.0, 660.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Wall_Side.x",
+    "pos": [ -1000.0, 35.0, 40.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Wall_Side.x",
+    "pos": [ 1000.0, 35.0, 40.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Reef.x",
+    "pos": [ 1000.0, 210.0, 455.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Reef.x",
+    "pos": [ 1050.0, 210.0, -710.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Reef.x",
+    "pos": [ -1045.0, 210.0, -710.0 ],
+    "rot": [ 0.0, 3.14, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/Reef.x",
+    "pos": [ -1040.0, 210.0, 485.0 ],
+    "rot": [ 0.0, 3.14, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/wallback.x",
+    "pos": [ 1320.0, 400.0, 0.0 ],
+    "rot": [ 0.0, 1.59, 0.0 ],
+    "scale": [ 3.0, 1.5, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/wallback.x",
+    "pos": [ -1350.0, 400.0, 0.0 ],
+    "rot": [ 0.0, -1.59, 0.0 ],
+    "scale": [ 3.0, 1.5, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/wallback.x",
+    "pos": [ 0.0, 400.0, 910.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 3.0, 1.5, 1.0 ]
+  }
+]

@@ -1,0 +1,326 @@
+[
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Back_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_BackBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Center_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_CenterBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Face.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_Front_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ARRAY/Ant_FrontBody.x",
+    "Instancing": true
+  },
+
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Back_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_BackBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Center_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_CenterBody.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Face.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Long_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Long_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Short_Left.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_Front_Short_Right.x",
+    "Instancing": true
+  },
+  {
+    "Model": "data/MODEL/ANT/ENEMY/Enemy_FrontBody.x",
+    "Instancing": true
+  },
+
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Back_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Back_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Back_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Back_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_BackBody.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Center_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Center_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Center_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Center_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_CenterBody.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Face.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Front_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Front_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Front_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_Front_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/WORKER/Work_FrontBody.x",
+    "Instancing": false
+  },
+
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Back_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Back_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Back_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Back_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_BackBody.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Center_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Center_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Center_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Center_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_CenterBody.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Face.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Front_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Front_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Front_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_Front_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/QUEEN/Queen_FrontBody.x",
+    "Instancing": false
+  },
+
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Back_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Back_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Back_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Back_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_BackBody.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Center_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Center_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Center_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Center_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_CenterBody.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Face.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Front_Long_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Front_Long_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Front_Short_Left.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_Front_Short_Right.x",
+    "Instancing": false
+  },
+  {
+    "Model": "data/MODEL/ANT/TOP/Top_FrontBody.x",
+    "Instancing": false
+  }
+]
