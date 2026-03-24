@@ -44,6 +44,7 @@ public:
 
 	CBlockManager* GetBlockManager(void) const { return m_pBlocks.get(); }
 	CBlock* GetBlock(void) const { return m_pBlock;}
+	CPlayer* GetPlayer(void) const { return m_pPlayer; }
 
 	//CEnemySpawner* GetEnemySpawn(void) const { return m_pSpawn.get(); }
 	//CArrayManager* GetArrayManager(void) const { return m_pArrayManager.get(); }

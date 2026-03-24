@@ -127,7 +127,8 @@ void CGameSceneObject::Update(void)
 {
 #ifdef _DEBUG
 	// デバッグキー
-	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_B))
+	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_B) ||
+		CManager::GetInstance()->GetJoyPad()->GetTrigger(CJoyPad::JOYKEY_A))
 	{
 		m_nIdx = Wrap(m_nIdx, 0, GAMEOBJECT::INDEX -1);
 		m_pPlayer->ActionSetting(GAMEOBJECT::target[m_nIdx]);

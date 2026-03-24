@@ -35,5 +35,7 @@
   { "Texture": "data/TEXTURE/Scenemenu.jpg" },
   { "Texture": "data/TEXTURE/Manual_Move.jpg" },
   { "Texture": "data/TEXTURE/Manual_Sepalation.jpg" },
-  { "Texture": "data/TEXTURE/Manual_GoFeed.jpg" }
+  { "Texture": "data/TEXTURE/Manual_GoFeed.jpg" },
+  { "Texture": "data/TEXTURE/gauge_frame00.png" },
+  { "Texture": "data/TEXTURE/gauge00.jpeg" }
 ]

@@ -25,6 +25,7 @@ m_pIdx(nullptr),
 m_pVtx(nullptr),
 m_pos(VECTOR3_NULL),
 m_rot(VECTOR3_NULL),
+m_EndPos(VECTOR3_NULL),
 m_Cylinder{},
 m_mtxWorld{}
 {
@@ -56,7 +57,7 @@ CMeshCylinder* CMeshCylinder::Create(const D3DXVECTOR3& pos, const float& fRadiu
 	return pMeshcylinder;
 }
 //=========================================================
-// 初期化処理
+// シリンダー初期化処理
 //=========================================================
 HRESULT CMeshCylinder::Init(void)
 {
@@ -90,42 +91,37 @@ HRESULT CMeshCylinder::Init(void)
 	// 頂点バッファをロック
 	m_pVtx->Lock(0, 0, (void**)&pVtx, 0);
 
-	// テクスチャ座標
 	float fTexX = 1.0f / DIGIT_X;
-	float fTexY = 1.0f / DIGIT_Z;
 	int nCnt = 0;
 
-	// 法線設定用
-	D3DXVECTOR3 nor = VECTOR3_NULL;
-
-	// 縦
 	for (int nCntZ = 0; nCntZ <= DIGIT_Z; nCntZ++)
 	{
-		// 横
+		// 長さの比率 (0.0 ～ 1.0)
+		float fLerp = (float)nCntZ / (float)DIGIT_Z;
+
 		for (int nCntX = 0; nCntX <= DIGIT_X; nCntX++)
 		{
-			// 角度計算
 			float fAngle = (D3DX_PI * 2.0f) / DIGIT_X * nCntX;
 
-			// 頂点座標の設定
-			pVtx[nCnt].pos = D3DXVECTOR3(sinf((fAngle)) * m_Cylinder.fRadius, nCntZ * 30.0f, cosf((fAngle)) * m_Cylinder.fRadius);
+			// Z軸方向に伸びるように座標を設定
+			float x = sinf(fAngle) * m_Cylinder.fRadius;
+			float y = cosf(fAngle) * m_Cylinder.fRadius;
+			float z = fLerp;
 
-			// 法線ベクトルの設定
-			nor = pVtx[nCnt].pos - m_pos;	// 各頂点から原点の値を引く
-			D3DXVec3Normalize(&pVtx[nCnt].nor, &nor);	// 法線の正規化
+			pVtx[nCnt].pos = D3DXVECTOR3(x, y, z);
 
-			// 頂点カラーの設定
-			pVtx[nCnt].col = D3DCOLOR_RGBA(0,255,255,255);
+			// 法線設定
+			D3DXVECTOR3 nor = D3DXVECTOR3(x, y, 0.0f);
+			D3DXVec3Normalize(&pVtx[nCnt].nor, &nor);
 
-			// テクスチャ座標の設定
-			pVtx[nCnt].tex = D3DXVECTOR2(fTexX * nCntX, nCntZ * fTexY);
+			pVtx[nCnt].col = COLOR_RED;
+			pVtx[nCnt].tex = D3DXVECTOR2(fTexX * nCntX, fLerp);
 
-			// 加算
 			nCnt++;
 		}
 	}
 
-	// 頂点バッファをアンロック
+	// 頂点アンロック
 	m_pVtx->Unlock();
 
 	// インデックスポインタを宣言
@@ -191,17 +187,51 @@ void CMeshCylinder::Uninit(void)
 //=========================================================
 void CMeshCylinder::Update(void)
 {
-	// 計算用のマトリックスを宣言
-	D3DXMATRIX mtxRot, mtxTrans;
+	if (m_EndPos == VECTOR3_NULL) return;
 
-	// 向きを反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, m_rot.y, m_rot.x, m_rot.z);
+	// 終点から始点
+	D3DXVECTOR3 vDir = m_EndPos - m_pos;
+	float fDistance = D3DXVec3Length(&vDir);
 
-	// 位置を反映
+	if (fDistance < 0.0001f) return; 
+
+	// 1. スケーリング 
+	D3DXMATRIX mtxScale;
+	D3DXMatrixScaling(&mtxScale, 1.0f, 1.0f, fDistance);
+
+	// 2. 回転
+	D3DXVECTOR3 vAxisZ;
+	D3DXVec3Normalize(&vAxisZ, &vDir);
+
+	// 上方向ベクトル
+	D3DXVECTOR3 vUp(0, 1, 0);
+	if (fabsf(D3DXVec3Dot(&vAxisZ, &vUp)) > 0.99f) vUp = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+
+	// 内積と正規化
+	D3DXVECTOR3 vAxisX, vAxisY;
+	D3DXVec3Cross(&vAxisX, &vUp, &vAxisZ);
+	D3DXVec3Normalize(&vAxisX, &vAxisX);
+	D3DXVec3Cross(&vAxisY, &vAxisZ, &vAxisX);
+
+	D3DXMATRIX mtxRot;
+	D3DXMatrixIdentity(&mtxRot);
+
+	mtxRot._11 = vAxisX.x; 
+	mtxRot._12 = vAxisX.y; 
+	mtxRot._13 = vAxisX.z;
+	mtxRot._21 = vAxisY.x; 
+	mtxRot._22 = vAxisY.y; 
+	mtxRot._23 = vAxisY.z;
+	mtxRot._31 = vAxisZ.x; 
+	mtxRot._32 = vAxisZ.y; 
+	mtxRot._33 = vAxisZ.z;
+
+	// 移動 (始点へ)
+	D3DXMATRIX mtxTrans;
 	D3DXMatrixTranslation(&mtxTrans, m_pos.x, m_pos.y, m_pos.z);
 
-	// マトリックスにかけ合わせる
-	m_mtxWorld = mtxRot * mtxTrans;
+	// 行列合成
+	m_mtxWorld = mtxScale * mtxRot * mtxTrans;
 }
 //=========================================================
 // 描画処理

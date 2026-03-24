@@ -23,6 +23,8 @@
 #include "debugproc.h"
 #include "template.h"
 #include "blockmanager.h"
+#include "effectlaser.h"
+#include "meshcylinder.h"
 
 //=========================================================
 // コンストラクタ
@@ -33,6 +35,8 @@ m_isLanding(false),
 m_isJump(false),
 m_isStayPos(false),
 m_pBoxCollder(nullptr),
+m_pLaser(nullptr),
+m_pCylinder(nullptr),
 m_TargetPos(VECTOR3_NULL)
 {
 
@@ -221,23 +225,17 @@ void CPlayer::Update(void)
 	// 最新の移動量を取り出す
 	D3DXVECTOR3 move = GetMove();
 
-	// --- 2. 重力の計算 ---
+	// 重力の計算
 	if (!m_isLanding && !m_isStayPos)
 	{
 		move.y -= 0.7f; // 通常の落下
 	}
 	else
 	{
-		move.y = 0.0f;	// 接地、アクション中、または滞空停止時はリセット
+		move.y = 0.0f;
 	}
 
-	// --- 入力があったら滞空を解除する ---
-	if (pKey->GetTrigger(DIK_M)) 
-	{
-		m_isStayPos = false;
-	}
-
-	// ジャンプ入力 (アクション中は不可にするのが一般的)
+	// ジャンプ入力
 	if (!m_isWall && (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)) && m_isLanding)
 	{
 		move.y = Config::JUMP;
@@ -247,11 +245,10 @@ void CPlayer::Update(void)
 
 	SetMove(move);
 
-	// --- 3. アクションの実行 ---
-	// ここで SetMove(moveVec) が呼ばれる
-	Action();
+	// ワイヤーアクション
+	PlayAction();
 
-	// 位置更新 (UpdatePosition内部で pos += move される)
+	// 位置更新
 	UpdatePosition();
 
 	D3DXVECTOR3 updatePos = GetPos();
@@ -273,7 +270,7 @@ void CPlayer::Update(void)
 		m_pBoxCollder->SetPosOld(updateposold);
 	}
 
-	// --- 4. ブロックとの衝突判定 ---
+	// ブロックとの衝突判定
 	auto BlockManager = CGameSceneObject::GetInstance()->GetBlockManager();
 	bool isAnyHit = (updatePos.y <= 0.0f);
 
@@ -285,11 +282,11 @@ void CPlayer::Update(void)
 			CMoveCharactor::SetPos(updatePos);
 			m_pBoxCollder->SetPos(updatePos);
 			isAnyHit = true;
-			break; // 他の壁判定も行うため、できれば外す
+			break;
 		}
 	}
 
-	// --- 5. フラグの最終確定 ---
+	// フラグの最終確定
 	m_isLanding = isAnyHit;
 	if (m_isLanding)
 	{
@@ -308,8 +305,11 @@ void CPlayer::Draw(void)
 	// 親クラスの描画処理
 	CMoveCharactor::Draw();
 
-#ifdef _DEBUG
-	// デバッグフォント
+#ifdef _DEBUG	// デバッグフォント
+
+	CDebugproc::Print("プレイヤーの目的座標 : [ %.2f,%.2f,%.2f ]", m_TargetPos.x,m_TargetPos.y,m_TargetPos.z);
+	CDebugproc::Draw(0, 160);
+
 	CDebugproc::Print("着地 : %d", m_isLanding);
 	CDebugproc::Draw(0, 180);
 
@@ -568,37 +568,61 @@ void CPlayer::KeyPad(void)
 	SetRotDest(rotdest);
 }
 //=========================================================
-// アクション操作
+// playerアクション操作
 //=========================================================
-void CPlayer::Action(void)
+void CPlayer::PlayAction(void)
 {
 	// 自動移動フラグが立っている間の処理
 	if (m_isWall)
 	{
+		// 現在座標の取得
 		D3DXVECTOR3 pos = GetPos();
+
+		// ベクトルを引く
 		D3DXVECTOR3 followVec = m_TargetPos - pos;
 		float fDistance = D3DXVec3Length(&followVec);
 
+		// nullの時シリンダー生成
+		if (!m_pCylinder)
+		{
+			m_pCylinder = CMeshCylinder::Create(pos, Action::CYLINDER);
+			m_pCylinder->SetEndPos(m_TargetPos);
+		}
+
+		// 一定の距離だったら
 		if (fDistance > Action::CheckDistance)
 		{
 			// 移動継続
 			D3DXVec3Normalize(&followVec, &followVec);
 			D3DXVECTOR3 moveVec = followVec * Action::AUTOSPEED;
 
+			// 目的角を設定する
 			float angleY = atan2(-moveVec.x, -moveVec.z);
 			D3DXVECTOR3 rotDest = GetRotDest();
 			rotDest.y = NormalAngle(angleY);
 			SetRotDest(rotDest);
 
+			// 移動ベクトル設定
 			SetMove(moveVec);
+
+			// シリンダー設定
+			m_pCylinder->SetPos(pos);				// シリンダーの現在位置
+			m_pCylinder->SetEndPos(m_TargetPos);	// 目的地の位置
+
+			// エフェクト生成
+			CEffectLaser::Create(pos, m_TargetPos, LASER, moveVec, 30, 30.0f);
 		}
 		else
 		{
 			// 到着した時だけフラグ
 			SetPos(m_TargetPos);
 			SetMove(VECTOR3_NULL);
-			m_isWall = false; // 終了！
-			m_isStayPos = true;   // その場に留まるフラグをON
+			m_isWall = false; 
+			m_isStayPos = true;
+
+			// シリンダーの破棄
+			m_pCylinder->Uninit();
+			m_pCylinder = nullptr;
 		}
 	}
 }

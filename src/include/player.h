@@ -26,6 +26,8 @@
 class CBoxCollider;
 class CInputKeyboard;
 class CJoyPad;
+class CEffectLaser;
+class CMeshCylinder;
 
 //*********************************************************
 // プレイヤークラスを定義
@@ -57,7 +59,7 @@ public:
 	void KeyPad(void);
 	bool CollisionBox(CBoxCollider* pOther, D3DXVECTOR3 * pOutPos);
 
-	void Action(void);
+	void PlayAction(void);
 	void ActionSetting(const D3DXVECTOR3& pos);
 	
 	/// <summary>
@@ -88,7 +90,8 @@ private:
 	struct Action
 	{
 		static constexpr float AUTOSPEED = 12.0f;		// 移動速度固定値
-		static constexpr float CheckDistance = 5.0f;	// 判定最小値
+		static constexpr float CheckDistance = 7.0f;	// 判定最小値
+		static constexpr float CYLINDER = 5.0f;			// 生成半径
 	};
 
 private:
@@ -100,4 +103,7 @@ private:
 	bool m_isJump;								// ジャンプ
 	bool m_isStayPos;							// ステイ中か
 	D3DXVECTOR3 m_TargetPos;					// 目的座標設定用の入れ物
+
+	CEffectLaser* m_pLaser;						// レーザーエフェクト
+	CMeshCylinder* m_pCylinder;					// メッシュシリンダー
 };

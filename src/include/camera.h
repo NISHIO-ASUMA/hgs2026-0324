@@ -62,6 +62,7 @@ public:
 	void WheelMouse(int nDelta);
 
 	void FollowCamera(void);
+	void SlidMouse(void);
 	void RightStickCamera(void);
 
 	void SetMode(int nMode) { m_pCamera.nMode = nMode; }
