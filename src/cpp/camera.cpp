@@ -27,8 +27,8 @@ namespace CAMERAINFO
 	constexpr float MAX_VIEWDOWN = 0.1f;		// カメラの角度制限値
 	constexpr float NorRot = D3DX_PI * 2.0f;	// 正規化値
 
-	const D3DXVECTOR3 InitPos = { 0.0f, 1450.0f, -1350.0f }; // カメラ初期座標
-	const D3DXVECTOR3 InitRot = { D3DX_PI * 0.6f, 0.0f, 0.0f }; // カメラ初期角度
+	const D3DXVECTOR3 InitPos = { 0.0f, 1110.0f, -650.0f }; // カメラ初期座標
+	const D3DXVECTOR3 InitRot = { D3DX_PI * 0.55f, 0.0f, 0.0f }; // カメラ初期角度
 	const D3DXVECTOR3 InitVecU = { 0.0f, 1.0f, 0.0f };		 // 初期ベクトル
 }
 
@@ -287,6 +287,13 @@ void CCamera::WheelMouse(int nDelta)
 	m_pCamera.posV.x = m_pCamera.posR.x - sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
 	m_pCamera.posV.y = m_pCamera.posR.y - cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
 	m_pCamera.posV.z = m_pCamera.posR.z - sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
+}
+//==============================================================
+// 追従カメラ処理
+//==============================================================
+void CCamera::FollowCamera(void)
+{
+
 }
 //==============================================================
 // 値のクリア関数

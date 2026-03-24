@@ -22,6 +22,7 @@ class CBlockManager;
 class CGameTime;
 class CEnemy;
 class CScore;
+class CBlock;
 
 //*********************************************************
 // ゲームシーンで使うオブジェクト管理クラスを定義
@@ -41,6 +42,8 @@ public:
 	CScore* GetScore(void) const { return m_pScore; }
 
 	CBlockManager* GetBlockManager(void) const { return m_pBlocks.get(); }
+	CBlock* GetBlock(void) const { return m_pBlock;}
+
 	//CEnemySpawner* GetEnemySpawn(void) const { return m_pSpawn.get(); }
 	//CArrayManager* GetArrayManager(void) const { return m_pArrayManager.get(); }
 	//CArraySpawnManager* GetArraySpawn(void) const { return m_pArraySpawn.get(); }
@@ -65,6 +68,8 @@ private:
 	CGameTime* m_pTimer;	// タイマークラスのポインタ
 
 	std::unique_ptr<CBlockManager>m_pBlocks;				// ブロックマネージャークラスのポインタ
+	CBlock* m_pBlock;
+
 	//std::unique_ptr<CArrayManager>m_pArrayManager;			// 仲間アリ管理クラス
 	//std::unique_ptr<CEnemySpawner>m_pSpawn;					// スポーン管理クラス
 	//std::unique_ptr<CArraySpawnManager>m_pArraySpawn;		// 仲間スポーン管理クラス

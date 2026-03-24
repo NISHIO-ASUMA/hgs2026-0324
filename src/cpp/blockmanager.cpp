@@ -35,9 +35,9 @@ CBlockManager::~CBlockManager()
 //=========================================================
 CBlock* CBlockManager::CreateManager
 (
-	const D3DXVECTOR3& pos, 
-	const D3DXVECTOR3& rot, 
-	const D3DXVECTOR3& scale, 
+	const D3DXVECTOR3& pos,
+	const D3DXVECTOR3& rot,
+	const D3DXVECTOR3& scale,
 	const char* pModelName
 )
 {

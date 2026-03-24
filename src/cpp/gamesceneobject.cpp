@@ -20,6 +20,8 @@
 #include "score.h"
 #include "gamemanager.h"
 #include "jsonmanager.h"
+#include "player.h"
+#include "block.h"
 
 //*********************************************************
 // 静的メンバ変数
@@ -43,7 +45,8 @@ namespace GAMEOBJECT
 //=========================================================
 CGameSceneObject::CGameSceneObject() : m_pBlocks(nullptr),
 m_pTimer(nullptr),
-m_pScore(nullptr)
+m_pScore(nullptr),
+m_pBlock(nullptr)
 {
 
 }
@@ -76,6 +79,12 @@ HRESULT CGameSceneObject::Init(void)
 
 	// 各種ポインタクラスの生成
 	CreatePointer();
+
+	// プレイヤー生成
+	CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, -200.0f), VECTOR3_NULL);
+
+	// テストブロック
+	m_pBlock = CBlock::Create(VECTOR3_NULL, VECTOR3_NULL, INITSCALE, "STAGEOBJ/block001.x");
 
 	// スコア初期化
 	m_pScore->DeleteScore();

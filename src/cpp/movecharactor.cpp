@@ -114,6 +114,14 @@ void CMoveCharactor::Update(void)
 	// 現在の角度
 	m_rot.y += (m_rotDest.y - m_rot.y) * 0.25f;
 
+#if 1
+	if (0.0f >= m_pos.y)
+	{// 地面より下
+		m_pos.y = 0.0f;
+		m_move.y = 0.0f;
+	}
+#endif
+
 	// ステンシルシャドウの更新
 	if (m_pShadowS)
 	{
