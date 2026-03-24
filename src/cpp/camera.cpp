@@ -27,9 +27,9 @@ namespace CAMERAINFO
 	constexpr float MAX_VIEWDOWN = 0.1f;		// カメラの角度制限値
 	constexpr float NorRot = D3DX_PI * 2.0f;	// 正規化値
 
-	const D3DXVECTOR3 InitPos = { 0.0f, 1110.0f, -650.0f }; // カメラ初期座標
+	const D3DXVECTOR3 InitPos = { 0.0f, 1110.0f, -650.0f };		 // カメラ初期座標
 	const D3DXVECTOR3 InitRot = { D3DX_PI * 0.55f, 0.0f, 0.0f }; // カメラ初期角度
-	const D3DXVECTOR3 InitVecU = { 0.0f, 1.0f, 0.0f };		 // 初期ベクトル
+	const D3DXVECTOR3 InitVecU = { 0.0f, 1.0f, 0.0f };			 // 初期ベクトル
 }
 
 //=========================================================
@@ -81,11 +81,16 @@ void CCamera::Update(void)
 	// カメラ更新
 	MouseView(CManager::GetInstance()->GetMouse());
 
+	// 右スティックのカメラ
+	RightStickCamera();
+
+#ifdef _DEBUG
 	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_TAB))
 	{
 		// 初期化
 		Init();
 	}
+#endif // _DEBUG
 
 	// 角度の正規化
 	if (m_pCamera.rot.y > D3DX_PI)
@@ -293,6 +298,61 @@ void CCamera::WheelMouse(int nDelta)
 //==============================================================
 void CCamera::FollowCamera(void)
 {
+
+}
+//==============================================================
+// 右スティックのカメラ処理
+//==============================================================
+void CCamera::RightStickCamera(void)
+{
+	// スティック
+	auto pad = CManager::GetInstance()->GetJoyPad();
+	XINPUT_STATE* pStick = pad->GetStickAngle();
+
+	if (pad->GetRightStick())
+	{
+		float RStickAngleY = pStick->Gamepad.sThumbRY;
+		float RStickAngleX = pStick->Gamepad.sThumbRX;
+
+		float DeadZone = 10920.0f;
+		float fMag = sqrtf((RStickAngleX * RStickAngleX) + (RStickAngleY * RStickAngleY));
+
+		if (fMag >= DeadZone)
+		{
+			float NormalizeX = RStickAngleX / fMag;
+			float NormalizeY = RStickAngleY / fMag;
+
+			float fAngle = fMag * 0.000003f;
+			m_pCamera.rot.y += NormalizeX * 0.5f * fAngle;
+			m_pCamera.rot.x -= NormalizeY * 0.5f * fAngle;
+		}
+	}
+
+	// 角度の正規化
+	if (m_pCamera.rot.y > D3DX_PI)
+	{// D3DX_PIより大きくなったら
+		m_pCamera.rot.y -= D3DX_PI * 2.0f;
+	}
+
+	// 角度の正規化
+	if (m_pCamera.rot.y < -D3DX_PI)
+	{// D3DX_PIより小さくなったら
+		m_pCamera.rot.y += D3DX_PI * 2.0f;
+	}
+
+	if (m_pCamera.rot.x <= D3DX_PI * 0.55f)
+	{// カメラの下限
+		m_pCamera.rot.x = D3DX_PI * 0.55f;
+	}
+
+	if (m_pCamera.rot.x >= D3DX_PI * 0.9f)
+	{// カメラの上限
+		m_pCamera.rot.x = D3DX_PI * 0.9f;
+	}
+	// カメラの視点の情報
+	m_pCamera.posV.x = m_pCamera.posR.x - sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
+	m_pCamera.posV.y = m_pCamera.posR.y - cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
+	m_pCamera.posV.z = m_pCamera.posR.z - sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
 
 }
 //==============================================================

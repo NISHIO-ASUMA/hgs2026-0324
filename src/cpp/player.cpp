@@ -21,6 +21,8 @@
 #include "gamesceneobject.h"
 #include "block.h"
 #include "debugproc.h"
+#include "template.h"
+#include "blockmanager.h"
 
 //=========================================================
 // コンストラクタ
@@ -29,7 +31,9 @@ CPlayer::CPlayer(int nPriority) : CMoveCharactor(nPriority),
 m_isWall(false),
 m_isLanding(false),
 m_isJump(false),
-m_pBoxCollder(nullptr)
+m_isStayPos(false),
+m_pBoxCollder(nullptr),
+m_TargetPos(VECTOR3_NULL)
 {
 
 }
@@ -54,7 +58,7 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 	pPlayer->SetOldPos(pos);
 	pPlayer->SetRot(rot);
 
-	// 初期化
+	// 初期化失敗時
 	if (FAILED(pPlayer->Init())) return nullptr;
 
 	return pPlayer;
@@ -97,101 +101,22 @@ void CPlayer::Uninit(void)
 void CPlayer::Update(void)
 {
 #if 0
-	// 現在の座標取得
-	auto pos = GetPos();
-	auto oldPos = GetOldPos();
-
-	// キー入力
-	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
-
-	// キー入力移動
-	KeyMove();
-	KeyPad();
-
-	// 更新座標を取得
-	auto Updatepos = GetPos();
-	auto Move = GetMove();
-
-	// 矩形コライダーの位置更新
-	if (m_pBoxCollder)
-	{
-		m_pBoxCollder->SetPos(Updatepos);
-		m_pBoxCollder->SetPosOld(oldPos);
-	}
-
-	// ジャンプキー
-	if (pKey->GetTrigger(DIK_SPACE) && m_isLanding)
-	{
-		m_isJump = true;
-		m_isLanding = false;
-		Move.y += 15.0f;
-		SetMove(Move);
-	}
-
-	// ジャンプ  かつ 着地
-	if (m_isJump && m_isLanding)
-	{
-		m_isJump = false;
-	}
-
-	//================================
-	// 重力落下
-	//================================
-	auto MoveDown = GetMove();
-	if (!m_isLanding) 
-	{
-		MoveDown.y -= 0.7f; // 空中にいる時だけ重力をかける
-	}
-	else 
-	{
-		MoveDown.y = 0.0f;	// 接地中は下方向への移動量をリセット
-	}
-	// 最終重力値を設定
-	SetMove(MoveDown);
-
-#if 1
-	if (0.0f >= Updatepos.y)
-	{// 地面より下
-		Updatepos.y = 0.0f;
-		SetPos(Updatepos);
-		//m_isLanding = true;
-	}
-#endif
-
-	// 座標更新
-	UpdatePosition();
-
-	// ブロックとのコリジョン
-	auto block = CGameSceneObject::GetInstance()->GetBlock();
-
-	// 当たっていたら
-	if (CollisionBox(block->GetCollider(), &Updatepos))
-	{
-		// 座標セット
-		SetPos(Updatepos);
-
-		// コライダー座標の更新
-		m_pBoxCollder->SetPos(Updatepos);
-	}
-
-	// 親クラスの更新処理
-	CMoveCharactor::Update();
-#else
-	// 入力クラスと現在の座標情報を取得
+	// 入力クラス取得
 	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
 	CJoyPad* pPad = CManager::GetInstance()->GetJoyPad();
 
+	// 過去座標を取得
 	auto oldPos = GetOldPos();
 
 	// まず「現在の移動量」を取得する
 	KeyMove();
 	KeyPad();
 
-	// キー入力後の「最新の移動量」を取り出す (XZ軸の入力が反映済み)
+	// キー入力後の「最新の移動量」を取り出す
 	D3DXVECTOR3 move = GetMove();
 
 	// 重力の計算 (Y軸の処理)
-	if (!m_isLanding)
+	if (!m_isLanding && !m_isWall)
 	{
 		move.y -= 0.7f; // 滞空時のみ重力
 	}
@@ -201,9 +126,9 @@ void CPlayer::Update(void)
 	}
 
 	// ジャンプ入力
-	if ((pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A))&& m_isLanding)
+	if ((pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)) && m_isLanding)
 	{
-		move.y = 15.0f;
+		move.y = Config::JUMP;
 		m_isLanding = false;
 		m_isJump = true;
 	}
@@ -211,46 +136,186 @@ void CPlayer::Update(void)
 	// 最終的な移動量を反映
 	SetMove(move);
 
-	// 物理的な位置更新 (UpdatePosition内部で座標 = 座標 + move される)
+	// アクションキー情報
+	Action();
+
+	// 位置更新
 	UpdatePosition();
 
 	// 移動後の最新座標を取得
 	D3DXVECTOR3 updatePos = GetPos();
+	D3DXVECTOR3 updateposold = GetOldPos();
 
-	// 地面(y=0)との衝突判定
+	// 地面との衝突判定
 	if (updatePos.y <= 0.0f)
 	{
 		updatePos.y = 0.0f;
 		m_isLanding = true;
 		m_isJump = false;
+		m_isWall = false;
 	}
 
-	// コライダーの更新 (判定を行うための最新状態にする)
+	// コライダーの更新
 	if (m_pBoxCollder)
 	{
 		m_pBoxCollder->SetPos(updatePos);
-		m_pBoxCollder->SetPosOld(oldPos);
+		m_pBoxCollder->SetPosOld(updateposold);
 	}
 
 	// ブロックとの衝突判定
-	auto block = CGameSceneObject::GetInstance()->GetBlock();
-	if (CollisionBox(block->GetCollider(), &updatePos))
+	auto BlockManager = CGameSceneObject::GetInstance()->GetBlockManager();
+
+	// ヒット関係のフラグ
+	bool isAnyHit = (updatePos.y <= 0.0f);
+
+	for (int nCnt = 0; nCnt < BlockManager->GetAll(); nCnt++)
 	{
-		SetPos(updatePos);	// 押し戻し適用
-		m_isLanding = true; // ここで着地フラグを立てる
+		// 配列のブロック取得
+		auto childblock = BlockManager->GetBlock(nCnt)->GetCollider();
+
+		if (CollisionBox(childblock, &updatePos))
+		{
+			// 押し戻し適用
+			CMoveCharactor::SetPos(updatePos);
+
+			// コライダー座標更新
+			m_pBoxCollder->SetPos(updatePos);
+			//m_pBoxCollder->SetPosOld(updatePos);
+			isAnyHit = true;
+			break;
+		}
+	}
+
+	// 全ブロックのループが終わった後に、最終的な接地状態を反映させる
+	m_isLanding = isAnyHit;
+	if (m_isLanding)
+	{
+		m_isJump = false;
+		m_isWall = false;
+	}
+
+	// 親クラスの更新
+	CMoveCharactor::Update();
+
+#else
+	// 入力クラス取得
+	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
+	CJoyPad* pPad = CManager::GetInstance()->GetJoyPad();
+
+	// 過去座標を取得
+	auto oldPos = GetOldPos();
+
+	// 移動入力の制御
+	if (!m_isStayPos)
+	{
+		// 通常時のみキー入力を受け付ける
+		KeyMove();
+		KeyPad();
+	}
+	else 
+	{
+		// アクション中は入力をリセット
+		SetMove(VECTOR3_NULL);
+	}
+
+	// 最新の移動量を取り出す
+	D3DXVECTOR3 move = GetMove();
+
+	// --- 2. 重力の計算 ---
+	if (!m_isLanding && !m_isStayPos)
+	{
+		move.y -= 0.7f; // 通常の落下
 	}
 	else
 	{
-		// 地面(y=0)にもいなければ、空中とする
-		if (updatePos.y > 0.0f) { m_isLanding = false;}
+		move.y = 0.0f;	// 接地、アクション中、または滞空停止時はリセット
 	}
 
-	// 最後に座標を確定
-	SetPos(updatePos);
+	// --- 入力があったら滞空を解除する ---
+	if (pKey->GetTrigger(DIK_M)) 
+	{
+		m_isStayPos = false;
+	}
+
+	// ジャンプ入力 (アクション中は不可にするのが一般的)
+	if (!m_isWall && (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)) && m_isLanding)
+	{
+		move.y = Config::JUMP;
+		m_isLanding = false;
+		m_isJump = true;
+	}
+
+	SetMove(move);
+
+	// --- 3. アクションの実行 ---
+	// ここで SetMove(moveVec) が呼ばれる
+	Action();
+
+	// 位置更新 (UpdatePosition内部で pos += move される)
+	UpdatePosition();
+
+	D3DXVECTOR3 updatePos = GetPos();
+	D3DXVECTOR3 updateposold = GetOldPos();
+
+	// 地面(Y=0)との衝突判定
+	if (updatePos.y <= 0.0f)
+	{
+		updatePos.y = 0.0f;
+		m_isLanding = true;
+		m_isJump = false;
+		m_isStayPos = false;
+	}
+
+	// コライダー更新
+	if (m_pBoxCollder)
+	{
+		m_pBoxCollder->SetPos(updatePos);
+		m_pBoxCollder->SetPosOld(updateposold);
+	}
+
+	// --- 4. ブロックとの衝突判定 ---
+	auto BlockManager = CGameSceneObject::GetInstance()->GetBlockManager();
+	bool isAnyHit = (updatePos.y <= 0.0f);
+
+	for (int nCnt = 0; nCnt < BlockManager->GetAll(); nCnt++)
+	{
+		auto childblock = BlockManager->GetBlock(nCnt)->GetCollider();
+		if (CollisionBox(childblock, &updatePos))
+		{
+			CMoveCharactor::SetPos(updatePos);
+			m_pBoxCollder->SetPos(updatePos);
+			isAnyHit = true;
+			break; // 他の壁判定も行うため、できれば外す
+		}
+	}
+
+	// --- 5. フラグの最終確定 ---
+	m_isLanding = isAnyHit;
+	if (m_isLanding)
+	{
+		m_isJump = false;
+	}
 
 	// 親クラスの更新
 	CMoveCharactor::Update();
 #endif
+}
+//=========================================================
+// 描画処理
+//=========================================================
+void CPlayer::Draw(void)
+{
+	// 親クラスの描画処理
+	CMoveCharactor::Draw();
+
+#ifdef _DEBUG
+	// デバッグフォント
+	CDebugproc::Print("着地 : %d", m_isLanding);
+	CDebugproc::Draw(0, 180);
+
+	CDebugproc::Print("座標 : [ %.2f,%.2f,%.2f ]", GetPos().x, GetPos().y, GetPos().z);
+	CDebugproc::Draw(0, 200);
+#endif // _DEBUG
 }
 //=========================================================
 // 矩形コライダー判定処理
@@ -268,21 +333,6 @@ bool CPlayer::CollisionBox(CBoxCollider* pOther, D3DXVECTOR3* pOutPos)
 
 	// 結果を返す
 	return isHit;
-}
-//=========================================================
-// 描画処理
-//=========================================================
-void CPlayer::Draw(void)
-{
-	// 親クラスの描画処理
-	CMoveCharactor::Draw();
-
-	// デバッグフォント
-	CDebugproc::Print("着地 : %d", m_isLanding);
-	CDebugproc::Draw(0, 180);
-
-	CDebugproc::Print("座標 : [ %.2f,%.2f,%.2f ]", GetPos().x, GetPos().y, GetPos().z);
-	CDebugproc::Draw(0, 200);
 }
 //=========================================================
 // キー入力移動
@@ -516,4 +566,50 @@ void CPlayer::KeyPad(void)
 	// 適用
 	SetMove(move);
 	SetRotDest(rotdest);
+}
+//=========================================================
+// アクション操作
+//=========================================================
+void CPlayer::Action(void)
+{
+	// 自動移動フラグが立っている間の処理
+	if (m_isWall)
+	{
+		D3DXVECTOR3 pos = GetPos();
+		D3DXVECTOR3 followVec = m_TargetPos - pos;
+		float fDistance = D3DXVec3Length(&followVec);
+
+		if (fDistance > Action::CheckDistance)
+		{
+			// 移動継続
+			D3DXVec3Normalize(&followVec, &followVec);
+			D3DXVECTOR3 moveVec = followVec * Action::AUTOSPEED;
+
+			float angleY = atan2(-moveVec.x, -moveVec.z);
+			D3DXVECTOR3 rotDest = GetRotDest();
+			rotDest.y = NormalAngle(angleY);
+			SetRotDest(rotDest);
+
+			SetMove(moveVec);
+		}
+		else
+		{
+			// 到着した時だけフラグ
+			SetPos(m_TargetPos);
+			SetMove(VECTOR3_NULL);
+			m_isWall = false; // 終了！
+			m_isStayPos = true;   // その場に留まるフラグをON
+		}
+	}
+}
+//=========================================================
+// wallアクションを設定する
+//=========================================================
+void CPlayer::ActionSetting(const D3DXVECTOR3& pos)
+{
+	// ターゲット座標を設定
+	m_TargetPos = pos;
+
+	// 壁移動フラグを起動
+	m_isWall = true;
 }

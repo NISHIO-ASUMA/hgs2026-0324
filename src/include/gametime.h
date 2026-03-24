@@ -63,7 +63,11 @@ private:
 	struct Config
 	{
 		static constexpr int DIGIT_TIME			= 2;		  // 桁数
-		static constexpr int NUMTIME			= 90;		  // 最大タイマー
+#ifdef _DEBUG
+		static constexpr int NUMTIME = 600;		  // 最大タイマー
+#else
+		static constexpr int NUMTIME = 180;		  // 最大タイマー
+#endif // _DEBUG
 		static constexpr int CARVETIME			= 60;		  // カウント上限
 		static constexpr int DIVIDE				= 10;		  // 桁分割の値
 		static constexpr float VALUE_WIDTH		= 150.0f;	  // 横幅の増加分
