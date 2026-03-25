@@ -24,6 +24,7 @@ class CEnemy;
 class CScore;
 class CBlock;
 class CPlayer;
+class CGoal;
 
 //*********************************************************
 // ゲームシーンで使うオブジェクト管理クラスを定義
@@ -38,19 +39,13 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void Draw(void);
-	
+
 	CGameTime* GetTime(void) const { return m_pTimer; }
 	CScore* GetScore(void) const { return m_pScore; }
 
 	CBlockManager* GetBlockManager(void) const { return m_pBlocks.get(); }
-	CBlock* GetBlock(void) const { return m_pBlock;}
 	CPlayer* GetPlayer(void) const { return m_pPlayer; }
-
-	//CEnemySpawner* GetEnemySpawn(void) const { return m_pSpawn.get(); }
-	//CArrayManager* GetArrayManager(void) const { return m_pArrayManager.get(); }
-	//CArraySpawnManager* GetArraySpawn(void) const { return m_pArraySpawn.get(); }
-	//CWorldWallManager* GetWorldWall(void)const { return m_pWorldWallManager.get(); }
-	//CEnemySpawnManager* GetEnemySpawnManager(void) const { return m_pEnemySpawnManager.get(); }
+	CGoal* GetGoal(void) const { return m_pGoal; }
 
 	/// <summary>
 	/// インスタンス取得処理
@@ -60,23 +55,16 @@ public:
 	static CGameSceneObject* GetInstance(void);
 
 private:
-
-	static CGameSceneObject* m_pInstance;	// シングルトン変数
-
 	CGameSceneObject();			// コンストラクタ
 	void CreatePointer(void);	// 初期化処理関数分け
+private:
 
-	CScore* m_pScore;			// スコアクラスのポインタ
-	CGameTime* m_pTimer;		// タイマークラスのポインタ
-	CBlock* m_pBlock;			// 検証用ブロックのポインタ
-	CPlayer* m_pPlayer;			// プレイヤーポインタ
+	static CGameSceneObject* m_pInstance;		// シングルトン変数
+	CScore* m_pScore;							// スコアクラスのポインタ
+	CGameTime* m_pTimer;						// タイマークラスのポインタ
+	CPlayer* m_pPlayer;							// プレイヤーポインタ
+	CGoal* m_pGoal;								// ゴールクラスポインタ
 	std::unique_ptr<CBlockManager>m_pBlocks;	// ブロックマネージャークラスのポインタ
 
-	int m_nIdx = 0;
-
-	//std::unique_ptr<CArrayManager>m_pArrayManager;			// 仲間アリ管理クラス
-	//std::unique_ptr<CEnemySpawner>m_pSpawn;					// スポーン管理クラス
-	//std::unique_ptr<CArraySpawnManager>m_pArraySpawn;		// 仲間スポーン管理クラス
-	//std::unique_ptr<CEnemySpawnManager>m_pEnemySpawnManager;// 敵スポーン管理
-	//std::unique_ptr<CWorldWallManager>m_pWorldWallManager;	// 世界の壁管理クラスのポインタ
+	int m_nIdx = 0; // 検証インデックス
 };

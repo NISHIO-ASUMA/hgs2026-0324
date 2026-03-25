@@ -113,6 +113,8 @@
     <ClCompile Include="src\cpp\tutorialmanager.cpp" />
     <ClCompile Include="src\cpp\tutorialobject.cpp" />
     <ClCompile Include="src\cpp\ui.cpp" />
+    <ClCompile Include="src\cpp\walltargetmanager.cpp" />
+    <ClCompile Include="src\cpp\walltargetpoint.cpp" />
     <ClCompile Include="src\cpp\xfilemanager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +216,8 @@
     <ClInclude Include="src\include\tutorialmanager.h" />
     <ClInclude Include="src\include\tutorialobject.h" />
     <ClInclude Include="src\include\ui.h" />
+    <ClInclude Include="src\include\walltargetmanager.h" />
+    <ClInclude Include="src\include\walltargetpoint.h" />
     <ClInclude Include="src\include\xfilemanager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

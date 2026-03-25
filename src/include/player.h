@@ -65,7 +65,8 @@ public:
 
 	void PlayAction(void);
 	void ActionSetting(const D3DXVECTOR3& pos);
-	
+	CBoxCollider* GetCollider(void) const { return m_pBoxCollder.get(); }
+
 	/// <summary>
 	/// ê∂ê¨èàóù
 	/// </summary>

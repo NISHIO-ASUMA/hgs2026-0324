@@ -1,6 +1,6 @@
 //=========================================================
 //
-// ゴール処理 [ goal.cpp ]
+// ワープターゲットのポイントクラス [ walltargetpoint.cpp ]
 // Author: Asuma Nishio
 //
 //=========================================================
@@ -8,112 +8,91 @@
 //*********************************************************
 // クラス定義ヘッダーファイル
 //*********************************************************
-#include "goal.h"
+#include "walltargetpoint.h"
 
 //*********************************************************
 // インクルードファイル
 //*********************************************************
 #include "spherecollider.h"
-#include "boxcollider.h"
-#include "boxtospherecollision.h"
-#include "player.h"
-#include "gamesceneobject.h"
 
 //=========================================================
 // コンストラクタ
 //=========================================================
-CGoal::CGoal(int nPriority) : CObjectX(nPriority),
-m_pSphereCollider(nullptr),
-m_isGoal(false)
+CWallTargetPoint::CWallTargetPoint(int nPriority) : CObjectX(nPriority),
+m_pCollider(nullptr)
 {
 
 }
 //=========================================================
 // デストラクタ
 //=========================================================
-CGoal::~CGoal()
+CWallTargetPoint::~CWallTargetPoint()
 {
 
 }
 //=========================================================
-// 生成関数
+// 生成処理
 //=========================================================
-CGoal* CGoal::Create(const D3DXVECTOR3& pos)
+CWallTargetPoint* CWallTargetPoint::Create
+(
+	const D3DXVECTOR3& pos, 
+	const D3DXVECTOR3& rot, 
+	const D3DXVECTOR3& scale, 
+	const char* pModelName
+)
 {
-	// インスタンス生成
-	CGoal* pGoal = new CGoal;
-	if (pGoal == nullptr) return nullptr;
+	CWallTargetPoint* pPoint = new CWallTargetPoint;
+	if (pPoint == nullptr) return nullptr;
 
 	// オブジェクト設定
-	pGoal->SetPos(pos);
-	pGoal->SetFilePass(Config::MODELNAME);
+	pPoint->SetPos(pos);
+	pPoint->SetRot(rot);
+	pPoint->SetScale(scale);
+	pPoint->SetFilePass(pModelName);
 
 	// 初期化失敗時
-	if (FAILED(pGoal->Init())) return nullptr;
+	if (FAILED(pPoint->Init())) return nullptr;
 
-	return pGoal;
+	return pPoint;
 }
 //=========================================================
 // 初期化処理
 //=========================================================
-HRESULT CGoal::Init(void)
+HRESULT CWallTargetPoint::Init(void)
 {
-	// 親クラスの初期化
 	CObjectX::Init();
-
-	// コライダー生成
-	m_pSphereCollider = CSphereCollider::Create(GetPos(), Config::RADIUS);
 
 	return S_OK;
 }
 //=========================================================
 // 終了処理
 //=========================================================
-void CGoal::Uninit(void)
+void CWallTargetPoint::Uninit(void)
 {
-	// コライダー破棄
-	m_pSphereCollider.reset();
+	m_pCollider.reset();
 
-	// 親クラスの終了処理
 	CObjectX::Uninit();
 }
 //=========================================================
 // 更新処理
 //=========================================================
-void CGoal::Update(void)
+void CWallTargetPoint::Update(void)
 {
-	// 有効なら
-	if (m_isGoal) return;
+	auto pos = GetPos();
 
-	// プレイヤーとのコリジョンチェック
-	auto player = CGameSceneObject::GetInstance()->GetPlayer();
-	if (!player) return;
-
-	// コリジョン判定
-	if (Collision(player->GetCollider()))
+	if (m_pCollider)
 	{
-		SetisGoal(true);
-		return;
+		m_pCollider->SetPos(pos);
 	}
 
-	// 親クラスの更新処理
 	CObjectX::Update();
 }
 //=========================================================
 // 描画処理
 //=========================================================
-void CGoal::Draw(void)
+void CWallTargetPoint::Draw(void)
 {
-	// 親クラスの描画処理
+#ifdef _DEBUG
 	CObjectX::Draw();
-}
-//=========================================================
-// 当たり判定関数
-//=========================================================
-bool CGoal::Collision(CBoxCollider* other)
-{
-	// nullなら失敗
-	if (m_pSphereCollider == nullptr) return false;
-
-	return CBoxToSphereCollision::Collision(other,m_pSphereCollider.get());
+#endif // _DEBUG
 }

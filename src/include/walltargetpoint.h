@@ -1,6 +1,6 @@
 //=========================================================
 //
-// ゴール処理 [ goal.h ]
+// ワープターゲットのポイントクラス [ walltargetpoint.h ]
 // Author: Asuma Nishio
 //
 //=========================================================
@@ -8,7 +8,7 @@
 //*********************************************************
 // インクルードガード
 //*********************************************************
-#pragma once 
+#pragma once
 
 //*********************************************************
 // システムインクルードファイル
@@ -24,47 +24,39 @@
 // 前方宣言
 //*********************************************************
 class CSphereCollider;
-class CBoxCollider;
 
 //*********************************************************
-// ゴールクラスを定義
+// ターゲットのポイントクラスの定義
 //*********************************************************
-class CGoal : public CObjectX
+class CWallTargetPoint : public CObjectX
 {
 public:
 
-	CGoal(int nPriority = static_cast<int>(CObject::PRIORITY::MODELOBJECT));
-	~CGoal();
+	CWallTargetPoint(int nPriority = static_cast<int>(CObject::PRIORITY::MODELOBJECT));
+	~CWallTargetPoint();
 
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
-	bool Collision(CBoxCollider* other);
-
-	void SetisGoal(const bool& isGoal) { m_isGoal = isGoal; }
-	bool GetIsGoalFlag(void) const { return m_isGoal; }
+	HRESULT Init(void) override;
+	void Uninit(void) override;
+	void Update(void) override;
+	void Draw(void) override;
+	inline CSphereCollider* GetCollider(void) { return m_pCollider.get(); }
 
 	/// <summary>
-	/// 生成処理
+	/// ポインタ生成処理
 	/// </summary>
-	/// <param name="pos"></param>
+	/// <param name="pos">生成座標</param>
+	/// <param name="rot">角度</param>
+	/// <param name="scale">拡大率</param>
+	/// <param name="pModelName">モデルパス</param>
 	/// <returns></returns>
-	static CGoal* Create(const D3DXVECTOR3& pos);
+	static CWallTargetPoint* Create
+	(
+		const D3DXVECTOR3& pos,
+		const D3DXVECTOR3& rot,
+		const D3DXVECTOR3& scale,
+		const char* pModelName
+	);
 
 private:
-
-	//******************************
-	// 定数構造体
-	//******************************
-	struct Config
-	{
-		static constexpr float RADIUS = 80.0f; // 当たり半径
-		static constexpr const char* MODELNAME = "STAGEOBJ/goal.x"; // モデルパス
-	};
-
-private:
-
-	std::unique_ptr<CSphereCollider>m_pSphereCollider; // 球形コライダー
-	bool m_isGoal;									   // 終了フラグ
+	std::unique_ptr<CSphereCollider> m_pCollider;	// 矩形のコライダー
 };
