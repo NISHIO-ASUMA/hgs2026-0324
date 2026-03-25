@@ -136,21 +136,6 @@ HRESULT CRenderer::Init(HWND hWnd, BOOL bWindow)
 	m_pDebug = new CDebugproc;
 	m_pDebug->Init();
 
-	// インスタンシング用頂点バッファ生成
-	HRESULT hr = m_pD3DDevice->CreateVertexBuffer
-	(
-		sizeof(InstanceData) * RENDERINFO::MAX_INSTANCE,
-		D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,
-		0,
-		D3DPOOL_DEFAULT,
-		&m_instanceVB,
-		nullptr
-	);
-
-	// 生成失敗時
-	if (FAILED(hr))
-		return hr;
-
 	return S_OK;
 }
 //=========================================================

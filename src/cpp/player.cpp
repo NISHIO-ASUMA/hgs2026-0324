@@ -25,6 +25,7 @@
 #include "blockmanager.h"
 #include "effectlaser.h"
 #include "meshcylinder.h"
+#include "boxtospherecollision.h"
 
 //=========================================================
 // コンストラクタ
@@ -37,6 +38,7 @@ m_isStayPos(false),
 m_pBoxCollder(nullptr),
 m_pLaser(nullptr),
 m_pCylinder(nullptr),
+m_pWorldBoxCollder(nullptr),
 m_TargetPos(VECTOR3_NULL)
 {
 
@@ -61,6 +63,8 @@ CPlayer* CPlayer::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot)
 	pPlayer->SetPos(pos);
 	pPlayer->SetOldPos(pos);
 	pPlayer->SetRot(rot);
+	pPlayer->SetUseOutLine(true);
+	pPlayer->SetUseStencil(true);
 
 	// 初期化失敗時
 	if (FAILED(pPlayer->Init())) return nullptr;
@@ -86,6 +90,14 @@ HRESULT CPlayer::Init(void)
 		D3DXVECTOR3(Config::COLLISION, Config::COLLISION, Config::COLLISION)
 	);
 
+	// 世界と当たる矩形を作成する
+	m_pWorldBoxCollder = CBoxCollider::Create
+	(
+		GetPos(),
+		GetOldPos(),
+		D3DXVECTOR3(Config::WORLDCOLLISION, Config::WORLDCOLLISION, Config::WORLDCOLLISION)
+	);
+
 	return S_OK;
 }
 //=========================================================
@@ -104,6 +116,7 @@ void CPlayer::Uninit(void)
 //=========================================================
 void CPlayer::Update(void)
 {
+#if 1
 	// 入力クラス取得
 	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
 	CJoyPad* pPad = CManager::GetInstance()->GetJoyPad();
@@ -111,10 +124,10 @@ void CPlayer::Update(void)
 	// 過去座標を取得
 	auto oldPos = GetOldPos();
 
-	// 移動入力の制御
-	if (!m_isStayPos)
+	// 壁アクション中じゃない かつ ステイフラグが有効じゃない時
+	if (!m_isStayPos && !m_isWall)
 	{
-		// 通常時のみキー入力を受け付ける
+		// 入力を受け付ける
 		KeyMove();
 		KeyPad();
 	}
@@ -128,23 +141,27 @@ void CPlayer::Update(void)
 	D3DXVECTOR3 move = GetMove();
 
 	// 重力の計算
-	if (!m_isLanding && !m_isStayPos)
+	if (m_isStayPos) 
 	{
-		move.y -= 0.7f; // 通常の落下
+		move.y = 0.0f; // 張り付き中は着地中は落下させない
 	}
-	else
+	else if (!m_isStayPos)
 	{
-		move.y = 0.0f;
+		move.y -= 0.7f; // それ以外は落下
 	}
 
 	// ジャンプ入力
-	if (!m_isWall && (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)) && m_isLanding)
+	if (!m_isWall 
+		&& !m_isStayPos 
+		&& m_isLanding 
+		&& (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)))
 	{
 		move.y = Config::JUMP;
 		m_isLanding = false;
 		m_isJump = true;
 	}
 
+	// 移動量の設定
 	SetMove(move);
 
 	// ワイヤーアクション
@@ -159,7 +176,6 @@ void CPlayer::Update(void)
 	// 地面(Y=0)との衝突判定
 	if (updatePos.y <= 0.0f)
 	{
-		updatePos.y = 0.0f;
 		m_isLanding = true;
 		m_isJump = false;
 		m_isStayPos = false;
@@ -170,6 +186,13 @@ void CPlayer::Update(void)
 	{
 		m_pBoxCollder->SetPos(updatePos);
 		m_pBoxCollder->SetPosOld(updateposold);
+	}
+
+	// 世界のコライダー更新
+	if (m_pWorldBoxCollder)
+	{
+		m_pWorldBoxCollder->SetPos(updatePos);
+		m_pWorldBoxCollder->SetPosOld(updateposold);
 	}
 
 	// ブロックとの衝突判定
@@ -186,37 +209,60 @@ void CPlayer::Update(void)
 			SetPos(updatePos);
 			if (m_pBoxCollder) m_pBoxCollder->SetPos(updatePos);
 
-			// --- 壁アクション中の衝突対応 ---
+			// ワイヤーアクション中の停止ロジック
 			if (m_isWall)
 			{
+				// ぶつかった衝撃で少し動けない状態にする
+				m_isStayPos = true;
+
+				D3DXVECTOR3 moveVec = GetMove();
+
+				// 離陸の瞬間（上向き移動かつ足元のブロック）はスルーする
+				if (moveVec.y >= 0.0f && (updatePos.y - oldPos.y) < 1.0f)
+				{
+					continue;
+				}
+
+				// アクションをその場で終了
 				m_isWall = false;
 
-				// シリンダーが残っていたら破棄
 				if (m_pCylinder)
 				{
 					m_pCylinder->Uninit();
 					m_pCylinder = nullptr;
 				}
 
-				// 当たった瞬間に移動を止める
+				// その場に止めるために移動量をリセット
 				SetMove(VECTOR3_NULL);
+				SetPos(updatePos);
+
+				// 張り付きかニュートラルに変更
+				GetMotion()->SetMotion(MOTION::NEUTRAL, true, 10);
+
+				isAnyHit = false;
+				break;
 			}
 
-			// 壁に張り付く演出として操作不能にするならtrue、
-			m_isStayPos = true;
 			isAnyHit = true;
 		}
 	}
 
-	// フラグの最終確定
+	// フラグ処理
 	m_isLanding = isAnyHit;
 	if (m_isLanding)
 	{
 		m_isJump = false;
+
+		if (!m_isWall && !m_isStayPos)
+		{
+			// 地面に足がついた通常状態なので、操作制限を解除する
+			m_isStayPos = false;
+		}
 	}
 
 	// 親クラスの更新
 	CMoveCharactor::Update();
+#endif
 }
 //=========================================================
 // 描画処理
@@ -226,7 +272,11 @@ void CPlayer::Draw(void)
 	// 親クラスの描画処理
 	CMoveCharactor::Draw();
 
-#ifdef _DEBUG	// デバッグフォント
+#ifdef _DEBUG
+
+	// デバッグフォント
+	CDebugproc::Print("ステイかどうか : %d", m_isStayPos);
+	CDebugproc::Draw(0, 120);
 
 	CDebugproc::Print("壁アクション : %d", m_isWall);
 	CDebugproc::Draw(0, 140);
@@ -239,6 +289,15 @@ void CPlayer::Draw(void)
 
 	CDebugproc::Print("座標 : [ %.2f,%.2f,%.2f ]", GetPos().x, GetPos().y, GetPos().z);
 	CDebugproc::Draw(0, 200);
+
+	CDebugproc::Print("worldコライダー座標 : [ %.2f,%.2f,%.2f ]", 
+		m_pWorldBoxCollder->GetPos().x, m_pWorldBoxCollder->GetPos().y, m_pWorldBoxCollder->GetPos().z);
+	CDebugproc::Draw(0, 220);
+
+	CDebugproc::Print("worldコライダーサイズ : [ %.2f,%.2f,%.2f ]",
+		m_pWorldBoxCollder->GetInfo().Size.x, m_pWorldBoxCollder->GetInfo().Size.y, m_pWorldBoxCollder->GetInfo().Size.z);
+	CDebugproc::Draw(0, 240);
+
 #endif // _DEBUG
 }
 //=========================================================
@@ -257,6 +316,16 @@ bool CPlayer::CollisionBox(CBoxCollider* pOther, D3DXVECTOR3* pOutPos)
 
 	// 結果を返す
 	return isHit;
+}
+//=========================================================
+// 世界の壁との当たり判定
+//=========================================================
+bool CPlayer::CollisionWorldBox(CSphereCollider* pOther)
+{
+	// nullなら
+	if (m_pBoxCollder == nullptr) return false;
+
+	return CBoxToSphereCollision::Collision(m_pBoxCollder.get(), pOther);
 }
 //=========================================================
 // キー入力移動
@@ -378,20 +447,20 @@ void CPlayer::KeyMove(void)
 
 	if (isMove)
 	{
-		//// MOVEじゃなかったら切り替え
-		//if (GetMotion()->GetMotionType() != MOVE)
-		//{
-		//	GetMotion()->SetMotion(MOVE);
-		//}
+		// MOVEじゃなかったら切り替え
+		if (GetMotion()->GetMotionType() != MOVE)
+		{
+			GetMotion()->SetMotion(MOVE);
+		}
 	}
 	else
 	{
-		//// NEUTRALに遷移する
-		//if (GetMotion()->GetMotionType() == MOVE)
-		//{
-		//	//　タイプ切り替え
-		//	GetMotion()->SetMotion(NEUTRAL, true, 10);
-		//}
+		// NEUTRALに遷移する
+		if (GetMotion()->GetMotionType() == MOVE)
+		{
+			//　タイプ切り替え
+			GetMotion()->SetMotion(NEUTRAL, true, 10);
+		}
 	}
 
 	if (rotdest.y - rot.y > D3DX_PI)
@@ -470,18 +539,18 @@ void CPlayer::KeyPad(void)
 
 	if (isMoving)
 	{
-		//// MOVEじゃなかったら
-		//if (GetMotion()->GetMotionType() != MOVE)
-		//{
-		//	// モーション変更
-		//	GetMotion()->SetMotion(MOVE);
-		//}
+		// MOVEじゃなかったら
+		if (GetMotion()->GetMotionType() != MOVE)
+		{
+			// モーション変更
+			GetMotion()->SetMotion(MOVE);
+		}
 	}
 	else if (!isMoving && wasStick)
 	{
-		//// 離した瞬間の判定
-		//if (GetMotion()->GetMotionType() == MOVE)
-		//	GetMotion()->SetMotion(NEUTRAL, true, 10);
+		// 離した瞬間の判定
+		if (GetMotion()->GetMotionType() == MOVE)
+			GetMotion()->SetMotion(NEUTRAL, true, 10);
 	}
 
 	// フラグを変更する
@@ -499,6 +568,13 @@ void CPlayer::PlayAction(void)
 	// 自動移動フラグが立っている間の処理
 	if (m_isWall)
 	{
+		// 特定モデルの取得 ここから基準でメッシュシリンダーを伸ばしたい!!
+		auto Model = GetModelPart(1);
+		auto mtx = Model->GetMtxWorld();
+
+		// モデルの座標
+		auto ModelPos = D3DXVECTOR3(mtx._41, mtx._42, mtx._43);
+
 		// 現在座標の取得
 		D3DXVECTOR3 pos = GetPos();
 
@@ -509,7 +585,7 @@ void CPlayer::PlayAction(void)
 		// nullの時シリンダー生成
 		if (!m_pCylinder)
 		{
-			m_pCylinder = CMeshCylinder::Create(pos, Action::CYLINDER);
+			m_pCylinder = CMeshCylinder::Create(ModelPos, Action::CYLINDER);
 			m_pCylinder->SetEndPos(m_TargetPos);
 		}
 
@@ -530,11 +606,8 @@ void CPlayer::PlayAction(void)
 			SetMove(moveVec);
 
 			// シリンダー設定
-			m_pCylinder->SetPos(pos);				// シリンダーの現在位置
+			m_pCylinder->SetPos(ModelPos);			// シリンダーの現在位置
 			m_pCylinder->SetEndPos(m_TargetPos);	// 目的地の位置
-
-			// エフェクト生成
-			CEffectLaser::Create(pos, m_TargetPos, LASER, moveVec, 30, 30.0f);
 		}
 		else
 		{
@@ -547,6 +620,7 @@ void CPlayer::PlayAction(void)
 			// シリンダーの破棄
 			m_pCylinder->Uninit();
 			m_pCylinder = nullptr;
+			GetMotion()->SetMotion(MOTION::NEUTRAL, true, 10);
 		}
 	}
 }
@@ -560,4 +634,7 @@ void CPlayer::ActionSetting(const D3DXVECTOR3& pos)
 
 	// 壁移動フラグを起動
 	m_isWall = true;
+
+	// モーション変更
+	GetMotion()->SetMotion(MOTION::WALLACTION);
 }

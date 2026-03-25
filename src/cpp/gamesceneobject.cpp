@@ -23,6 +23,7 @@
 #include "player.h"
 #include "block.h"
 #include "template.h"
+#include "enemymanager.h"
 
 //*********************************************************
 // 静的メンバ変数
@@ -39,6 +40,7 @@ namespace GAMEOBJECT
 	const D3DXVECTOR3 QueenPos		= { 0.0f, 55.0f, 0.0f };		// 女王アリの座標
 	constexpr const char* LoadName	= "data/JSON/Gameobject.json";	// 読み込みjsonファイル名
 	constexpr const char* WallName	= "data/JSON/GameWall.json";	// 読み込みjsonファイル名
+	constexpr const char* ENEMYLOAD = "data/JSON/MapEnemy.json";	// ファイル名
 
 	constexpr int INDEX = 4;
 
@@ -93,12 +95,8 @@ HRESULT CGameSceneObject::Init(void)
 	// 各種ポインタクラスの生成
 	CreatePointer();
 
-	// プレイヤー生成
-	m_pPlayer = CPlayer::Create(D3DXVECTOR3(-400.0f, 0.0f, -200.0f), VECTOR3_NULL);
-
-	// テストブロック
-	m_pBlock = CBlock::Create(VECTOR3_NULL, VECTOR3_NULL, INITSCALE, "STAGEOBJ/block001.x");
-	CBlock::Create(D3DXVECTOR3(0.0f,300.0f,0.0f), VECTOR3_NULL, INITSCALE, "STAGEOBJ/block000.x");
+	// 敵管理クラスの初期化
+	//CEnemyManager::GetInstance()->Init(GAMEOBJECT::ENEMYLOAD);
 
 	// スコア初期化
 	m_pScore->DeleteScore();
@@ -110,6 +108,9 @@ HRESULT CGameSceneObject::Init(void)
 //=========================================================
 void CGameSceneObject::Uninit(void)
 {
+	// 敵管理クラスの終了
+	//CEnemyManager::GetInstance()->Uninit();
+
 	// ブロック管理クラスの破棄
 	m_pBlocks.reset();
 
@@ -125,7 +126,7 @@ void CGameSceneObject::Uninit(void)
 //=========================================================
 void CGameSceneObject::Update(void)
 {
-#ifdef _DEBUG
+#ifdef NDEBUG
 	// デバッグキー
 	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_B) ||
 		CManager::GetInstance()->GetJoyPad()->GetTrigger(CJoyPad::JOYKEY_A))
@@ -162,4 +163,6 @@ void CGameSceneObject::CreatePointer(void)
 	// スコア生成
 	m_pScore = CScore::Create(VECTOR3_NULL);
 
+	// プレイヤー生成
+	m_pPlayer = CPlayer::Create(VECTOR3_NULL, VECTOR3_NULL);
 }
