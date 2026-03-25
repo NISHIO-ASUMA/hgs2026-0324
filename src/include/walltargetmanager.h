@@ -22,7 +22,7 @@
 class CWallTargetPoint;
 
 //*********************************************************
-// ターゲットポイントクラスを定義
+// ターゲットポイント複数クラスを定義
 //*********************************************************
 class CWallTargetManager
 {
@@ -78,7 +78,6 @@ public:
 private:
 
 	CWallTargetManager();						// コンストラクタ
-	void LoadJson(const char* pLoadName);		// json読み込み
 
 private:
 

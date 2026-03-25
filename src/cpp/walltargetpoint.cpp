@@ -62,6 +62,9 @@ HRESULT CWallTargetPoint::Init(void)
 {
 	CObjectX::Init();
 
+	// コライダー生成
+	m_pCollider = CSphereCollider::Create(GetPos(), 600.0f);
+
 	return S_OK;
 }
 //=========================================================

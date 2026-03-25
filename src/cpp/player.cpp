@@ -29,6 +29,8 @@
 #include "meshcylinder.h"
 #include "boxtospherecollision.h"
 #include "goal.h"
+#include "walltargetmanager.h"
+#include "walltargetpoint.h"
 
 //=========================================================
 // コンストラクタ
@@ -43,7 +45,10 @@ m_pLaser(nullptr),
 m_pCylinder(nullptr),
 m_pWorldBoxCollder(nullptr),
 m_pSphereCollider(nullptr),
-m_TargetPos(VECTOR3_NULL)
+m_TargetPos(VECTOR3_NULL),
+m_AroundTargetCount(NULL),
+m_SelectIndex(NULL),
+m_pNearbyTargets{}
 {
 
 }
@@ -99,7 +104,7 @@ HRESULT CPlayer::Init(void)
 	(
 		GetPos(),
 		GetOldPos(),
-		D3DXVECTOR3(Config::COLLISION, Config::WORLDCOLLISION, Config::WORLDCOLLISION)
+		D3DXVECTOR3(Config::WORLDCOLLISION, Config::WORLDCOLLISION, Config::WORLDCOLLISION)
 	);
 
 	// 球形を生成する
@@ -122,7 +127,6 @@ void CPlayer::Uninit(void)
 //=========================================================
 void CPlayer::Update(void)
 {
-#if 1
 	// プレイヤーがゴールしたなら
 	if (CGameSceneObject::GetInstance()->GetGoal()->GetIsGoalFlag()) return;
 
@@ -173,6 +177,52 @@ void CPlayer::Update(void)
 
 	// 移動量の設定
 	SetMove(move);
+
+	// ワイヤーアクション中でない場合のみターゲットを探す
+	if (!m_isWall)
+	{
+		// 1. 周囲のターゲットをリストアップ
+		this->SerachTarget();
+
+		if (!m_pNearbyTargets.empty())
+		{
+			// ターゲットを切り替える入力
+			if (pKey->GetTrigger(DIK_Q) || pPad->GetTrigger(CJoyPad::JOYKEY_Y))
+			{
+				m_SelectIndex = (m_SelectIndex + 1) % m_pNearbyTargets.size();
+			}
+
+			for (int i = 0; i < (int)m_pNearbyTargets.size(); i++)
+			{
+				if (i == m_SelectIndex)
+				{
+					// 選択中
+					m_pNearbyTargets[i]->SetIsOutLine(true);
+					m_pNearbyTargets[i]->SetOutLineColor(D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f));
+
+					// ビルボードを表示する
+
+				}
+				else
+				{
+					// リストには入っているが選択されていない
+					m_pNearbyTargets[i]->SetIsOutLine(false);
+				}
+			}
+
+			// 決定処理
+			CWallTargetPoint* pSelected = m_pNearbyTargets[m_SelectIndex];
+			if (pKey->GetTrigger(DIK_R) || pPad->GetTrigger(CJoyPad::JOYKEY_B))
+			{
+				ActionSetting(pSelected->GetPos());
+			}
+		}
+		else 
+		{
+			// 範囲内に何もない時はインデックスをリセットしておく
+			m_SelectIndex = 0;
+		}
+	}
 
 	// ワイヤーアクション
 	PlayAction();
@@ -278,7 +328,6 @@ void CPlayer::Update(void)
 
 	// 親クラスの更新
 	CMoveCharactor::Update();
-#endif
 }
 //=========================================================
 // 描画処理
@@ -289,8 +338,10 @@ void CPlayer::Draw(void)
 	CMoveCharactor::Draw();
 
 #ifdef _DEBUG
-
 	// デバッグフォント
+	CDebugproc::Print("追うターゲットの個数 : %d", m_pNearbyTargets.size());
+	CDebugproc::Draw(0, 100);
+
 	CDebugproc::Print("ステイかどうか : %d", m_isStayPos);
 	CDebugproc::Draw(0, 120);
 
@@ -314,6 +365,20 @@ void CPlayer::Draw(void)
 		m_pWorldBoxCollder->GetInfo().Size.x, m_pWorldBoxCollder->GetInfo().Size.y, m_pWorldBoxCollder->GetInfo().Size.z);
 	CDebugproc::Draw(0, 240);
 
+	// 選択中のターゲットにデバッグ用の印を出す
+	if (!m_pNearbyTargets.empty())
+	{
+		if (m_SelectIndex == -1)
+		{
+			return;
+		}
+		else
+		{
+			auto selectedPos = m_pNearbyTargets[m_SelectIndex]->GetPos();
+			CDebugproc::Print("SELECT TARGET: [ %.2f, %.2f,%.2f ]", selectedPos.x, selectedPos.y, selectedPos.z);
+			CDebugproc::Draw(0, 260);
+		}
+	}
 #endif // _DEBUG
 }
 //=========================================================
@@ -339,9 +404,10 @@ bool CPlayer::CollisionBox(CBoxCollider* pOther, D3DXVECTOR3* pOutPos)
 bool CPlayer::CollisionWorldBox(CSphereCollider* pOther)
 {
 	// nullなら
-	if (m_pBoxCollder == nullptr) return false;
+	if (m_pWorldBoxCollder == nullptr) return false;
 
-	return CBoxToSphereCollision::Collision(m_pBoxCollder.get(), pOther);
+	// 球と矩形の判定
+	return CBoxToSphereCollision::Collision(m_pWorldBoxCollder.get(), pOther);
 }
 //=========================================================
 // 球形当たり判定
@@ -379,7 +445,6 @@ void CPlayer::KeyMove(void)
 
 	if (pKey->GetPress(DIK_A) || pPad->GetPress(CJoyPad::JOYKEY_LEFT))
 	{// Aキー
-
 		if (pKey->GetPress(DIK_W) || pPad->GetPress(CJoyPad::JOYKEY_RIGHT))
 		{// 左斜め上
 
@@ -395,7 +460,6 @@ void CPlayer::KeyMove(void)
 			move.z -= cosf(pCamera->GetRot().y + D3DX_PI * 0.25f) * Config::MOVESPEED;
 			rotdest.y = pCamera->GetRot().y + (D3DX_PI * 0.25f);
 			isMove = true;
-
 		}
 		else
 		{// 単体
@@ -594,11 +658,11 @@ void CPlayer::PlayAction(void)
 	// 自動移動フラグが立っている間の処理
 	if (m_isWall)
 	{
-		// 特定モデルの取得 ここから基準でメッシュシリンダーを伸ばしたい!!
+		// 特定モデルの取得
 		auto Model = GetModelPart(1);
 		auto mtx = Model->GetMtxWorld();
 
-		// モデルの座標
+		// モデルの座標取得
 		auto ModelPos = D3DXVECTOR3(mtx._41, mtx._42, mtx._43);
 
 		// 現在座標の取得
@@ -646,6 +710,9 @@ void CPlayer::PlayAction(void)
 			// シリンダーの破棄
 			m_pCylinder->Uninit();
 			m_pCylinder = nullptr;
+			m_SelectIndex = 0;
+
+			// ニュートラルモーションに設定
 			GetMotion()->SetMotion(MOTION::NEUTRAL, true, 10);
 		}
 	}
@@ -663,4 +730,46 @@ void CPlayer::ActionSetting(const D3DXVECTOR3& pos)
 
 	// モーション変更
 	GetMotion()->SetMotion(MOTION::WALLACTION);
+}
+//=========================================================
+// ポイントを探す
+//=========================================================
+void CPlayer::SerachTarget()
+{
+	auto targetManager = CWallTargetManager::GetInstance();
+	m_pNearbyTargets.clear(); // 毎フレームクリア
+
+	for (int nCnt = 0; nCnt < targetManager->GetAll(); nCnt++)
+	{
+		auto target = targetManager->GetIdxPoint(nCnt);
+		if (!target) continue;
+
+		// 範囲内判定
+		D3DXVECTOR3 diff = target->GetPos() - GetPos();
+		float dist = D3DXVec3Length(&diff);
+
+		if (dist < 1.0f) // 距離が1.0f未満なら無視
+		{
+			// 現在地のターゲットはアウトラインOFF
+			target->SetIsOutLine(false);
+			continue;
+		}
+
+		// 範囲内判定
+		if (CollisionWorldBox(target->GetCollider()))
+		{
+			m_pNearbyTargets.push_back(target);
+		}
+		else
+		{
+			// 範囲外のターゲットもアウトラインをOFF
+			target->SetIsOutLine(false);
+		}
+	}
+
+	// 範囲外に出たなどでインデックスがオーバーしないよう調整
+	if (m_SelectIndex >= (int)m_pNearbyTargets.size())
+	{
+		m_SelectIndex = 0;
+	}
 }

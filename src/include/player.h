@@ -29,6 +29,7 @@ class CInputKeyboard;
 class CJoyPad;
 class CEffectLaser;
 class CMeshCylinder;
+class CWallTargetPoint;
 
 //*********************************************************
 // プレイヤークラスを定義
@@ -57,6 +58,7 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 	void Draw(void) override;
+
 	void KeyMove(void);
 	void KeyPad(void);
 
@@ -67,6 +69,7 @@ public:
 
 	void PlayAction(void);
 	void ActionSetting(const D3DXVECTOR3& pos);
+	void SerachTarget();
 
 	CBoxCollider* GetCollider(void) const { return m_pBoxCollder.get(); }
 	CBoxCollider* GetWorldCollider(void) const { return m_pWorldBoxCollder.get(); }
@@ -89,7 +92,7 @@ private:
 	{
 		static constexpr float MOVESPEED = 6.0f;			// 移動速度固定値
 		static constexpr float COLLISION = 20.0f;			// コリジョン半径
-		static constexpr float WORLDCOLLISION = 600.0f;		// 世界とのコリジョン半径
+		static constexpr float WORLDCOLLISION = 2000.0f;		// 世界とのコリジョン半径
 		static constexpr float SPHERECOLLISION = 60.0f;		// コリジョン半径
 
 		static constexpr float JUMP = 15.0f;				// ジャンプ量
@@ -118,7 +121,15 @@ private:
 	bool m_isJump;								// ジャンプ
 	bool m_isStayPos;							// ステイ中か
 
+
 	D3DXVECTOR3 m_TargetPos;					// 目的座標設定用の入れ物
 	CEffectLaser* m_pLaser;						// レーザーエフェクト
 	CMeshCylinder* m_pCylinder;					// メッシュシリンダー
+
+	//**************************
+	// ワープ関係
+	//**************************
+	int m_AroundTargetCount;					// ターゲットの取得インデックス
+	std::vector<CWallTargetPoint*> m_pNearbyTargets; // 範囲内のターゲット一時保存用
+	int m_SelectIndex = 0;						// 現在何番目を選択中か
 };

@@ -48,7 +48,7 @@ namespace GAMEOBJECT
 	constexpr const char* LoadName	= "data/JSON/Gameobject.json";	// 読み込みjsonファイル名
 	constexpr const char* WallName	= "data/JSON/GameWall.json";	// 読み込みjsonファイル名
 	constexpr const char* ENEMYLOAD = "data/JSON/MapEnemy.json";	// 敵ファイル名
-	constexpr const char* POINTLOAD = "data/JSON/MapPoint.json";	// ワイヤーポイント	ファイル名
+	constexpr const char* POINTLOAD = "data/JSON/GameMaker.json";	// ワイヤーポイントファイル名
 
 	constexpr int INDEX = 4;
 	constexpr int PARTICLE = 60;
@@ -128,8 +128,8 @@ void CGameSceneObject::Uninit(void)
 	//// 敵管理クラスの終了
 	//CEnemyManager::GetInstance()->Uninit();
 
-	//// ターゲットポイント管理クラスの終了
-	//CWallTargetManager::GetInstance()->Uninit();
+	// ターゲットポイント管理クラスの終了
+	CWallTargetManager::GetInstance()->Uninit();
 
 	// ブロック管理クラスの破棄
 	m_pBlocks.reset();
@@ -161,15 +161,7 @@ void CGameSceneObject::Update(void)
 		m_nParticleCreateCount = 0;
 	}
 
-#ifdef NDEBUG
-	// デバッグキー
-	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_B) ||
-		CManager::GetInstance()->GetJoyPad()->GetTrigger(CJoyPad::JOYKEY_A))
-	{
-		m_nIdx = Wrap(m_nIdx, 0, GAMEOBJECT::INDEX -1);
-		m_pPlayer->ActionSetting(GAMEOBJECT::target[m_nIdx]);
-		m_nIdx++;
-	}
+#ifdef _DEBUG
 #endif // _DEBUG
 }
 //=========================================================
@@ -198,8 +190,8 @@ void CGameSceneObject::CreatePointer(void)
 	// スコア生成
 	m_pScore = CScore::Create(VECTOR3_NULL);
 
-	//// ターゲットポイントの初期化
-	// CWallTargetManager::GetInstance()->Init(GAMEOBJECT::POINTLOAD);
+	// ターゲットポイントの初期化
+	 CWallTargetManager::GetInstance()->Init(GAMEOBJECT::POINTLOAD);
 
 	//// 敵管理クラスの初期化
 	//CEnemyManager::GetInstance()->Init(GAMEOBJECT::ENEMYLOAD);

@@ -96,7 +96,7 @@ HRESULT CMeshCylinder::Init(void)
 
 	for (int nCntZ = 0; nCntZ <= DIGIT_Z; nCntZ++)
 	{
-		// 長さの比率 (0.0 ～ 1.0)
+		// 長さの比率
 		float fLerp = (float)nCntZ / (float)DIGIT_Z;
 
 		for (int nCntX = 0; nCntX <= DIGIT_X; nCntX++)
@@ -124,15 +124,15 @@ HRESULT CMeshCylinder::Init(void)
 	// 頂点アンロック
 	m_pVtx->Unlock();
 
-	// インデックスポインタを宣言
+	// インデックスポインタ
 	WORD* pIdx;
 
 	// インデックスバッファのロック
 	m_pIdx->Lock(0, 0, (void**)&pIdx, 0);
 
-	WORD IndxNum = DIGIT_X + 1;// X
+	WORD IndxNum = DIGIT_X + 1;
 
-	WORD IdxCnt = 0;// 配列
+	WORD IdxCnt = 0;
 
 	WORD Num = 0;
 
