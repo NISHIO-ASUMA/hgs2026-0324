@@ -124,9 +124,9 @@ void CParticle::Update(void)
 		D3DXVECTOR3 Move = VECTOR3_NULL;
 
 		// à⁄ìÆãóó£ê›íË
-		Move.x = sinf(fAngelX) * sinf(fAngelY) * fLength;
-		Move.y = cosf(fAngelX) * fLength;
-		Move.z = sinf(fAngelX) * cosf(fAngelY) * fLength;
+		Move.x = sinf(fAngelX) * sinf(fAngelY) * fLength * 5.0f;
+		Move.y = cosf(fAngelX) * fLength * 5.0f;
+		Move.z = sinf(fAngelX) * cosf(fAngelY) * fLength * 5.0f;
 
 		//îºåaÇÃê›íË
 		float fRadius = (static_cast<float>(rand() % m_nRadius) / PARTICLEINFO::DIGIT_LENGTH + 0.7f);

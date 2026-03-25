@@ -96,7 +96,7 @@ HRESULT CPlayer::Init(void)
 	(
 		GetPos(),
 		GetOldPos(),
-		D3DXVECTOR3(Config::WORLDCOLLISION, Config::WORLDCOLLISION, Config::WORLDCOLLISION)
+		D3DXVECTOR3(Config::COLLISION, Config::WORLDCOLLISION, Config::WORLDCOLLISION)
 	);
 
 	return S_OK;
@@ -163,6 +163,7 @@ void CPlayer::Update(void)
 		move.y = Config::JUMP;
 		m_isLanding = false;
 		m_isJump = true;
+		GetMotion()->SetMotion(MOTION::JUMP);
 	}
 
 	// ˆÚ“®—Ê‚ÌÝ’è

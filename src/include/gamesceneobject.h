@@ -67,4 +67,5 @@ private:
 	std::unique_ptr<CBlockManager>m_pBlocks;	// ブロックマネージャークラスのポインタ
 
 	int m_nIdx = 0; // 検証インデックス
+	int m_nParticleCreateCount;					// 生成カウント
 };

@@ -52,7 +52,6 @@ void CEnemyManager::Uninit(void)
 {
 	// 敵の配列のクリア
 	m_pEnemyList.clear();
-
 }
 //=========================================================
 // 更新処理
@@ -60,6 +59,26 @@ void CEnemyManager::Uninit(void)
 void CEnemyManager::Update(void)
 {
 
+}
+//=========================================================
+// 消去処理
+//=========================================================
+void CEnemyManager::Erase(CEnemy* pthis)
+{
+	// 削除処理
+	auto DeleteDestObj = std::find(m_pEnemyList.begin(), m_pEnemyList.end(), pthis);
+
+	// もし要素の最後尾なら
+	if (DeleteDestObj == m_pEnemyList.end()) return;
+
+	// 要素を削除
+	(*DeleteDestObj)->Uninit();
+
+	// 先をnullにする
+	pthis = nullptr;
+
+	// 配列の要素を消す
+	DeleteDestObj = m_pEnemyList.erase(DeleteDestObj);
 }
 //=========================================================
 // 生成処理

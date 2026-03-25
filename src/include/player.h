@@ -82,7 +82,7 @@ private:
 	//******************************
 	struct Config
 	{
-		static constexpr float MOVESPEED = 3.0f;			// 移動速度固定値
+		static constexpr float MOVESPEED = 6.0f;			// 移動速度固定値
 		static constexpr float COLLISION = 20.0f;			// コリジョン半径
 		static constexpr float WORLDCOLLISION = 600.0f;		// 世界とのコリジョン半径
 		static constexpr float JUMP = 15.0f;				// ジャンプ量

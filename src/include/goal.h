@@ -59,8 +59,8 @@ private:
 	//******************************
 	struct Config
 	{
-		static constexpr float RADIUS = 80.0f; // 当たり半径
-		static constexpr const char* MODELNAME = "STAGEOBJ/tornado00.x"; // モデルパス
+		static constexpr float RADIUS = 80.0f;						// 当たり半径
+		static constexpr const char* MODELNAME = "STAGEOBJ/goal.x"; // モデルパス
 	};
 
 private:

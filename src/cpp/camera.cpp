@@ -2,7 +2,6 @@
 //
 // カメラ処理 [ camera.cpp ]
 // Author: Asuma Nishio
-// NOTE : 基本の操作はゲームパッド前提で作成する
 // 
 //=========================================================
 
@@ -83,12 +82,16 @@ void CCamera::Update(void)
 {
 	// 右スティックのカメラ
 	RightStickCamera();
-	//SlidMouse();
+
 #ifdef _DEBUG
 	// マウスクリックカメラ更新
 	MouseView(CManager::GetInstance()->GetMouse());
+
+	//FollowCamera();
+
 #else
 	// 追従カメラ
+	FollowCamera();
 	FollowCamera();
 	// マウスのスライド移動を有効化
 	SlidMouse();
@@ -143,7 +146,7 @@ void CCamera::SetCamera(void)
 		D3DXToRadian(45.0f),
 		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT,
 		10.0f,
-		6000.0f);
+		15000.0f);
 
 	// プロジェクションマトリックスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &m_pCamera.mtxprojection);

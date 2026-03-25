@@ -23,6 +23,7 @@
 #include "sound.h"
 #include "input.h"
 #include "fade.h"
+#include "title.h"
 #include "ranking.h"
 
 //=========================================================
@@ -57,7 +58,7 @@ HRESULT CResultManager::Init(void)
 	if (pSound == nullptr) return E_FAIL;
 
 	// サウンド再生
-	pSound->Play(CSound::SOUND_LABEL_RESULTBGM);
+	//pSound->Play(CSound::SOUND_LABEL_RESULTBGM);
 
 	// 初期化結果を返す
 	return S_OK;
@@ -91,7 +92,7 @@ void CResultManager::Update(void)
 		if (pFade != nullptr)
 		{
 			// ランキングシーン遷移
-			pFade->SetFade(std::make_unique <CRanking>());
+			pFade->SetFade(std::make_unique <CTitle>());
 			return;
 		}
 	}

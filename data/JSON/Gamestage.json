@@ -1,0 +1,382 @@
+[
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ -1209.0, 222.0, -4679.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ -2269.0, 700.0, -4563.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ -398.0, 440.0, -4666.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 380.0, 564.0, -4677.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ 1113.0, 744.0, -4688.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 1800.0, 232.0, -4655.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ 2597.0, 222.0, -4652.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ 448.0, 744.0, -3090.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 2534.0, 564.0, -3050.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ 1193.0, 440.0, -3097.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ -297.0, 700.0, -3058.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/house01.x",
+    "pos": [ -1037.0, 232.0, -3073.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ -2708.0, 440.0, -3090.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ -1049.0, 700.0, -2325.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ -330.0, 700.0, -2341.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ 466.0, 222.0, -2313.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 1224.0, 564.0, -2303.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 2535.0, 564.0, -2554.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ 2632.0, 440.0, -960.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ 2632.0, 1320.0, -962.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/house01.x",
+    "pos": [ 1225.0, 232.0, -900.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ 551.0, 744.0, -906.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ -48.0, 744.0, -907.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ -47.0, 744.0, -311.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ 545.0, 744.0, -315.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ -855.0, 700.0, -868.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ -2726.0, 222.0, -959.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ -817.0, 564.0, -211.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ 2633.0, 700.0, -264.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ 1328.0, 222.0, -205.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 2684.0, 564.0, 1262.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 2684.0, 1664.0, 1262.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ 1228.0, 66.0, 1340.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ 550.0, 440.0, 1353.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ 0.6, 440.0, 1354.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ -824.0, 222.0, 1231.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/house01.x",
+    "pos": [ -2700.0, 232.0, 1225.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ -830.0, 222.0, 1764.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 72.0, 564.0, 1990.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ 821.0, 564.0, 1990.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ 2641.0, 744.0, 2088.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/house01.x",
+    "pos": [ 2635.0, 232.0, 3387.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ 1045.0, 700.0, 3389.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ 438.0, 700.0, 3391.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ -611.0, 564.0, 3387.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ -2632.0, 440.0, 3085.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill02.x",
+    "pos": [ -2632.0, 400.0, 3626.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion00.x",
+    "pos": [ -2672.0, 700.0, 4648.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ -964.0, 564.0, 4730.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill01.x",
+    "pos": [ -218.0, 564.0, -4730.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/mansion01.x",
+    "pos": [ 759.0, 222.0, 4724.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ 2584.0, 744.0, 4682.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ -2670.0, 744.0, -131.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/bill00.x",
+    "pos": [ -2636.0, 744.0, 1892.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  }
+]
