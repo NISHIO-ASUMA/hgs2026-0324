@@ -177,7 +177,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\stundet\\Desktop\\モデルdata\\ミッカソ\ン\\TEXTURE\\bill.jpg";
+    "data\\TEXTURE\\bill.jpg";
    }
   }
   Material {
