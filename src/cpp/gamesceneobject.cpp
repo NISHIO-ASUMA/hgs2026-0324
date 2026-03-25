@@ -27,6 +27,7 @@
 #include "goal.h"
 #include "simplemeshcylinder.h"
 #include "particle.h"
+#include "enemy.h"
 
 //*********************************************************
 // 静的メンバ変数
@@ -41,6 +42,8 @@ namespace GAMEOBJECT
 	const D3DXVECTOR3 TimerPos		= { 1020.0f,60.0f,0.0f };		// タイマーの座標
 	const D3DXVECTOR3 TopAntPos		= { 0.0f, 0.0f, -450.0f };		// 操作アリの座標
 	const D3DXVECTOR3 PlayerPos		= { -2635.0f,0.0f,-3870.0f };		// プレイヤー座標
+	const D3DXVECTOR3 EPos = { -2635.0f,50.0f,-3870.0f };		// プレイヤー座標
+
 	const D3DXVECTOR3 QueenPos		= { 0.0f, 55.0f, 0.0f };		// 女王アリの座標
 	constexpr const char* LoadName	= "data/JSON/Gameobject.json";	// 読み込みjsonファイル名
 	constexpr const char* WallName	= "data/JSON/GameWall.json";	// 読み込みjsonファイル名
@@ -107,6 +110,10 @@ HRESULT CGameSceneObject::Init(void)
 	// ゴール生成
 	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f,-600.0f));
 	CSimpleMeshCylinder::Create(D3DXVECTOR3(255.0f, 1480.0f, -600.0f), 80.0f);
+
+	//// 敵生成
+	//CEnemy::Create(GAMEOBJECT::EPos,VECTOR3_NULL,INITSCALE,"ENEMY/butterfly.x");
+	//CEnemy::Create(GAMEOBJECT::EPos, VECTOR3_NULL, INITSCALE, "ENEMY/Ant_Face.x");
 
 	// スコア初期化
 	m_pScore->DeleteScore();

@@ -39,6 +39,7 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 	void Draw(void) override;
+	void DecLife(const int& nDamage);
 	bool Collision(CSphereCollider* pOther);
 	inline CSphereCollider* GetCollider(void) { return m_pCollider.get(); }
 
@@ -59,6 +60,17 @@ public:
 	);
 
 private:
+
+	//******************************
+	// 定数構造体
+	//******************************
+	struct Config
+	{
+		static constexpr int LIFE = 1;
+		static constexpr float ROT = 0.03f;
+	};
+
 	std::unique_ptr<CSphereCollider> m_pCollider;	// 矩形のコライダー
+	int m_nLife;									// 体力
 };
 

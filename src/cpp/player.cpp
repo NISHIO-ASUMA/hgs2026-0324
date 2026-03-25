@@ -14,6 +14,8 @@
 // インクルードファイル
 //*********************************************************
 #include "boxcollider.h"
+#include "spherecollider.h"
+#include "collisionsphere.h"
 #include "collisionbox.h"
 #include "manager.h"
 #include "input.h"
@@ -40,6 +42,7 @@ m_pBoxCollder(nullptr),
 m_pLaser(nullptr),
 m_pCylinder(nullptr),
 m_pWorldBoxCollder(nullptr),
+m_pSphereCollider(nullptr),
 m_TargetPos(VECTOR3_NULL)
 {
 
@@ -99,6 +102,8 @@ HRESULT CPlayer::Init(void)
 		D3DXVECTOR3(Config::COLLISION, Config::WORLDCOLLISION, Config::WORLDCOLLISION)
 	);
 
+	// 球形を生成する
+	m_pSphereCollider = CSphereCollider::Create(GetPos(), Config::SPHERECOLLISION);
 	return S_OK;
 }
 //=========================================================
@@ -184,6 +189,12 @@ void CPlayer::Update(void)
 		m_isLanding = true;
 		m_isJump = false;
 		m_isStayPos = false;
+	}
+
+	// 球コライダー更新
+	if (m_pSphereCollider)
+	{
+		m_pSphereCollider->SetPos(updatePos);
 	}
 
 	// コライダー更新
@@ -292,7 +303,7 @@ void CPlayer::Draw(void)
 	CDebugproc::Print("プレイヤーの目的座標 : [ %.2f,%.2f,%.2f ]", m_TargetPos.x,m_TargetPos.y,m_TargetPos.z);
 	CDebugproc::Draw(0, 180);
 
-	CDebugproc::Print("座標 : [ %.2f,%.2f,%.2f ]", GetPos().x, GetPos().y, GetPos().z);
+	CDebugproc::Print("プレイヤーの現在座標 : [ %.2f,%.2f,%.2f ]", GetPos().x, GetPos().y, GetPos().z);
 	CDebugproc::Draw(0, 200);
 
 	CDebugproc::Print("worldコライダー座標 : [ %.2f,%.2f,%.2f ]", 
@@ -331,6 +342,16 @@ bool CPlayer::CollisionWorldBox(CSphereCollider* pOther)
 	if (m_pBoxCollder == nullptr) return false;
 
 	return CBoxToSphereCollision::Collision(m_pBoxCollder.get(), pOther);
+}
+//=========================================================
+// 球形当たり判定
+//=========================================================
+bool CPlayer::CollisionSphere(CSphereCollider* pOther)
+{
+	// nullなら
+	if (m_pSphereCollider == nullptr) return false;
+
+	return CCollisionSphere::Collision(m_pSphereCollider.get(),pOther);
 }
 //=========================================================
 // キー入力移動

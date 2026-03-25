@@ -327,7 +327,7 @@ void CObjectX::SetFilePass(const char* pFilePass)
 //=========================================================
 // アウトラインカラー設定関数
 //=========================================================
-inline void CObjectX::SetOutLineColor(const D3DXVECTOR4& color)
+void CObjectX::SetOutLineColor(const D3DXVECTOR4& color)
 {
 	m_OutLineColor = color;
 }

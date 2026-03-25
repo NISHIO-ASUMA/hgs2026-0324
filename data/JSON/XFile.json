@@ -18,5 +18,7 @@
   { "XFile": "data/MODEL/STAGEOBJ/house01.x" },
   { "XFile": "data/MODEL/STAGEOBJ/goal.x" },
   { "XFile": "data/MODEL/STAGEOBJ/PointMaker.x" },
-  { "XFile": "data/MODEL/ENEMY/Ant_Face.x" }
+
+  { "XFile": "data/MODEL/ENEMY/Ant_Face.x" },
+  { "XFile": "data/MODEL/ENEMY/butterfly.x" }
 ]
