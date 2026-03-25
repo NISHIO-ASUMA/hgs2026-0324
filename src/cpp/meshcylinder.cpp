@@ -114,7 +114,7 @@ HRESULT CMeshCylinder::Init(void)
 			D3DXVECTOR3 nor = D3DXVECTOR3(x, y, 0.0f);
 			D3DXVec3Normalize(&pVtx[nCnt].nor, &nor);
 
-			pVtx[nCnt].col = COLOR_RED;
+			pVtx[nCnt].col = D3DCOLOR_RGBA(255,170,165,255);
 			pVtx[nCnt].tex = D3DXVECTOR2(fTexX * nCntX, fLerp);
 
 			nCnt++;
@@ -204,7 +204,7 @@ void CMeshCylinder::Update(void)
 	D3DXVec3Normalize(&vAxisZ, &vDir);
 
 	// 上方向ベクトル
-	D3DXVECTOR3 vUp(0, 1, 0);
+	D3DXVECTOR3 vUp(0.0f, 1.0f, 0.0f);
 	if (fabsf(D3DXVec3Dot(&vAxisZ, &vUp)) > 0.99f) vUp = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 
 	// 内積と正規化
@@ -263,7 +263,7 @@ void CMeshCylinder::Draw(void)
 	if (pTexture == nullptr) return;
 
 	// テクスチャセット
-	pDevice->SetTexture(0, pTexture->GetAddress(m_Cylinder.nTexIdx));
+	pDevice->SetTexture(0, nullptr);
 
 	// ポリゴンの描画
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, m_Cylinder.nNumAllVtx, 0, m_Cylinder.nNumPrimitive);

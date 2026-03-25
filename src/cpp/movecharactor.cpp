@@ -147,9 +147,9 @@ void CMoveCharactor::Update(void)
 
 #ifdef NDEBUG
 	// モーションとモデルの更新
-	if (m_pMotion) 
+	if (m_pMotion)
 		m_pMotion->Update(m_pModel);
-#endif
+#endif // NDEBUG
 }
 //=========================================================
 // 描画処理

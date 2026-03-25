@@ -73,6 +73,13 @@ public:
 	/// <returns>
 	inline CMotion* GetMotion(void) { return m_pMotion.get(); }
 
+	/// <summary>
+	/// モデルの特定パーツの取得
+	/// </summary>
+	/// <param name="nIdx">取得するパーツ</param>
+	/// <returns></returns>
+	inline CModel* GetModelPart(const int& nIdx) { return m_pModel[nIdx]; }
+
 protected:
 
 	CBlackBoard* m_pBlackBoard = nullptr; // 共通ブラックボード

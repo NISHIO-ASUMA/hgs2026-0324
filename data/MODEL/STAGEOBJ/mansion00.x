@@ -209,7 +209,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "C:\\Users\\student\\Desktop\\ƒ‚ƒfƒ‹data\\TEXTURE\\mansion00.jpg";
+    "data\\TEXTURE\\mansion00.jpg";
    }
   }
   Material {

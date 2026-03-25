@@ -2,8 +2,8 @@
   {
     "ObjectTag": "MeshField",
     "Pos": [ 0.0, 0.0, 0.0 ],
-    "RadiusX": 4000.0,
-    "RadiusZ": 2000.0,
+    "RadiusX": 1400.0,
+    "RadiusZ": 4000.0,
     "SegmentX": 1,
     "SegmentZ": 1
   },

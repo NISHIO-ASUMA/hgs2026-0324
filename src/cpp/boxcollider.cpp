@@ -25,6 +25,15 @@ CBoxCollider::~CBoxCollider()
 
 }
 //=========================================================
+// ÉTÉCÉYê›íË
+//=========================================================
+void CBoxCollider::SetColliderSize(const D3DXVECTOR3& size)
+{
+	m_BoxInfo.Size.x = size.x;
+	m_BoxInfo.Size.y = size.y;
+	m_BoxInfo.Size.z = size.z;
+}
+//=========================================================
 // ê∂ê¨èàóù
 //=========================================================
 std::unique_ptr<CBoxCollider> CBoxCollider::Create

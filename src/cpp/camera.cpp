@@ -87,11 +87,9 @@ void CCamera::Update(void)
 #ifdef _DEBUG
 	// マウスクリックカメラ更新
 	MouseView(CManager::GetInstance()->GetMouse());
-
+#else
 	// 追従カメラ
 	FollowCamera();
-
-#else
 	// マウスのスライド移動を有効化
 	SlidMouse();
 
@@ -321,7 +319,7 @@ void CCamera::FollowCamera(void)
 	targetPos.y += 60.0f;
 
 	// カメラからの距離を固定化する
-	m_pCamera.fDistance = 300.0f;
+	m_pCamera.fDistance = 450.0f;
 
 	// 滑らかに追従させる（線形補間）
 	m_pCamera.posR += (targetPos - m_pCamera.posR) * 0.3f;

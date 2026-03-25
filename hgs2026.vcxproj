@@ -33,6 +33,7 @@
     <ClCompile Include="src\cpp\createjsonblock.cpp" />
     <ClCompile Include="src\cpp\createjsonblocknormal.cpp" />
     <ClCompile Include="src\cpp\createjsoncharactor.cpp" />
+    <ClCompile Include="src\cpp\createjsonenemy.cpp" />
     <ClCompile Include="src\cpp\createjsonmeshdome.cpp" />
     <ClCompile Include="src\cpp\createjsonmeshfield.cpp" />
     <ClCompile Include="src\cpp\createjsonnomove.cpp" />
@@ -42,6 +43,8 @@
     <ClCompile Include="src\cpp\easing.cpp" />
     <ClCompile Include="src\cpp\effect.cpp" />
     <ClCompile Include="src\cpp\effectlaser.cpp" />
+    <ClCompile Include="src\cpp\enemy.cpp" />
+    <ClCompile Include="src\cpp\enemymanager.cpp" />
     <ClCompile Include="src\cpp\fade.cpp" />
     <ClCompile Include="src\cpp\game.cpp" />
     <ClCompile Include="src\cpp\gamemanager.cpp" />
@@ -129,6 +132,7 @@
     <ClInclude Include="src\include\createjsonblock.h" />
     <ClInclude Include="src\include\createjsonblocknormal.h" />
     <ClInclude Include="src\include\createjsoncharactor.h" />
+    <ClInclude Include="src\include\createjsonenemy.h" />
     <ClInclude Include="src\include\createjsonmeshdome.h" />
     <ClInclude Include="src\include\createjsonmeshfield.h" />
     <ClInclude Include="src\include\createjsonnomove.h" />
@@ -138,6 +142,8 @@
     <ClInclude Include="src\include\easing.h" />
     <ClInclude Include="src\include\effect.h" />
     <ClInclude Include="src\include\effectlaser.h" />
+    <ClInclude Include="src\include\enemy.h" />
+    <ClInclude Include="src\include\enemymanager.h" />
     <ClInclude Include="src\include\fade.h" />
     <ClInclude Include="src\include\game.h" />
     <ClInclude Include="src\include\gamemanager.h" />
@@ -303,7 +309,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
