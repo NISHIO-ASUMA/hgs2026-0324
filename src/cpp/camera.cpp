@@ -83,13 +83,14 @@ void CCamera::Update(void)
 {
 	// 右スティックのカメラ
 	RightStickCamera();
-
+	//SlidMouse();
 #ifdef _DEBUG
 	// マウスクリックカメラ更新
 	MouseView(CManager::GetInstance()->GetMouse());
 
 	// 追従カメラ
 	FollowCamera();
+
 #else
 	// マウスのスライド移動を有効化
 	SlidMouse();
@@ -317,9 +318,10 @@ void CCamera::FollowCamera(void)
 
 	// 注視点設定
 	D3DXVECTOR3 targetPos = player->GetPos();
+	targetPos.y += 60.0f;
 
 	// カメラからの距離を固定化する
-	m_pCamera.fDistance = 500.0f;
+	m_pCamera.fDistance = 300.0f;
 
 	// 滑らかに追従させる（線形補間）
 	m_pCamera.posR += (targetPos - m_pCamera.posR) * 0.3f;

@@ -104,104 +104,6 @@ void CPlayer::Uninit(void)
 //=========================================================
 void CPlayer::Update(void)
 {
-#if 0
-	// 入力クラス取得
-	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
-	CJoyPad* pPad = CManager::GetInstance()->GetJoyPad();
-
-	// 過去座標を取得
-	auto oldPos = GetOldPos();
-
-	// まず「現在の移動量」を取得する
-	KeyMove();
-	KeyPad();
-
-	// キー入力後の「最新の移動量」を取り出す
-	D3DXVECTOR3 move = GetMove();
-
-	// 重力の計算 (Y軸の処理)
-	if (!m_isLanding && !m_isWall)
-	{
-		move.y -= 0.7f; // 滞空時のみ重力
-	}
-	else
-	{
-		move.y = 0.0f;  // 接地時はリセット
-	}
-
-	// ジャンプ入力
-	if ((pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)) && m_isLanding)
-	{
-		move.y = Config::JUMP;
-		m_isLanding = false;
-		m_isJump = true;
-	}
-
-	// 最終的な移動量を反映
-	SetMove(move);
-
-	// アクションキー情報
-	Action();
-
-	// 位置更新
-	UpdatePosition();
-
-	// 移動後の最新座標を取得
-	D3DXVECTOR3 updatePos = GetPos();
-	D3DXVECTOR3 updateposold = GetOldPos();
-
-	// 地面との衝突判定
-	if (updatePos.y <= 0.0f)
-	{
-		updatePos.y = 0.0f;
-		m_isLanding = true;
-		m_isJump = false;
-		m_isWall = false;
-	}
-
-	// コライダーの更新
-	if (m_pBoxCollder)
-	{
-		m_pBoxCollder->SetPos(updatePos);
-		m_pBoxCollder->SetPosOld(updateposold);
-	}
-
-	// ブロックとの衝突判定
-	auto BlockManager = CGameSceneObject::GetInstance()->GetBlockManager();
-
-	// ヒット関係のフラグ
-	bool isAnyHit = (updatePos.y <= 0.0f);
-
-	for (int nCnt = 0; nCnt < BlockManager->GetAll(); nCnt++)
-	{
-		// 配列のブロック取得
-		auto childblock = BlockManager->GetBlock(nCnt)->GetCollider();
-
-		if (CollisionBox(childblock, &updatePos))
-		{
-			// 押し戻し適用
-			CMoveCharactor::SetPos(updatePos);
-
-			// コライダー座標更新
-			m_pBoxCollder->SetPos(updatePos);
-			//m_pBoxCollder->SetPosOld(updatePos);
-			isAnyHit = true;
-			break;
-		}
-	}
-
-	// 全ブロックのループが終わった後に、最終的な接地状態を反映させる
-	m_isLanding = isAnyHit;
-	if (m_isLanding)
-	{
-		m_isJump = false;
-		m_isWall = false;
-	}
-
-	// 親クラスの更新
-	CMoveCharactor::Update();
-
-#else
 	// 入力クラス取得
 	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
 	CJoyPad* pPad = CManager::GetInstance()->GetJoyPad();
@@ -276,13 +178,33 @@ void CPlayer::Update(void)
 
 	for (int nCnt = 0; nCnt < BlockManager->GetAll(); nCnt++)
 	{
+		// 単体ブロックを取得
 		auto childblock = BlockManager->GetBlock(nCnt)->GetCollider();
 		if (CollisionBox(childblock, &updatePos))
 		{
-			CMoveCharactor::SetPos(updatePos);
-			m_pBoxCollder->SetPos(updatePos);
+			// 座標を押し戻し後の位置に確定
+			SetPos(updatePos);
+			if (m_pBoxCollder) m_pBoxCollder->SetPos(updatePos);
+
+			// --- 壁アクション中の衝突対応 ---
+			if (m_isWall)
+			{
+				m_isWall = false;
+
+				// シリンダーが残っていたら破棄
+				if (m_pCylinder)
+				{
+					m_pCylinder->Uninit();
+					m_pCylinder = nullptr;
+				}
+
+				// 当たった瞬間に移動を止める
+				SetMove(VECTOR3_NULL);
+			}
+
+			// 壁に張り付く演出として操作不能にするならtrue、
+			m_isStayPos = true;
 			isAnyHit = true;
-			break;
 		}
 	}
 
@@ -295,7 +217,6 @@ void CPlayer::Update(void)
 
 	// 親クラスの更新
 	CMoveCharactor::Update();
-#endif
 }
 //=========================================================
 // 描画処理
@@ -307,10 +228,13 @@ void CPlayer::Draw(void)
 
 #ifdef _DEBUG	// デバッグフォント
 
-	CDebugproc::Print("プレイヤーの目的座標 : [ %.2f,%.2f,%.2f ]", m_TargetPos.x,m_TargetPos.y,m_TargetPos.z);
-	CDebugproc::Draw(0, 160);
+	CDebugproc::Print("壁アクション : %d", m_isWall);
+	CDebugproc::Draw(0, 140);
 
 	CDebugproc::Print("着地 : %d", m_isLanding);
+	CDebugproc::Draw(0, 160);
+
+	CDebugproc::Print("プレイヤーの目的座標 : [ %.2f,%.2f,%.2f ]", m_TargetPos.x,m_TargetPos.y,m_TargetPos.z);
 	CDebugproc::Draw(0, 180);
 
 	CDebugproc::Print("座標 : [ %.2f,%.2f,%.2f ]", GetPos().x, GetPos().y, GetPos().z);

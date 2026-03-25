@@ -99,6 +99,7 @@
     <ClCompile Include="src\cpp\score.cpp" />
     <ClCompile Include="src\cpp\shadow.cpp" />
     <ClCompile Include="src\cpp\shadowstencil.cpp" />
+    <ClCompile Include="src\cpp\simplemeshcylinder.cpp" />
     <ClCompile Include="src\cpp\sound.cpp" />
     <ClCompile Include="src\cpp\spherecollider.cpp" />
     <ClCompile Include="src\cpp\texture.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\include\score.h" />
     <ClInclude Include="src\include\shadow.h" />
     <ClInclude Include="src\include\shadowstencil.h" />
+    <ClInclude Include="src\include\simplemeshcylinder.h" />
     <ClInclude Include="src\include\sound.h" />
     <ClInclude Include="src\include\spherecollider.h" />
     <ClInclude Include="src\include\template.h" />
