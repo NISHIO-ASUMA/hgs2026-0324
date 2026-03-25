@@ -108,14 +108,15 @@ HRESULT CSimpleMeshCylinder::Init(void)
 			float fAngle = (D3DX_PI * 2.0f) / DIGIT_X * nCntX;
 
 			// 頂点座標の設定
-			pVtx[nCnt].pos = D3DXVECTOR3(sinf((fAngle)) * m_Cylinder.fRadius, nCntZ * 30.0f, cosf((fAngle)) * m_Cylinder.fRadius);
+			pVtx[nCnt].pos = D3DXVECTOR3(sinf(fAngle) * m_Cylinder.fRadius, nCntZ * 30.0f, cosf(fAngle) * m_Cylinder.fRadius);
 
 			// 法線ベクトルの設定
-			nor = pVtx[nCnt].pos - m_pos;				// 各頂点から原点の値を引く
-			D3DXVec3Normalize(&pVtx[nCnt].nor, &nor);	// 法線の正規化
+			// シリンダーの外側を向くように、水平成分のみを取り出して正規化する
+			nor = D3DXVECTOR3(pVtx[nCnt].pos.x, 0.0f, pVtx[nCnt].pos.z);
+			D3DXVec3Normalize(&pVtx[nCnt].nor, &nor);
 
 			// 頂点カラーの設定
-			pVtx[nCnt].col = D3DCOLOR_RGBA(0,255,255,255);
+			pVtx[nCnt].col = LASER;
 
 			// テクスチャ座標の設定
 			pVtx[nCnt].tex = D3DXVECTOR2(fTexX * nCntX, nCntZ * fTexY);

@@ -86,6 +86,7 @@
     <ClCompile Include="src\cpp\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">hgs2026-0324\src\cpp;hgs2026-0324\src\include;hgs2026-0324\src\include\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="src\cpp\player.cpp" />
     <ClCompile Include="src\cpp\ranking.cpp" />
@@ -299,7 +300,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include\nlohmann;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>hgs2026-0324\src\include;hgs2026-0324\src\include\nlohmann;hgs2026-0324\src\cpp;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\cpp;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>

@@ -49,6 +49,12 @@ public:
 	inline CEnemy* GetIdxEnemy(const int& nIdx) { return m_pEnemyList[nIdx]; }
 
 	/// <summary>
+	/// ”z—ñ‚©‚çÁ‹‚·‚éˆ—
+	/// </summary>
+	/// <param name="pthis"></param>
+	void Erase(CEnemy* pthis);
+
+	/// <summary>
 	/// ¶¬ŠÖ”
 	/// </summary>
 	/// <param name="pos"></param>

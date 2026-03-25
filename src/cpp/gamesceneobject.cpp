@@ -25,6 +25,8 @@
 #include "enemymanager.h"
 #include "walltargetmanager.h"
 #include "goal.h"
+#include "simplemeshcylinder.h"
+#include "particle.h"
 
 //*********************************************************
 // 静的メンバ変数
@@ -38,6 +40,7 @@ namespace GAMEOBJECT
 {
 	const D3DXVECTOR3 TimerPos		= { 1020.0f,60.0f,0.0f };		// タイマーの座標
 	const D3DXVECTOR3 TopAntPos		= { 0.0f, 0.0f, -450.0f };		// 操作アリの座標
+	const D3DXVECTOR3 PlayerPos		= { -2635.0f,0.0f,-3870.0f };		// プレイヤー座標
 	const D3DXVECTOR3 QueenPos		= { 0.0f, 55.0f, 0.0f };		// 女王アリの座標
 	constexpr const char* LoadName	= "data/JSON/Gameobject.json";	// 読み込みjsonファイル名
 	constexpr const char* WallName	= "data/JSON/GameWall.json";	// 読み込みjsonファイル名
@@ -45,7 +48,7 @@ namespace GAMEOBJECT
 	constexpr const char* POINTLOAD = "data/JSON/MapPoint.json";	// ワイヤーポイント	ファイル名
 
 	constexpr int INDEX = 4;
-
+	constexpr int PARTICLE = 60;
 	const D3DXVECTOR3 target[INDEX] =
 	{
 		{ 300.0f,100.0f,400.0f },
@@ -63,7 +66,8 @@ m_pTimer(nullptr),
 m_pScore(nullptr),
 m_pPlayer(nullptr),
 m_pGoal(nullptr),
-m_nIdx(NULL)
+m_nIdx(NULL),
+m_nParticleCreateCount(NULL)
 {
 
 }
@@ -98,10 +102,11 @@ HRESULT CGameSceneObject::Init(void)
 	CreatePointer();
 
 	// プレイヤー生成
-	m_pPlayer = CPlayer::Create(VECTOR3_NULL, VECTOR3_NULL);
+	m_pPlayer = CPlayer::Create(GAMEOBJECT::PlayerPos, VECTOR3_NULL);
 
 	// ゴール生成
-	m_pGoal = CGoal::Create(D3DXVECTOR3(0.0f, 30.0f, -400.0f));
+	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f,-600.0f));
+	CSimpleMeshCylinder::Create(D3DXVECTOR3(255.0f, 1480.0f, -600.0f), 80.0f);
 
 	// スコア初期化
 	m_pScore->DeleteScore();
@@ -134,6 +139,21 @@ void CGameSceneObject::Uninit(void)
 //=========================================================
 void CGameSceneObject::Update(void)
 {
+	// カウント加算
+	m_nParticleCreateCount++;
+
+	if (m_nParticleCreateCount >= GAMEOBJECT::PARTICLE)
+	{
+		// 生成
+		auto pos = D3DXVECTOR3(255.0f, 1580.0f, -600.0f);
+
+		// パーティクル生成
+		CParticle::Create(pos, COLOR_YERROW, 70, 120.0f, 120, 160);
+
+		// カウント初期化
+		m_nParticleCreateCount = 0;
+	}
+
 #ifdef NDEBUG
 	// デバッグキー
 	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_B) ||

@@ -15,6 +15,7 @@
 //*********************************************************
 #include "collisionsphere.h"
 #include "spherecollider.h"
+#include "template.h"
 
 //=========================================================
 // コンストラクタ
@@ -36,9 +37,9 @@ CEnemy::~CEnemy()
 //=========================================================
 CEnemy* CEnemy::Create
 (
-	const D3DXVECTOR3& pos, 
-	const D3DXVECTOR3& rot, 
-	const D3DXVECTOR3& scale, 
+	const D3DXVECTOR3& pos,
+	const D3DXVECTOR3& rot,
+	const D3DXVECTOR3& scale,
 	const char* pModelName
 )
 {
@@ -51,6 +52,7 @@ CEnemy* CEnemy::Create
 	pEnemy->SetRot(rot);
 	pEnemy->SetScale(scale);
 	pEnemy->SetFilePass(pModelName);
+	pEnemy->SetIsOutLine(true);
 
 	// 初期化失敗時
 	if (FAILED(pEnemy->Init())) return nullptr;
@@ -65,6 +67,9 @@ HRESULT CEnemy::Init(void)
 	// 親クラスの初期化処理
 	CObjectX::Init();
 
+	// アウトラインのカラーを設定(黄色)
+	SetOutLineColor(D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f));
+	
 	return S_OK;
 }
 //=========================================================
@@ -80,8 +85,13 @@ void CEnemy::Uninit(void)
 //=========================================================
 void CEnemy::Update(void)
 {
-	// コライダー更新
+	// コライダー更新座標を取得
 	auto pos = GetPos();
+
+	// 回転を適用する
+	auto rot = GetRot();
+	rot.y += 0.03f;
+	SetRot(rot);
 
 	if (m_pCollider)
 	{
