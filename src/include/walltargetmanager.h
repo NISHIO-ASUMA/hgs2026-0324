@@ -1,6 +1,6 @@
 //=========================================================
 //
-// 敵の管理処理 [ enemymanager.h ]
+// ターゲットのポイント管理処理 [ walltargetmanager.h ]
 // Author: Asuma Nishio
 // 
 //=========================================================
@@ -19,16 +19,16 @@
 //*********************************************************
 // 前方宣言
 //*********************************************************
-class CEnemy;
+class CWallTargetPoint;
 
 //*********************************************************
-// 敵管理クラスを定義
+// ターゲットポイントクラスを定義
 //*********************************************************
-class CEnemyManager
+class CWallTargetManager
 {
 public:
 
-	~CEnemyManager();
+	~CWallTargetManager();
 
 	HRESULT Init(const char* pLoadName);
 	void Uninit(void);
@@ -39,14 +39,14 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	inline int GetAll(void) { return static_cast<int>(m_pEnemyList.size()); }
+	inline int GetAll(void) { return static_cast<int>(m_pTargetList.size()); }
 
 	/// <summary>
-	/// 配列の中の敵を取得する
+	/// 配列の中のポイントを取得する
 	/// </summary>
 	/// <param name="nIdx">取得する配列番号</param>
 	/// <returns></returns>
-	inline CEnemy* GetIdxEnemy(const int& nIdx) { return m_pEnemyList[nIdx]; }
+	inline CWallTargetPoint* GetIdxPoint(const int& nIdx) { return m_pTargetList[nIdx]; }
 
 	/// <summary>
 	/// 生成関数
@@ -56,7 +56,7 @@ public:
 	/// <param name="scale"></param>
 	/// <param name="pModelName"></param>
 	/// <returns></returns>
-	CEnemy* CreateManager
+	CWallTargetPoint* CreateManager
 	(
 		const D3DXVECTOR3& pos,
 		const D3DXVECTOR3& rot,
@@ -69,17 +69,18 @@ public:
 	/// </summary>
 	/// <param name=""></param>
 	/// <returns></returns>
-	static CEnemyManager* GetInstance(void)
+	static CWallTargetManager* GetInstance(void)
 	{
-		static CEnemyManager Instance;
+		static CWallTargetManager Instance;
 		return &Instance;
 	}
 
 private:
 
-	CEnemyManager();					// コンストラクタ
+	CWallTargetManager();						// コンストラクタ
+	void LoadJson(const char* pLoadName);		// json読み込み
 
 private:
 
-	std::vector<CEnemy*>m_pEnemyList;	// 敵の動的配列
+	std::vector<CWallTargetPoint*>m_pTargetList;	// 動的配列
 };

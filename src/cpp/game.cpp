@@ -22,6 +22,7 @@
 #include "result.h"
 #include "fade.h"
 #include "gametime.h"
+#include "goal.h"
 
 #ifdef _DEBUG
 #include "debugproc.h"
@@ -143,11 +144,19 @@ void CGame::Update(void)
 			return;
 		}
 
+		// ƒS[ƒ‹Œ‹‰Ê‚ª—LŒø‚È‚ç
+		if (CGameSceneObject::GetInstance()->GetGoal()->GetIsGoalFlag() == true)
+		{
+			// ƒQ[ƒ€I—¹ó‘Ô‚ÉÝ’è
+			m_pState->SetProgress(CGameState::PROGRESS_END);
+			return;
+		}
+
 		// ƒQ[ƒ€I—¹ƒtƒ‰ƒO‚ª—LŒø‚È‚ç
 		if (CGameManager::GetInstance()->GetIsGameEnd())
 		{
 			// ƒQ[ƒ€”s–kó‘Ô‚ÉÝ’è
-			m_pState->SetProgress(CGameState::PROGRESS_LOSE);
+			m_pState->SetProgress(CGameState::PROGRESS_END);
 			return;
 		}
 	}

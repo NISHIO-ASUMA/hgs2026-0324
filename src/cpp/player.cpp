@@ -26,6 +26,7 @@
 #include "effectlaser.h"
 #include "meshcylinder.h"
 #include "boxtospherecollision.h"
+#include "goal.h"
 
 //=========================================================
 // コンストラクタ
@@ -117,6 +118,9 @@ void CPlayer::Uninit(void)
 void CPlayer::Update(void)
 {
 #if 1
+	// プレイヤーがゴールしたなら
+	if (CGameSceneObject::GetInstance()->GetGoal()->GetIsGoalFlag()) return;
+
 	// 入力クラス取得
 	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
 	CJoyPad* pPad = CManager::GetInstance()->GetJoyPad();
