@@ -69,19 +69,9 @@ HRESULT CBlock::Init(void)
 	int nModelIdx = GetModelIdx();
 	D3DXVECTOR3 Size = pXManager->GetInfo(nModelIdx).Size;
 
-	// モデルのパス取得
-	std::string str = pXManager->GetInfo(nModelIdx).FilePath;
+	m_pCollider = CBoxCollider::Create(GetPos(), GetPos(), Size);
 
-	// コライダーの設定
-	if (str == "data/MODEL/STAGEOBJ/Reef.x") m_pCollider = nullptr;
-	else
-		m_pCollider = CBoxCollider::Create(GetPos(), GetPos(), Size);
-	
-	// マトリックスシャドウを有効化する
-	if (str == "data/MODEL/STAGEOBJ/wallback.x")
-		SetShadow(false);
-	else
-		SetShadow(true);
+	SetShadow(false);
 
 	return S_OK;
 }
@@ -123,6 +113,9 @@ bool CBlock::Collision(CBoxCollider* pOther, D3DXVECTOR3* OutPos)
 	// nullチェック
 	if (m_pCollider == nullptr) return false;
 
+	bool isLand = false;
+	float move = 0.0f;
+
 	// 矩形同士の当たり判定を返す
-	return CCollisionBox::Collision(m_pCollider.get(), pOther, OutPos);
+	return CCollisionBox::Collision(m_pCollider.get(), pOther, OutPos, isLand, move);
 }

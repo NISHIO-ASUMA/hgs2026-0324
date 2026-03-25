@@ -53,7 +53,7 @@ CModelManager::~CModelManager()
 HRESULT CModelManager::Load(void)
 {
 	// jsonファイルロード
-	//LoadJson();
+	LoadJson();
 
 	// 初期化結果を返す
 	return S_OK;

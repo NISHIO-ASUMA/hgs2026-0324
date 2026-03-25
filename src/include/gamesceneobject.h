@@ -22,6 +22,8 @@ class CBlockManager;
 class CGameTime;
 class CEnemy;
 class CScore;
+class CBlock;
+class CPlayer;
 
 //*********************************************************
 // ゲームシーンで使うオブジェクト管理クラスを定義
@@ -41,6 +43,9 @@ public:
 	CScore* GetScore(void) const { return m_pScore; }
 
 	CBlockManager* GetBlockManager(void) const { return m_pBlocks.get(); }
+	CBlock* GetBlock(void) const { return m_pBlock;}
+	CPlayer* GetPlayer(void) const { return m_pPlayer; }
+
 	//CEnemySpawner* GetEnemySpawn(void) const { return m_pSpawn.get(); }
 	//CArrayManager* GetArrayManager(void) const { return m_pArrayManager.get(); }
 	//CArraySpawnManager* GetArraySpawn(void) const { return m_pArraySpawn.get(); }
@@ -61,10 +66,14 @@ private:
 	CGameSceneObject();			// コンストラクタ
 	void CreatePointer(void);	// 初期化処理関数分け
 
-	CScore* m_pScore;		// スコアクラスのポインタ
-	CGameTime* m_pTimer;	// タイマークラスのポインタ
+	CScore* m_pScore;			// スコアクラスのポインタ
+	CGameTime* m_pTimer;		// タイマークラスのポインタ
+	CBlock* m_pBlock;			// 検証用ブロックのポインタ
+	CPlayer* m_pPlayer;			// プレイヤーポインタ
+	std::unique_ptr<CBlockManager>m_pBlocks;	// ブロックマネージャークラスのポインタ
 
-	std::unique_ptr<CBlockManager>m_pBlocks;				// ブロックマネージャークラスのポインタ
+	int m_nIdx = 0;
+
 	//std::unique_ptr<CArrayManager>m_pArrayManager;			// 仲間アリ管理クラス
 	//std::unique_ptr<CEnemySpawner>m_pSpawn;					// スポーン管理クラス
 	//std::unique_ptr<CArraySpawnManager>m_pArraySpawn;		// 仲間スポーン管理クラス

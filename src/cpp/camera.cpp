@@ -2,7 +2,8 @@
 //
 // カメラ処理 [ camera.cpp ]
 // Author: Asuma Nishio
-//
+// NOTE : 基本の操作はゲームパッド前提で作成する
+// 
 //=========================================================
 
 //*********************************************************
@@ -17,6 +18,8 @@
 #include "input.h"
 #include "debugproc.h"
 #include "template.h"
+#include "player.h"
+#include "gamesceneobject.h"
 
 //*********************************************************
 // 定数宣言
@@ -27,9 +30,9 @@ namespace CAMERAINFO
 	constexpr float MAX_VIEWDOWN = 0.1f;		// カメラの角度制限値
 	constexpr float NorRot = D3DX_PI * 2.0f;	// 正規化値
 
-	const D3DXVECTOR3 InitPos = { 0.0f, 1450.0f, -1350.0f }; // カメラ初期座標
-	const D3DXVECTOR3 InitRot = { D3DX_PI * 0.6f, 0.0f, 0.0f }; // カメラ初期角度
-	const D3DXVECTOR3 InitVecU = { 0.0f, 1.0f, 0.0f };		 // 初期ベクトル
+	const D3DXVECTOR3 InitPos = { 0.0f, 1110.0f, -350.0f };		 // カメラ初期座標
+	const D3DXVECTOR3 InitRot = { D3DX_PI * 0.55f, 0.0f, 0.0f }; // カメラ初期角度
+	const D3DXVECTOR3 InitVecU = { 0.0f, 1.0f, 0.0f };			 // 初期ベクトル
 }
 
 //=========================================================
@@ -78,14 +81,29 @@ void CCamera::Uninit(void)
 //=========================================================
 void CCamera::Update(void)
 {
-	// カメラ更新
+	// 右スティックのカメラ
+	RightStickCamera();
+	//SlidMouse();
+#ifdef _DEBUG
+	// マウスクリックカメラ更新
 	MouseView(CManager::GetInstance()->GetMouse());
 
+	// 追従カメラ
+	FollowCamera();
+
+#else
+	// マウスのスライド移動を有効化
+	SlidMouse();
+
+#endif // _DEBUG
+
+#ifdef _DEBUG
 	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_TAB))
 	{
 		// 初期化
 		Init();
 	}
+#endif // _DEBUG
 
 	// 角度の正規化
 	if (m_pCamera.rot.y > D3DX_PI)
@@ -169,10 +187,7 @@ void CCamera::SetResultCamara(void)
 {
 	// カメラ位置
 	m_pCamera.posV = D3DXVECTOR3(0.0f, 5.0f, -190.0f);
-
-	// 見上げたい対象
 	m_pCamera.posR = D3DXVECTOR3(80.0f, 50.0f, 0.0f);
-
 	m_pCamera.vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	// 回転
@@ -287,6 +302,148 @@ void CCamera::WheelMouse(int nDelta)
 	m_pCamera.posV.x = m_pCamera.posR.x - sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
 	m_pCamera.posV.y = m_pCamera.posR.y - cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
 	m_pCamera.posV.z = m_pCamera.posR.z - sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
+}
+//==============================================================
+// ターゲット追従カメラ処理
+//==============================================================
+void CCamera::FollowCamera(void)
+{
+	// 追従先のターゲットを設定
+	const auto& instance = CGameSceneObject::GetInstance();
+	if (instance == nullptr) return;
+
+	// プレイヤー取得
+	auto player = instance->GetPlayer();
+	if (player == nullptr) return;
+
+	// 注視点設定
+	D3DXVECTOR3 targetPos = player->GetPos();
+	targetPos.y += 60.0f;
+
+	// カメラからの距離を固定化する
+	m_pCamera.fDistance = 300.0f;
+
+	// 滑らかに追従させる（線形補間）
+	m_pCamera.posR += (targetPos - m_pCamera.posR) * 0.3f;
+
+	// 計算
+	m_pCamera.posV.x = m_pCamera.posR.x - sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
+	m_pCamera.posV.y = m_pCamera.posR.y - cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
+	m_pCamera.posV.z = m_pCamera.posR.z - sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
+}
+//==============================================================
+// マウスのフリック移動によるカメラ移動
+//==============================================================
+void CCamera::SlidMouse(void)
+{
+	DIMOUSESTATE mouseState;
+
+	if (CManager::GetInstance()->GetMouse()->GetState(&mouseState))
+	{
+		static POINT prevCursorPos = { (long)SCREEN_WIDTH / (long)1.5f,(long)SCREEN_HEIGHT / (long)1.5f };
+
+		POINT cursorPos;
+		GetCursorPos(&cursorPos);
+
+		float X = (float)cursorPos.x - prevCursorPos.x;
+		float Y = (float)cursorPos.y - prevCursorPos.y;
+
+		const float mouseSensitivity = 0.00045f;
+
+		X *= mouseSensitivity;
+		Y *= mouseSensitivity;
+
+		m_pCamera.rot.y += X;
+		m_pCamera.rot.x += Y;
+
+		if (m_pCamera.rot.y < -D3DX_PI)
+		{
+			m_pCamera.rot.y += D3DX_PI * 2.0f;
+		}
+		else if (m_pCamera.rot.y > D3DX_PI)
+		{
+			m_pCamera.rot.y += -D3DX_PI * 2.0f;
+		}
+
+		if (m_pCamera.rot.x < -D3DX_PI)
+		{
+			m_pCamera.rot.x += D3DX_PI * 2.0f;
+		}
+		else if (m_pCamera.rot.x > D3DX_PI)
+		{
+			m_pCamera.rot.x += -D3DX_PI * 2.0f;
+		}
+
+		if (m_pCamera.rot.x > 3.00f)
+		{
+			m_pCamera.rot.x -= Y;
+		}
+		else if (m_pCamera.rot.x < 0.1f)
+		{
+			m_pCamera.rot.x -= Y;
+		}
+
+		SetCursorPos((long)SCREEN_WIDTH / (long)1.5f, (long)SCREEN_HEIGHT / (long)1.5f);
+
+		//m_pCamera.posR.x = m_pCamera.posV.x + sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
+		//m_pCamera.posR.y = m_pCamera.posV.y + cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
+		//m_pCamera.posR.z = m_pCamera.posV.z + sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
+	}
+}
+//==============================================================
+// 右スティックのカメラ処理
+//==============================================================
+void CCamera::RightStickCamera(void)
+{
+	// スティック
+	auto pad = CManager::GetInstance()->GetJoyPad();
+	XINPUT_STATE* pStick = pad->GetStickAngle();
+
+	if (pad->GetRightStick())
+	{
+		float RStickAngleY = pStick->Gamepad.sThumbRY;
+		float RStickAngleX = pStick->Gamepad.sThumbRX;
+
+		float DeadZone = 10920.0f;
+		float fMag = sqrtf((RStickAngleX * RStickAngleX) + (RStickAngleY * RStickAngleY));
+
+		if (fMag >= DeadZone)
+		{
+			float NormalizeX = RStickAngleX / fMag;
+			float NormalizeY = RStickAngleY / fMag;
+
+			float fAngle = fMag * 0.000003f;
+			m_pCamera.rot.y += NormalizeX * 0.5f * fAngle;
+			m_pCamera.rot.x -= NormalizeY * 0.5f * fAngle;
+		}
+	}
+
+	// 角度の正規化
+	if (m_pCamera.rot.y > D3DX_PI)
+	{// D3DX_PIより大きくなったら
+		m_pCamera.rot.y -= D3DX_PI * 2.0f;
+	}
+
+	// 角度の正規化
+	if (m_pCamera.rot.y < -D3DX_PI)
+	{// D3DX_PIより小さくなったら
+		m_pCamera.rot.y += D3DX_PI * 2.0f;
+	}
+
+	if (m_pCamera.rot.x <= D3DX_PI * 0.55f)
+	{// カメラの下限
+		m_pCamera.rot.x = D3DX_PI * 0.55f;
+	}
+
+	if (m_pCamera.rot.x >= D3DX_PI * 0.9f)
+	{// カメラの上限
+		m_pCamera.rot.x = D3DX_PI * 0.9f;
+	}
+	// カメラの視点の情報
+	m_pCamera.posV.x = m_pCamera.posR.x - sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
+	m_pCamera.posV.y = m_pCamera.posR.y - cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
+	m_pCamera.posV.z = m_pCamera.posR.z - sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
+
 }
 //==============================================================
 // 値のクリア関数

@@ -451,6 +451,26 @@ bool CJoyPad::GetLeftStick(void)
 	// 結果を返す
 	return isLstick;
 }
+//=========================================================
+// 右スティックの取得
+//=========================================================
+bool CJoyPad::GetRightStick(void)
+{
+	// ローカル変数宣言
+	bool isRstick = false;
+
+	// スティックの入力値がしきい値を超えていなければ
+	if (m_joyKeyState.Gamepad.sThumbRX >= 100 ||
+		m_joyKeyState.Gamepad.sThumbRX <= -100 ||
+		m_joyKeyState.Gamepad.sThumbRY >= 100 ||
+		m_joyKeyState.Gamepad.sThumbRY <= -100)
+	{
+		isRstick = true;
+	}
+
+	// 結果を返す
+	return isRstick;
+}
 
 //=========================================================
 // マウスのコンストラクタ

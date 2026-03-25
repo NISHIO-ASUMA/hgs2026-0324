@@ -46,6 +46,8 @@ public:
 	void SetTexture(void);
 
 	void SetPos(const D3DXVECTOR3& pos) { m_pos = pos; }
+	void SetEndPos(const D3DXVECTOR3& endpos) { m_EndPos = endpos; }
+
 	inline D3DXVECTOR3 GetPos(void) { return m_pos; }
 	inline float GetRadius(void) const { return m_Cylinder.fRadius; }
 
@@ -72,5 +74,6 @@ private:
 	D3DXVECTOR3 m_pos;		// 座標
 	D3DXVECTOR3 m_rot;		// 角度
 	D3DXMATRIX m_mtxWorld;	// ワールドマトリックス
+	D3DXVECTOR3 m_EndPos;	// 終端座標
 	Cylinder m_Cylinder;	// 構造体変数
 };

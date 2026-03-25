@@ -8,11 +8,6 @@
     "SegmentZ": 1
   },
   {
-    "ObjectTag": "MeshDome",
-    "Pos": [ 0.0, -20.0, 0.0 ],
-    "Radius": 80.0
-  },
-  {
     "ObjectTag": "Ui",
     "Pos": [ 1125.0, 60.0, 0.0 ],
     "FlashFrame": 0,

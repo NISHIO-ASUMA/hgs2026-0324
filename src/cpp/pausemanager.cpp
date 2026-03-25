@@ -239,4 +239,6 @@ void CPauseManager::SetEnablePause(void)
 		// ƒtƒ‰ƒO•ÏX
 		m_isPause = m_isPause ? false : true;
 	}
+
+	if (m_isPause == false) CManager::GetInstance()->GetMouse()->SetCursorVisibility(false);
 }

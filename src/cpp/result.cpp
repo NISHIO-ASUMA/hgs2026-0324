@@ -68,5 +68,5 @@ void CResult::Update(void)
 //=========================================================
 void CResult::Draw(void)
 {
-	
+
 }

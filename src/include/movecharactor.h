@@ -47,6 +47,9 @@ public:
 	void MotionLoad(const char* pScriptName, int nDestMotions,const bool isShadow);
 	void UpdatePosition(void);
 
+	void Gravity(void) { m_posOld = m_pos; }
+	void UpdateMove() { m_pos += m_move; }
+
 	inline void SetPos(const D3DXVECTOR3& pos) { m_pos = pos; }
 	inline void SetOldPos(const D3DXVECTOR3& posOld) { m_posOld = posOld; }
 	inline void SetRot(const D3DXVECTOR3& rot) { m_rot = rot; }

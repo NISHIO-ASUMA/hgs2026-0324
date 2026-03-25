@@ -41,6 +41,7 @@
     <ClCompile Include="src\cpp\debugproc.cpp" />
     <ClCompile Include="src\cpp\easing.cpp" />
     <ClCompile Include="src\cpp\effect.cpp" />
+    <ClCompile Include="src\cpp\effectlaser.cpp" />
     <ClCompile Include="src\cpp\fade.cpp" />
     <ClCompile Include="src\cpp\game.cpp" />
     <ClCompile Include="src\cpp\gamemanager.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="src\cpp\gamestate.cpp" />
     <ClCompile Include="src\cpp\gametime.cpp" />
     <ClCompile Include="src\cpp\gauge.cpp" />
+    <ClCompile Include="src\cpp\goal.cpp" />
     <ClCompile Include="src\cpp\input.cpp" />
     <ClCompile Include="src\cpp\jsonconverter.cpp" />
     <ClCompile Include="src\cpp\jsonmanager.cpp" />
@@ -82,6 +84,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\cpp\player.cpp" />
     <ClCompile Include="src\cpp\ranking.cpp" />
     <ClCompile Include="src\cpp\rankingmanager.cpp" />
     <ClCompile Include="src\cpp\rankingobject.cpp" />
@@ -96,6 +99,7 @@
     <ClCompile Include="src\cpp\score.cpp" />
     <ClCompile Include="src\cpp\shadow.cpp" />
     <ClCompile Include="src\cpp\shadowstencil.cpp" />
+    <ClCompile Include="src\cpp\simplemeshcylinder.cpp" />
     <ClCompile Include="src\cpp\sound.cpp" />
     <ClCompile Include="src\cpp\spherecollider.cpp" />
     <ClCompile Include="src\cpp\texture.cpp" />
@@ -133,6 +137,7 @@
     <ClInclude Include="src\include\debugproc.h" />
     <ClInclude Include="src\include\easing.h" />
     <ClInclude Include="src\include\effect.h" />
+    <ClInclude Include="src\include\effectlaser.h" />
     <ClInclude Include="src\include\fade.h" />
     <ClInclude Include="src\include\game.h" />
     <ClInclude Include="src\include\gamemanager.h" />
@@ -140,6 +145,7 @@
     <ClInclude Include="src\include\gamestate.h" />
     <ClInclude Include="src\include\gametime.h" />
     <ClInclude Include="src\include\gauge.h" />
+    <ClInclude Include="src\include\goal.h" />
     <ClInclude Include="src\include\input.h" />
     <ClInclude Include="src\include\jsonconverter.h" />
     <ClInclude Include="src\include\jsoncreator.h" />
@@ -174,6 +180,7 @@
     <ClInclude Include="src\include\pause.h" />
     <ClInclude Include="src\include\pausemanager.h" />
     <ClInclude Include="src\include\pch.h" />
+    <ClInclude Include="src\include\player.h" />
     <ClInclude Include="src\include\ranking.h" />
     <ClInclude Include="src\include\rankingmanager.h" />
     <ClInclude Include="src\include\rankingobject.h" />
@@ -189,6 +196,7 @@
     <ClInclude Include="src\include\score.h" />
     <ClInclude Include="src\include\shadow.h" />
     <ClInclude Include="src\include\shadowstencil.h" />
+    <ClInclude Include="src\include\simplemeshcylinder.h" />
     <ClInclude Include="src\include\sound.h" />
     <ClInclude Include="src\include\spherecollider.h" />
     <ClInclude Include="src\include\template.h" />
@@ -281,7 +289,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+<<<<<<< HEAD
       <AdditionalIncludeDirectories>C:\Users\student\OneDrive - yoshida-g.ac.jp\デスクトップ\ミッカソン\hgs2026-0324\src\cpp;C:\Users\student\OneDrive - yoshida-g.ac.jp\デスクトップ\ミッカソン\hgs2026-0324\src\include;C:\Users\student\OneDrive - yoshida-g.ac.jp\デスクトップ\ミッカソン\hgs2026-0324\src\include\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include\nlohmann;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> 74cba9455befb33105f2b34b2cf2f5e6b67659ef
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -301,7 +313,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>C:\Users\student\source\repos\hgs2026\src\cpp;C:\Users\student\source\repos\hgs2026\src\include\nlohmann;C:\Users\student\source\repos\hgs2026\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include\nlohmann;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
