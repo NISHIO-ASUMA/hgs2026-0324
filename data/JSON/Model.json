@@ -39,122 +39,62 @@
     "Model": "data/MODEL/CHARA/09_footL.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/00_Body.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/01_Head_Up.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/02_Head_Down.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/03_Shoulder_R.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/04_Arm_R.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/05_Hand_R.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/06_Shoulder_L.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/07_Arm_L.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/08_Hand_L.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/09_Leg_UR.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/10_Leg_DR.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/11_Foot_R.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/12_Leg_UL.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/13_Leg_DL.x",
     "Instancing": false
   },
-<<<<<<< HEAD
-=======
-
->>>>>>> 78b8125efc234e40f0ad29e2ac4bab56dd474dc4
   {
     "Model": "data/MODEL/Flog/14_Foot_L.x",
     "Instancing": false
