@@ -23,6 +23,7 @@
 #include <xfilemanager.h>
 #include <manager.h>
 #include "sound.h"
+#include <particle.h>
 
 //=========================================================
 // コンストラクタ
@@ -167,6 +168,9 @@ void CEnemy::DecLife(const int& nDamage)
 
 		// 配列内の要素を削除
 		CEnemyManager::GetInstance()->Erase(this);
+
+		// パーティクル生成
+		CParticle::Create(GetPos(), COLOR_GREEN, 24, 120, 120, 120);
 
 		switch (m_nType)
 		{

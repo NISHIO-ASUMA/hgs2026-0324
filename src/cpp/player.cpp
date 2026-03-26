@@ -185,8 +185,8 @@ void CPlayer::Update(void)
 		m_isJump = true;
 
 		// サウンド再生
-		//auto Sound = CManager::GetInstance()->GetSound();
-		//Sound->Play(CSound::)
+		auto Sound = CManager::GetInstance()->GetSound();
+		Sound->Play(CSound::SOUND_LABEL_JUMP);
 		
 		// モーションセット
 		GetMotion()->SetMotion(MOTION::JUMP);
@@ -204,11 +204,12 @@ void CPlayer::Update(void)
 		if (!m_pNearbyTargets.empty())
 		{
 			// ターゲットを切り替える入力
-			if (pKey->GetTrigger(DIK_Q) || pPad->GetTrigger(CJoyPad::JOYKEY_RIGHT_B) || pPad->GetTrigger(CJoyPad::JOYKEY_LEFT_B))
+			if (pMouse->GetTriggerDown(CInputMouse::MOUSE_RIGHT) || pPad->GetTrigger(CJoyPad::JOYKEY_RIGHT_B) || pPad->GetTrigger(CJoyPad::JOYKEY_LEFT_B))
 			{
 				m_SelectIndex = (m_SelectIndex + 1) % m_pNearbyTargets.size();
 			}
 
+			// 配置内の物から探す
 			for (int i = 0; i < static_cast<int>(m_pNearbyTargets.size()); i++)
 			{
 				if (i == m_SelectIndex)
@@ -245,7 +246,7 @@ void CPlayer::Update(void)
 			}
 #else
 			// アクション起動
-			if (pMouse->GetTrigger(CInputMouse::MOUSE_LEFT) || pPad->GetTriggerRT())
+			if (pMouse->GetTriggerDown(CInputMouse::MOUSE_LEFT) || pPad->GetTriggerRT())
 			{
 				// サウンド再生
 				auto Sound = CManager::GetInstance()->GetSound();

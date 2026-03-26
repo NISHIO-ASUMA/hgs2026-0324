@@ -378,5 +378,54 @@
     "pos": [ -2636.0, 744.0, 1892.0 ],
     "rot": [ 0.0, 0.0, 0.0 ],
     "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/gamewall_center.x",
+    "pos": [ -512.0, 0.0, -5025.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/gamewall_center.x",
+    "pos": [ 512.0, 0.0, 5025.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/gamewall_center.x",
+    "pos": [ -512.0, 0.0, -5025.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/gamewall_side.x",
+    "pos": [ -3022.0, 0.0, -1300.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/gamewall_side.x",
+    "pos": [ -3022.0, 0.0, 1300.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/gamewall_side.x",
+    "pos": [ 3022.0, 0.0, -1300.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
+  },
+  {
+    "ObjectTag": "Block",
+    "filepath": "STAGEOBJ/gamewall_side.x",
+    "pos": [ 3022.0, 0.0, 1300.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ]
   }
 ]

@@ -28,6 +28,7 @@
 #include "simplemeshcylinder.h"
 #include "particle.h"
 #include "enemy.h"
+#include "billboard.h"
 
 //*********************************************************
 // 静的メンバ変数
@@ -41,8 +42,8 @@ namespace GAMEOBJECT
 {
 	const D3DXVECTOR3 TimerPos		= { 1020.0f,60.0f,0.0f };		// タイマーの座標
 	const D3DXVECTOR3 TopAntPos		= { 0.0f, 0.0f, -450.0f };		// 操作アリの座標
-	const D3DXVECTOR3 PlayerPos		= { -2635.0f,0.0f,-3870.0f };		// プレイヤー座標
-	const D3DXVECTOR3 EPos = { -2635.0f,50.0f,-3870.0f };		// プレイヤー座標
+	const D3DXVECTOR3 PlayerPos		= { -2820.0f,0.0f,-4858.0f };	// プレイヤー座標
+	const D3DXVECTOR3 EPos			= { -2635.0f,50.0f,-3870.0f };
 
 	const D3DXVECTOR3 QueenPos		= { 0.0f, 55.0f, 0.0f };		// 女王アリの座標
 	constexpr const char* LoadName	= "data/JSON/Gameobject.json";	// 読み込みjsonファイル名
@@ -114,6 +115,13 @@ HRESULT CGameSceneObject::Init(void)
 	// ゴール生成
 	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f,-600.0f));
 	CSimpleMeshCylinder::Create(D3DXVECTOR3(255.0f, 1480.0f, -600.0f), 80.0f);
+
+	// ビルボード生成
+	CBillboard::Create(D3DXVECTOR3(-2820.0f, 140.0f, -4750.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Move.png");
+	CBillboard::Create(D3DXVECTOR3(-2638.0f, 140.0f, -3500.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Tongue.png");
+	CBillboard::Create(D3DXVECTOR3(-1605.0f, 150.0f, -3974.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Jump.png");
+	CBillboard::Create(D3DXVECTOR3(-1990.0f, 150.0f, -3572.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Camera.png");
+
 
 	// スコア初期化
 	m_pScore->DeleteScore();

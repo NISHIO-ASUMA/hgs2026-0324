@@ -98,8 +98,14 @@ void CCamera::Update(void)
 
 #else
 	// 追従カメラ
-	FollowCamera();
-	FollowCamera();
+		// シーン取得
+	auto Scene = CManager::GetInstance()->GetScene();
+
+	// ゲームのみ追従する
+	if (Scene == CScene::MODE_GAME)
+	{
+		FollowCamera();
+	}
 	// マウスのスライド移動を有効化
 	SlidMouse();
 
