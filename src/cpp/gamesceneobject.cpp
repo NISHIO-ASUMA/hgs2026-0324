@@ -27,6 +27,7 @@
 #include "goal.h"
 #include "simplemeshcylinder.h"
 #include "particle.h"
+#include "enemy.h"
 
 //*********************************************************
 // 静的メンバ変数
@@ -41,11 +42,13 @@ namespace GAMEOBJECT
 	const D3DXVECTOR3 TimerPos		= { 1020.0f,60.0f,0.0f };		// タイマーの座標
 	const D3DXVECTOR3 TopAntPos		= { 0.0f, 0.0f, -450.0f };		// 操作アリの座標
 	const D3DXVECTOR3 PlayerPos		= { -2635.0f,0.0f,-3870.0f };		// プレイヤー座標
+	const D3DXVECTOR3 EPos = { -2635.0f,50.0f,-3870.0f };		// プレイヤー座標
+
 	const D3DXVECTOR3 QueenPos		= { 0.0f, 55.0f, 0.0f };		// 女王アリの座標
 	constexpr const char* LoadName	= "data/JSON/Gameobject.json";	// 読み込みjsonファイル名
 	constexpr const char* WallName	= "data/JSON/GameWall.json";	// 読み込みjsonファイル名
 	constexpr const char* ENEMYLOAD = "data/JSON/MapEnemy.json";	// 敵ファイル名
-	constexpr const char* POINTLOAD = "data/JSON/MapPoint.json";	// ワイヤーポイント	ファイル名
+	constexpr const char* POINTLOAD = "data/JSON/GameMaker.json";	// ワイヤーポイントファイル名
 
 	constexpr int INDEX = 4;
 	constexpr int PARTICLE = 60;
@@ -108,6 +111,10 @@ HRESULT CGameSceneObject::Init(void)
 	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f,-600.0f));
 	CSimpleMeshCylinder::Create(D3DXVECTOR3(255.0f, 1480.0f, -600.0f), 80.0f);
 
+	//// 敵生成
+	//CEnemy::Create(GAMEOBJECT::EPos,VECTOR3_NULL,INITSCALE,"ENEMY/butterfly.x");
+	//CEnemy::Create(GAMEOBJECT::EPos, VECTOR3_NULL, INITSCALE, "ENEMY/Ant_Face.x");
+
 	// スコア初期化
 	m_pScore->DeleteScore();
 
@@ -121,8 +128,8 @@ void CGameSceneObject::Uninit(void)
 	//// 敵管理クラスの終了
 	//CEnemyManager::GetInstance()->Uninit();
 
-	//// ターゲットポイント管理クラスの終了
-	//CWallTargetManager::GetInstance()->Uninit();
+	// ターゲットポイント管理クラスの終了
+	CWallTargetManager::GetInstance()->Uninit();
 
 	// ブロック管理クラスの破棄
 	m_pBlocks.reset();
@@ -154,15 +161,7 @@ void CGameSceneObject::Update(void)
 		m_nParticleCreateCount = 0;
 	}
 
-#ifdef NDEBUG
-	// デバッグキー
-	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_B) ||
-		CManager::GetInstance()->GetJoyPad()->GetTrigger(CJoyPad::JOYKEY_A))
-	{
-		m_nIdx = Wrap(m_nIdx, 0, GAMEOBJECT::INDEX -1);
-		m_pPlayer->ActionSetting(GAMEOBJECT::target[m_nIdx]);
-		m_nIdx++;
-	}
+#ifdef _DEBUG
 #endif // _DEBUG
 }
 //=========================================================
@@ -191,8 +190,8 @@ void CGameSceneObject::CreatePointer(void)
 	// スコア生成
 	m_pScore = CScore::Create(VECTOR3_NULL);
 
-	//// ターゲットポイントの初期化
-	// CWallTargetManager::GetInstance()->Init(GAMEOBJECT::POINTLOAD);
+	// ターゲットポイントの初期化
+	 CWallTargetManager::GetInstance()->Init(GAMEOBJECT::POINTLOAD);
 
 	//// 敵管理クラスの初期化
 	//CEnemyManager::GetInstance()->Init(GAMEOBJECT::ENEMYLOAD);

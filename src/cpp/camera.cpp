@@ -87,7 +87,7 @@ void CCamera::Update(void)
 	// マウスクリックカメラ更新
 	MouseView(CManager::GetInstance()->GetMouse());
 
-	//FollowCamera();
+	FollowCamera();
 
 #else
 	// 追従カメラ
@@ -319,10 +319,10 @@ void CCamera::FollowCamera(void)
 
 	// 注視点設定
 	D3DXVECTOR3 targetPos = player->GetPos();
-	targetPos.y += 60.0f;
+	targetPos.y += 180.0f;
 
 	// カメラからの距離を固定化する
-	m_pCamera.fDistance = 450.0f;
+	m_pCamera.fDistance = 700.0f;
 
 	// 滑らかに追従させる（線形補間）
 	m_pCamera.posR += (targetPos - m_pCamera.posR) * 0.3f;
@@ -331,6 +331,12 @@ void CCamera::FollowCamera(void)
 	m_pCamera.posV.x = m_pCamera.posR.x - sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
 	m_pCamera.posV.y = m_pCamera.posR.y - cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
 	m_pCamera.posV.z = m_pCamera.posR.z - sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
+
+	float minCameraHeight = 50.0f;
+	if (m_pCamera.posV.y < minCameraHeight)
+	{
+		m_pCamera.posV.y = minCameraHeight;
+	}
 }
 //==============================================================
 // マウスのフリック移動によるカメラ移動
@@ -419,32 +425,13 @@ void CCamera::RightStickCamera(void)
 		}
 	}
 
-	// 角度の正規化
-	if (m_pCamera.rot.y > D3DX_PI)
-	{// D3DX_PIより大きくなったら
-		m_pCamera.rot.y -= D3DX_PI * 2.0f;
-	}
+	// Y軸（水平回転）の正規化
+	if (m_pCamera.rot.y > D3DX_PI)  m_pCamera.rot.y -= D3DX_PI * 2.0f;
+	if (m_pCamera.rot.y < -D3DX_PI) m_pCamera.rot.y += D3DX_PI * 2.0f;
 
-	// 角度の正規化
-	if (m_pCamera.rot.y < -D3DX_PI)
-	{// D3DX_PIより小さくなったら
-		m_pCamera.rot.y += D3DX_PI * 2.0f;
-	}
-
-	if (m_pCamera.rot.x <= D3DX_PI * 0.55f)
-	{// カメラの下限
-		m_pCamera.rot.x = D3DX_PI * 0.55f;
-	}
-
-	if (m_pCamera.rot.x >= D3DX_PI * 0.9f)
-	{// カメラの上限
-		m_pCamera.rot.x = D3DX_PI * 0.9f;
-	}
-	// カメラの視点の情報
-	m_pCamera.posV.x = m_pCamera.posR.x - sinf(m_pCamera.rot.x) * sinf(m_pCamera.rot.y) * m_pCamera.fDistance;
-	m_pCamera.posV.y = m_pCamera.posR.y - cosf(m_pCamera.rot.x) * m_pCamera.fDistance;
-	m_pCamera.posV.z = m_pCamera.posR.z - sinf(m_pCamera.rot.x) * cosf(m_pCamera.rot.y) * m_pCamera.fDistance;
-
+	// X軸（上下回転）の制限
+	if (m_pCamera.rot.x < 0.1f)  m_pCamera.rot.x = 0.1f;
+	if (m_pCamera.rot.x > 2.6f)  m_pCamera.rot.x = 2.6f;
 }
 //==============================================================
 // 値のクリア関数

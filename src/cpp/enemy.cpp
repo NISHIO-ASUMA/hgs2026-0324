@@ -16,12 +16,14 @@
 #include "collisionsphere.h"
 #include "spherecollider.h"
 #include "template.h"
+#include "enemymanager.h"
 
 //=========================================================
 // コンストラクタ
 //=========================================================
 CEnemy::CEnemy(int nPriority) : CObjectX(nPriority),
-m_pCollider(nullptr)
+m_pCollider(nullptr),
+m_nLife(NULL)
 {
 
 }
@@ -69,7 +71,8 @@ HRESULT CEnemy::Init(void)
 
 	// アウトラインのカラーを設定(黄色)
 	SetOutLineColor(D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f));
-	
+	m_nLife = Config::LIFE;
+
 	return S_OK;
 }
 //=========================================================
@@ -90,7 +93,7 @@ void CEnemy::Update(void)
 
 	// 回転を適用する
 	auto rot = GetRot();
-	rot.y += 0.03f;
+	rot.y += Config::ROT;
 	SetRot(rot);
 
 	if (m_pCollider)
@@ -108,6 +111,28 @@ void CEnemy::Draw(void)
 {
 	// 親クラスの描画処理
 	CObjectX::Draw();
+}
+//=========================================================
+// ダメージ処理
+//=========================================================
+void CEnemy::DecLife(const int& nDamage)
+{
+	// 体力減らす
+	m_nLife -= nDamage;
+	if (m_nLife <= NULL)
+	{
+		// 体力を0にする
+		m_nLife = NULL;
+
+		// 配列内の要素を削除
+		CEnemyManager::GetInstance()->Erase(this);
+
+		// 自身の破棄
+		Uninit();
+
+		// 処理終了
+		return;
+	}
 }
 //=========================================================
 // 当たり判定処理

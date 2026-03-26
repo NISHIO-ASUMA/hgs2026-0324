@@ -34,6 +34,7 @@
     <ClCompile Include="src\cpp\createjsonblocknormal.cpp" />
     <ClCompile Include="src\cpp\createjsoncharactor.cpp" />
     <ClCompile Include="src\cpp\createjsonenemy.cpp" />
+    <ClCompile Include="src\cpp\createjsonmaker.cpp" />
     <ClCompile Include="src\cpp\createjsonmeshdome.cpp" />
     <ClCompile Include="src\cpp\createjsonmeshfield.cpp" />
     <ClCompile Include="src\cpp\createjsonnomove.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="src\include\createjsonblocknormal.h" />
     <ClInclude Include="src\include\createjsoncharactor.h" />
     <ClInclude Include="src\include\createjsonenemy.h" />
+    <ClInclude Include="src\include\createjsonmaker.h" />
     <ClInclude Include="src\include\createjsonmeshdome.h" />
     <ClInclude Include="src\include\createjsonmeshfield.h" />
     <ClInclude Include="src\include\createjsonnomove.h" />

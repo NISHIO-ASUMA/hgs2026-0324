@@ -29,6 +29,7 @@
 #include "createjsonblocknormal.h"
 #include "createjsonwall.h"
 #include "createjsonenemy.h"
+#include "createjsonmaker.h"
 
 //*********************************************************
 // json空間を使用
@@ -43,11 +44,12 @@ namespace PATH_TAGNAME
 	constexpr const char* UI			= "Ui";			// UIパラメータ
 	constexpr const char* MESHDOME		= "MeshDome";	// メッシュドームパラメータ
 	constexpr const char* MESHFIELD		= "MeshField";	// メッシュフィールドパラメータ
-	constexpr const char* CHARACTOR		= "Charactor";	// メッシュフィールドパラメータ
+	constexpr const char* CHARACTOR		= "Charactor";	// キャラクターパラメータ
 	constexpr const char* BLOCK			= "Block";		// ブロックパラメータ
 	constexpr const char* NORMALBLOCK	= "NormalBlock";// 通常ブロックパラメータ
 	constexpr const char* WALL			= "Wall";		// 壁モデルパラメータ
 	constexpr const char* ENEMY			= "Enemy";		// 敵パラメータ
+	constexpr const char* MAKER			= "Maker";		// ワイヤーポイントマーカー
 };
 
 //=========================================================
@@ -78,6 +80,7 @@ HRESULT CJsonManager::Init(void)
 	m_Creator[PATH_TAGNAME::NORMALBLOCK] = std::make_unique<CJsonCreateBlockNormal>();
 	m_Creator[PATH_TAGNAME::WALL] = std::make_unique<CJsonCreateWall>();
 	m_Creator[PATH_TAGNAME::ENEMY] = std::make_unique<CJsonCreateEnemy>();
+	m_Creator[PATH_TAGNAME::MAKER] = std::make_unique<CJsonCreateMaker>();
 
 	return S_OK;
 }
