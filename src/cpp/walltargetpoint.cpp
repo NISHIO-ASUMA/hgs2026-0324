@@ -15,13 +15,15 @@
 //*********************************************************
 #include "spherecollider.h"
 #include "lockonui.h"
+#include "particle.h"
 
 //=========================================================
 // コンストラクタ
 //=========================================================
 CWallTargetPoint::CWallTargetPoint(int nPriority) : CObjectX(nPriority),
 m_pCollider(nullptr),
-m_pLockOnUi(nullptr)
+m_pLockOnUi(nullptr),
+m_nCreateParticleCount(NULL)
 {
 
 }
@@ -91,6 +93,7 @@ void CWallTargetPoint::Update(void)
 {
 	auto pos = GetPos();
 
+	// コライダー更新
 	if (m_pCollider)
 	{
 		m_pCollider->SetPos(pos);

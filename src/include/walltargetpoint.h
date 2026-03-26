@@ -61,6 +61,10 @@ public:
 	);
 
 private:
+	static constexpr int COUNT = 120;
+
+private:
 	std::unique_ptr<CSphereCollider> m_pCollider;	// 矩形のコライダー
 	CLockOnUi* m_pLockOnUi;							// ビルボード
+	int m_nCreateParticleCount;						// 生成カウント
 };

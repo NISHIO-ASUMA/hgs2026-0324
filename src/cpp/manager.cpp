@@ -147,6 +147,9 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	// 乱数の種を一度宣言する
 	srand((unsigned int)time(nullptr));
 
+	// カーソルの描画を切る
+	ShowCursor(false);
+
 	return S_OK;
 }
 //=========================================================
