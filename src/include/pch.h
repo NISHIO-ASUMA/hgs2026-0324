@@ -47,7 +47,7 @@
 #define SCREEN_WIDTH (1280)				// ウインドウの幅
 #define SCREEN_HEIGHT (720)				// ウインドウの高さ
 #define CLASS_NAME "WindowClass"		// ウインドウクラスの名前
-#define WINDOW_NAME "Defence Queen"		// ウインドウの名前
+#define WINDOW_NAME "FlyFlog"			// ウインドウの名前
 
 #define FVF_VERTEX_2D (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)					// [2D]頂点フォーマット
 #define FVF_VERTEX_3D (D3DFVF_XYZ | D3DFVF_NORMAL |  D3DFVF_DIFFUSE | D3DFVF_TEX1)		// [3D]頂点フォーマット

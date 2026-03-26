@@ -44,6 +44,7 @@ m_isWall(false),
 m_isLanding(false),
 m_isJump(false),
 m_isStayPos(false),
+m_isFastFall(false),
 m_pBoxCollder(nullptr),
 m_pLaser(nullptr),
 m_pCylinder(nullptr),
@@ -151,6 +152,8 @@ void CPlayer::Update(void)
 
 	// 過去座標を取得
 	auto oldPos = GetOldPos();
+	// サウンド再生
+	auto Sound = CManager::GetInstance()->GetSound();
 
 	// 壁アクション中じゃない かつ ステイフラグが有効じゃない時
 	if (!m_isStayPos && !m_isWall)
@@ -169,32 +172,49 @@ void CPlayer::Update(void)
 	D3DXVECTOR3 move = GetMove();
 
 	// 重力の計算
-	if (m_isStayPos) 
+	if (m_isStayPos)
 	{
-		move.y = 0.0f; // 張り付き中は着地中は落下させない
+		move.y = 0.0f;
+		m_isFastFall = false; // 張り付いたら急降下解除
 	}
 	else if (!m_isStayPos)
 	{
-		move.y -= 0.7f; // それ以外は落下
+		if (m_isFastFall)
+		{
+			move.y -= 2.5f; // 
+		}
+		else
+		{
+			move.y -= 0.7f; // 通常の落下
+		}
 	}
 
-	// ジャンプ入力
-	if (!m_isWall 
-		&& !m_isStayPos 
-		&& m_isLanding 
-		&& (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)))
-	{
-		// ジャンプ処理
-		move.y = Config::JUMP;
-		m_isLanding = false;
-		m_isJump = true;
 
-		// サウンド再生
-		auto Sound = CManager::GetInstance()->GetSound();
-		Sound->Play(CSound::SOUND_LABEL_JUMP);
-		
-		// モーションセット
-		GetMotion()->SetMotion(MOTION::JUMP);
+	// ジャンプ入力
+	if (!m_isWall)
+	{
+		// キー入力
+		if (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A))
+		{
+			if (m_isLanding || m_isStayPos)
+			{
+				move.y = Config::JUMP;
+				m_isLanding = false;
+				m_isJump = true;
+				m_isStayPos = false;
+				m_isFastFall = false; // ジャンプしたら急降下はオフ
+
+				Sound->Play(CSound::SOUND_LABEL_JUMP);
+			}
+			else
+			{
+				// 急降下モード
+				m_isFastFall = true;
+
+				// 押した瞬間に少し下への初速を与えるとより反応が良く見えます
+				if (move.y > 0.0f) move.y = 0.0f;
+			}
+		}
 	}
 
 	// 移動量の設定
@@ -203,15 +223,27 @@ void CPlayer::Update(void)
 	// ワイヤーアクション中でない場合のみターゲットを探す
 	if (!m_isWall)
 	{
-		// 1. 周囲のターゲットをリストアップ
+		// 周囲のターゲットをリストアップ
 		this->SerachTarget();
 
 		if (!m_pNearbyTargets.empty())
 		{
 			// ターゲットを切り替える入力
-			if (pMouse->GetTriggerDown(CInputMouse::MOUSE_RIGHT) || pPad->GetTrigger(CJoyPad::JOYKEY_RIGHT_B) || pPad->GetTrigger(CJoyPad::JOYKEY_LEFT_B))
+			if (pMouse->GetTriggerDown(CInputMouse::MOUSE_RIGHT) || pPad->GetTrigger(CJoyPad::JOYKEY_RIGHT_B))
 			{
 				m_SelectIndex = (m_SelectIndex + 1) % m_pNearbyTargets.size();
+
+				// サウンド再生
+				Sound->Play(CSound::SOUND_LABEL_SELECT);
+			}
+
+			// ターゲットを切り替える入力
+			if (pPad->GetTrigger(CJoyPad::JOYKEY_LEFT_B))
+			{
+				m_SelectIndex = (m_SelectIndex - 1) % m_pNearbyTargets.size();
+
+				// サウンド再生
+				Sound->Play(CSound::SOUND_LABEL_SELECT);
 			}
 
 			// 配置内の物から探す
@@ -268,7 +300,6 @@ void CPlayer::Update(void)
 			if (pMouse->GetTriggerDown(CInputMouse::MOUSE_LEFT) || pPad->GetTriggerRT())
 			{
 				// サウンド再生
-				auto Sound = CManager::GetInstance()->GetSound();
 				Sound->Play(CSound::SOUND_LABEL_FLOG);
 
 				ActionSetting(pSelected->GetPos());
@@ -398,10 +429,10 @@ void CPlayer::Update(void)
 	if (m_isLanding)
 	{
 		m_isJump = false;
+		m_isFastFall = false; // 着地したので急降下フラグをリセット
 
 		if (!m_isWall && !m_isStayPos)
 		{
-			// 地面に足がついた通常状態なので、操作制限を解除する
 			m_isStayPos = false;
 		}
 	}

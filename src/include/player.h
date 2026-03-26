@@ -121,7 +121,7 @@ private:
 	bool m_isLanding;									// 着地したかどうか
 	bool m_isJump;										// ジャンプ
 	bool m_isStayPos;									// ステイ中か
-
+	bool m_isFastFall = false;							// 急降下中フラグ
 
 	D3DXVECTOR3 m_TargetPos;							// 目的座標設定用の入れ物
 	CEffectLaser* m_pLaser;								// レーザーエフェクト
