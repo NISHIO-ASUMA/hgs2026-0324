@@ -99,6 +99,8 @@ HRESULT CResultScore::Init(void)
 
 		// テクスチャセット
 		m_pNumber[nCnt]->SetTexture(Config::TEXNAME);
+		m_pNumber[nCnt]->SetCol(SCORECOLOR);
+
 	}
 
 	// ポインタ生成
