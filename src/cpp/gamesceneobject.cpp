@@ -69,6 +69,7 @@ m_pTimer(nullptr),
 m_pScore(nullptr),
 m_pPlayer(nullptr),
 m_pGoal(nullptr),
+m_pScoreEatNum(nullptr),
 m_nIdx(NULL),
 m_nParticleCreateCount(NULL)
 {
@@ -116,6 +117,7 @@ HRESULT CGameSceneObject::Init(void)
 
 	// スコア初期化
 	m_pScore->DeleteScore();
+	m_pScoreEatNum->DeleteScore();
 
 	return S_OK;
 }
@@ -165,7 +167,7 @@ void CGameSceneObject::Update(void)
 	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_F7))
 	{
 		// 仮ですこあ書き出しを実行する
-		m_pScore->SaveScore();
+		//m_pScore->SaveScore();
 	}
 #endif // _DEBUG
 #endif
@@ -195,6 +197,7 @@ void CGameSceneObject::CreatePointer(void)
 
 	// スコア生成
 	m_pScore = CScore::Create(VECTOR3_NULL);
+	m_pScoreEatNum = CScore::Create(VECTOR3_NULL);
 
 	// ターゲットポイントの初期化
 	 CWallTargetManager::GetInstance()->Init(GAMEOBJECT::POINTLOAD);

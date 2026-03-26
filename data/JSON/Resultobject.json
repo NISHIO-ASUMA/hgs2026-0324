@@ -1,60 +1,11 @@
 [
   {
-    "ObjectTag": "MeshField",
-    "Pos": [ 0.0, 0.0, 0.0 ],
-    "RadiusX": 4000.0,
-    "RadiusZ": 2000.0,
-    "SegmentX": 1,
-    "SegmentZ": 1
-  },
-  {
-    "ObjectTag": "MeshDome",
-    "Pos": [ 0.0, -20.0, 0.0 ],
-    "Radius": 60.0
-  },
-  {
     "ObjectTag": "Ui",
     "Pos": [ 1040.0, 360.0, 0.0 ],
     "FlashFrame": 0,
     "Width": 360.0,
     "Height": 720.0,
     "Texture": "backboard.png",
-    "AlphaTest": false,
-    "IsFlash": false,
-    "EnableAlpha": false,
-    "AlphaFrame": 0
-  },
-  {
-    "ObjectTag": "Ui",
-    "Pos": [ 840.0, 50.0, 0.0 ],
-    "FlashFrame": 0,
-    "Width": 160.0,
-    "Height": 40.0,
-    "Texture": "result_logo.png",
-    "AlphaTest": false,
-    "IsFlash": false,
-    "EnableAlpha": false,
-    "AlphaFrame": 0
-  },
-  {
-    "ObjectTag": "Ui",
-    "Pos": [ 800.0, 245.0, 0.0 ],
-    "FlashFrame": 0,
-    "Width": 120.0,
-    "Height": 30.0,
-    "Texture": "result_feed.png",
-    "AlphaTest": false,
-    "IsFlash": false,
-    "EnableAlpha": false,
-    "AlphaFrame": 0
-  },
-  {
-    "ObjectTag": "Ui",
-    "Pos": [ 790.0, 425.0, 0.0 ],
-    "FlashFrame": 0,
-    "Width": 100.0,
-    "Height": 30.0,
-    "Texture": "Defence_Late.png",
     "AlphaTest": false,
     "IsFlash": false,
     "EnableAlpha": false,
@@ -107,12 +58,5 @@
     "IsFlash": false,
     "EnableAlpha": false,
     "AlphaFrame": 0
-  },
-  {
-    "ObjectTag": "Charactor",
-    "Charactortag": "NoMove",
-    "CharactorName": "Queen",
-    "Pos": [ 0.0, 30.0, -5.0 ],
-    "Rot": [ 0.0, 0.0, 0.0 ]
   }
 ]

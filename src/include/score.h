@@ -44,7 +44,7 @@ public:
 
 	void AddScore(int nValue);
 	void DeleteScore(void);
-	void SaveScore(void);
+	void SaveScore(const char * pSave);
 
 	inline void SetScore(const int& nDestScore) { m_nScore = nDestScore; }
 	inline void SetPos(const D3DXVECTOR3& pos) { m_pos = pos; }

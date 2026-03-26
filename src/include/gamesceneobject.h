@@ -42,6 +42,7 @@ public:
 
 	CGameTime* GetTime(void) const { return m_pTimer; }
 	CScore* GetScore(void) const { return m_pScore; }
+	CScore* GetEatNum(void) const { return m_pScoreEatNum; }
 
 	CBlockManager* GetBlockManager(void) const { return m_pBlocks.get(); }
 	CPlayer* GetPlayer(void) const { return m_pPlayer; }
@@ -60,7 +61,9 @@ private:
 private:
 
 	static CGameSceneObject* m_pInstance;		// シングルトン変数
-	CScore* m_pScore;							// スコアクラスのポインタ
+	CScore* m_pScore;							// スコアクラスのポインタ ( ポイントのほう )
+	CScore* m_pScoreEatNum;						// スコアクラスのポインタ ( 食べたかずのほう )
+
 	CGameTime* m_pTimer;						// タイマークラスのポインタ
 	CPlayer* m_pPlayer;							// プレイヤーポインタ
 	CGoal* m_pGoal;								// ゴールクラスポインタ

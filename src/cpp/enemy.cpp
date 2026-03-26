@@ -22,6 +22,7 @@
 #include <string>
 #include <xfilemanager.h>
 #include <manager.h>
+#include "sound.h"
 
 //=========================================================
 // コンストラクタ
@@ -160,6 +161,10 @@ void CEnemy::DecLife(const int& nDamage)
 		// 体力を0にする
 		m_nLife = NULL;
 
+		// サウンド取得と再生
+		auto Sound = CManager::GetInstance()->GetSound();
+		if (Sound) Sound->Play(CSound::SOUND_LABEL_EAT);
+
 		// 配列内の要素を削除
 		CEnemyManager::GetInstance()->Erase(this);
 
@@ -191,6 +196,8 @@ void CEnemy::DecLife(const int& nDamage)
 			break;
 		}
 
+		// 敵の食べた数のスコアを加算する
+		CGameSceneObject::GetInstance()->GetEatNum()->AddScore(1);
 
 		// 自身の破棄
 		Uninit();

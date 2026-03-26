@@ -1,6 +1,18 @@
 [
   {
     "ObjectTag": "Ui",
+    "Pos": [ 640.0, 360.0, 0.0 ],
+    "FlashFrame": 0,
+    "Width": 640.0,
+    "Height": 360.0,
+    "Texture": "titleback.jpeg",
+    "AlphaTest": false,
+    "IsFlash": false,
+    "EnableAlpha": false,
+    "AlphaFrame": 0
+  },
+  {
+    "ObjectTag": "Ui",
     "Pos": [ 640.0, 650.0, 0.0 ],
     "FlashFrame": 0,
     "Width": 180.0,

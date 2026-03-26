@@ -165,8 +165,8 @@ void CScore::DeleteScore(void)
 //=========================================================
 // スコア書き出し処理
 //=========================================================
-void CScore::SaveScore(void)
+void CScore::SaveScore(const char * pSave)
 {
 	// 一個の数値を書き出す
-	m_pLoad->SaveInt(Config::SAVE_NAME, m_nScore);
+	m_pLoad->SaveInt(pSave, m_nScore);
 }
