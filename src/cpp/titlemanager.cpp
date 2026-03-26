@@ -87,7 +87,7 @@ void CTitleManager::Update(void)
 	if (pFade == nullptr) return;
 
 	// キー入力時の遷移
-	if ((pKey->GetTrigger(DIK_RETURN) || pJoyPad->GetTrigger(pJoyPad->JOYKEY_START)))
+	if ((pKey->GetTrigger(DIK_RETURN) || pJoyPad->GetTrigger(pJoyPad->JOYKEY_START) || pJoyPad->GetTrigger(pJoyPad->JOYKEY_A)))
 	{
 		// サウンド取得
 		CSound* pSound = CManager::GetInstance()->GetSound();

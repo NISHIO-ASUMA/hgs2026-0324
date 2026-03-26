@@ -98,7 +98,7 @@ void CCamera::Update(void)
 
 #else
 	// 追従カメラ
-		// シーン取得
+	// シーン取得
 	auto Scene = CManager::GetInstance()->GetScene();
 
 	// ゲームのみ追従する

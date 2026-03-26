@@ -116,7 +116,7 @@ HRESULT CPlayer::Init(void)
 	m_pSphereCollider = CSphereCollider::Create(GetPos(), Config::SPHERECOLLISION);
 
 	// "目標に向かうui"を生成する
-	m_pLockOnTarget = CLockOnUi::Create(VECTOR3_NULL, VECTOR3_NULL, D3DXVECTOR2(80.0f, 55.0f), "MoveTarget.jpg");
+	m_pLockOnTarget = CLockOnUi::Create(VECTOR3_NULL, VECTOR3_NULL, D3DXVECTOR2(80.0f, 60.0f), "MoveTarget.jpg");
 
 	return S_OK;
 }
@@ -219,26 +219,26 @@ void CPlayer::Update(void)
 			{
 				if (i == m_SelectIndex)
 				{
-					// 選択中
-					m_pNearbyTargets[i]->SetIsOutLine(true);
-					m_pNearbyTargets[i]->SetOutLineColor(D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f));
-
-					// ビルボードを表示する
-					m_pNearbyTargets[i]->GetLockUi()->SetIsDraw(true);
-
 					// uiの座標を変更する
 					m_pLockOnTarget->SetPos
 					(
 						D3DXVECTOR3
 						(
 							m_pNearbyTargets[i]->GetPos().x,
-							m_pNearbyTargets[i]->GetPos().y,
+							m_pNearbyTargets[i]->GetPos().y + 120.0f,
 							m_pNearbyTargets[i]->GetPos().z
 						)
 					);
 
 					// uiの表示
 					m_pLockOnTarget->SetIsDraw(true);
+
+					// 選択中
+					m_pNearbyTargets[i]->SetIsOutLine(true);
+					m_pNearbyTargets[i]->SetOutLineColor(D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f));
+
+					// ビルボードを表示する
+					m_pNearbyTargets[i]->GetLockUi()->SetIsDraw(true);
 				}
 				else
 				{
