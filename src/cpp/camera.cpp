@@ -87,7 +87,14 @@ void CCamera::Update(void)
 	// マウスクリックカメラ更新
 	MouseView(CManager::GetInstance()->GetMouse());
 
-	FollowCamera();
+	// シーン取得
+	auto Scene = CManager::GetInstance()->GetScene();
+
+	// ゲームのみ追従する
+	if (Scene == CScene::MODE_GAME)
+	{
+		FollowCamera();
+	}
 
 #else
 	// 追従カメラ

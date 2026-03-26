@@ -214,6 +214,7 @@ void CObject::UpdateAll(void)
 //=========================================================
 void CObject::DrawAll(void)
 {
+#if 1
 	// カメラの取得
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
@@ -248,4 +249,5 @@ void CObject::DrawAll(void)
 	CDebugproc::Print("現在の総オブジェクト数 : %d", m_nNumAll);
 	CDebugproc::Draw(0, 60);
 #endif // _DEBUG
+#endif
 }

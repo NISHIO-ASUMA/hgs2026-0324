@@ -31,6 +31,9 @@
 #include "goal.h"
 #include "walltargetmanager.h"
 #include "walltargetpoint.h"
+#include "lockonui.h"
+#include "enemymanager.h"
+#include "enemy.h"
 
 //=========================================================
 // コンストラクタ
@@ -118,6 +121,11 @@ void CPlayer::Uninit(void)
 {
 	// コライダー破棄
 	m_pBoxCollder.reset();
+	m_pWorldBoxCollder.reset();
+	m_pSphereCollider.reset();
+
+	// 動的配列のクリア
+	m_pNearbyTargets.clear();
 
 	// 親クラスの終了処理
 	CMoveCharactor::Uninit();
@@ -187,12 +195,12 @@ void CPlayer::Update(void)
 		if (!m_pNearbyTargets.empty())
 		{
 			// ターゲットを切り替える入力
-			if (pKey->GetTrigger(DIK_Q) || pPad->GetTrigger(CJoyPad::JOYKEY_Y))
+			if (pKey->GetTrigger(DIK_Q) || pPad->GetTrigger(CJoyPad::JOYKEY_RIGHT_B))
 			{
 				m_SelectIndex = (m_SelectIndex + 1) % m_pNearbyTargets.size();
 			}
 
-			for (int i = 0; i < (int)m_pNearbyTargets.size(); i++)
+			for (int i = 0; i < static_cast<int>(m_pNearbyTargets.size()); i++)
 			{
 				if (i == m_SelectIndex)
 				{
@@ -201,18 +209,23 @@ void CPlayer::Update(void)
 					m_pNearbyTargets[i]->SetOutLineColor(D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f));
 
 					// ビルボードを表示する
-
+					m_pNearbyTargets[i]->GetLockUi()->SetIsDraw(true);
 				}
 				else
 				{
 					// リストには入っているが選択されていない
 					m_pNearbyTargets[i]->SetIsOutLine(false);
+
+					// ビルボードを表示しない
+					m_pNearbyTargets[i]->GetLockUi()->SetIsDraw(false);
 				}
 			}
 
 			// 決定処理
 			CWallTargetPoint* pSelected = m_pNearbyTargets[m_SelectIndex];
-			if (pKey->GetTrigger(DIK_R) || pPad->GetTrigger(CJoyPad::JOYKEY_B))
+			
+			// ここ最終的に右クリックに変更する
+			if (pKey->GetTrigger(DIK_R) || pPad->GetTriggerRT())
 			{
 				ActionSetting(pSelected->GetPos());
 			}
@@ -259,6 +272,27 @@ void CPlayer::Update(void)
 	{
 		m_pWorldBoxCollder->SetPos(updatePos);
 		m_pWorldBoxCollder->SetPosOld(updateposold);
+	}
+
+	// 敵との衝突判定
+	auto EnemyManager = CEnemyManager::GetInstance();
+	if (EnemyManager == nullptr) return;
+
+	for (int nCnt = 0; nCnt < EnemyManager->GetAll(); nCnt++)
+	{
+		// 単体敵の取得
+		auto Enemy = EnemyManager->GetIdxEnemy(nCnt);
+		if (CollisionSphere(Enemy->GetCollider()))
+		{
+			// 敵にダメージ
+			Enemy->DecLife(999);
+
+			// コライダー更新
+			if (m_pSphereCollider)
+			{
+				m_pSphereCollider->SetPos(updatePos);
+			}
+		}
 	}
 
 	// ブロックとの衝突判定
@@ -737,7 +771,7 @@ void CPlayer::ActionSetting(const D3DXVECTOR3& pos)
 void CPlayer::SerachTarget()
 {
 	auto targetManager = CWallTargetManager::GetInstance();
-	m_pNearbyTargets.clear(); // 毎フレームクリア
+	m_pNearbyTargets.clear();								// 毎フレームクリア
 
 	for (int nCnt = 0; nCnt < targetManager->GetAll(); nCnt++)
 	{
@@ -748,10 +782,11 @@ void CPlayer::SerachTarget()
 		D3DXVECTOR3 diff = target->GetPos() - GetPos();
 		float dist = D3DXVec3Length(&diff);
 
-		if (dist < 1.0f) // 距離が1.0f未満なら無視
+		if (dist < 3.0f) // 距離が1.0f未満なら無視
 		{
 			// 現在地のターゲットはアウトラインOFF
 			target->SetIsOutLine(false);
+			target->GetLockUi()->SetIsDraw(false);
 			continue;
 		}
 

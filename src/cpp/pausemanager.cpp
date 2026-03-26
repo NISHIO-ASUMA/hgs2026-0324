@@ -54,7 +54,7 @@ m_nSelectIdx(NULL)
 //=========================================================
 CPauseManager::~CPauseManager()
 {
-	
+	m_isPause = false;
 }
 //=========================================================
 // ‰Šú‰»ˆ—
@@ -240,5 +240,5 @@ void CPauseManager::SetEnablePause(void)
 		m_isPause = m_isPause ? false : true;
 	}
 
-	if (m_isPause == false) CManager::GetInstance()->GetMouse()->SetCursorVisibility(false);
+	//if (m_isPause == false) //CManager::GetInstance()->GetMouse()->SetCursorVisibility(false);
 }

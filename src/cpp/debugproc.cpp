@@ -87,11 +87,11 @@ void CDebugproc::Uninit(void)
 //=========================================================
 void CDebugproc::Update(void)
 {
-	// キー入力で表示切替
-	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_F1))
-	{
-		m_isUse = m_isUse ? false : true;
-	}
+	//// キー入力で表示切替
+	//if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_F1))
+	//{
+	//	m_isUse = m_isUse ? false : true;
+	//}
 }
 //=========================================================
 // デバッグプロセスの描画処理

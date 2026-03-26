@@ -32,6 +32,18 @@ class CEnemy : public CObjectX
 {
 public:
 
+	//*******************************
+	// 敵の種類
+	//*******************************
+	enum TYPE
+	{
+		ANT,		// アリ 1
+		OTAMA,		// オタマジャクシ 3
+		BUTTERFLY,	// 蝶 5
+		SPIDER,		// 蜘蛛 10
+		MAX
+	};
+
 	CEnemy(int nPriority = static_cast<int>(CObject::PRIORITY::MODELOBJECT));
 	~CEnemy();
 
@@ -40,6 +52,8 @@ public:
 	void Update(void) override;
 	void Draw(void) override;
 	void DecLife(const int& nDamage);
+	void SetType(const int& nType) { m_nType = nType; }
+
 	bool Collision(CSphereCollider* pOther);
 	inline CSphereCollider* GetCollider(void) { return m_pCollider.get(); }
 
@@ -72,5 +86,6 @@ private:
 
 	std::unique_ptr<CSphereCollider> m_pCollider;	// 矩形のコライダー
 	int m_nLife;									// 体力
+	int m_nType;									// 種類
 };
 

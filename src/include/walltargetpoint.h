@@ -24,6 +24,7 @@
 // 前方宣言
 //*********************************************************
 class CSphereCollider;
+class CLockOnUi;
 
 //*********************************************************
 // ターゲットのポイント単体のクラスの定義
@@ -39,7 +40,9 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 	void Draw(void) override;
+
 	inline CSphereCollider* GetCollider(void) { return m_pCollider.get(); }
+	CLockOnUi* GetLockUi(void) { return m_pLockOnUi; }
 
 	/// <summary>
 	/// ポインタ生成処理
@@ -59,4 +62,5 @@ public:
 
 private:
 	std::unique_ptr<CSphereCollider> m_pCollider;	// 矩形のコライダー
+	CLockOnUi* m_pLockOnUi;							// ビルボード
 };

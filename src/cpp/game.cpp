@@ -127,6 +127,7 @@ void CGame::Update(void)
 	// ポーズ管理クラスの更新処理
 	m_pPausemanager->Update();
 	
+#if 1
 	// falseの時に更新
 	if (!m_pPausemanager->GetPause() && State == m_pState->PROGRESS_NORMAL)
 	{
@@ -160,6 +161,7 @@ void CGame::Update(void)
 			return;
 		}
 	}
+#endif
 
 #ifdef _DEBUG
 	// 画面遷移デバッグキー
@@ -167,7 +169,7 @@ void CGame::Update(void)
 	{
 		// 画面遷移
 		auto fade = CManager::GetInstance()->GetFade();
-		fade->SetFade(std::make_unique<CResult>());
+		if (fade != nullptr) fade->SetFade(std::make_unique<CResult>());
 		return;
 	}
 #endif // _DEBUG
@@ -177,6 +179,4 @@ void CGame::Update(void)
 //=========================================================
 void CGame::Draw(void)
 {
-	// ゲームオブジェクトの描画
-	CGameSceneObject::GetInstance()->Draw();
 }
