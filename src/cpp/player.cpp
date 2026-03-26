@@ -54,6 +54,7 @@ m_pLockOnTarget(nullptr),
 m_TargetPos(VECTOR3_NULL),
 m_AroundTargetCount(NULL),
 m_SelectIndex(NULL),
+m_JumpWaitTimer(NULL),
 m_pNearbyTargets{}
 {
 
@@ -193,25 +194,30 @@ void CPlayer::Update(void)
 	// ジャンプ入力
 	if (!m_isWall)
 	{
-		// キー入力
+		// キー入力（スペースまたはAボタン）
 		if (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A))
 		{
+			// 地面にいる、または壁に張り付いている場合（通常のジャンプ）
 			if (m_isLanding || m_isStayPos)
 			{
 				move.y = Config::JUMP;
 				m_isLanding = false;
 				m_isJump = true;
 				m_isStayPos = false;
-				m_isFastFall = false; // ジャンプしたら急降下はオフ
+				m_isFastFall = false; // ジャンプ直後はまだ空中アクションをしていない状態
 
+				m_JumpWaitTimer = 600;
+
+				// サウンド
 				Sound->Play(CSound::SOUND_LABEL_JUMP);
+
 			}
-			else
+			// B. 空中にいて、かつ「まだ空中アクション（急降下）をしていない」場合
+			else if (!m_isFastFall)
 			{
-				// 急降下モード
+				// 急降下モード起動
 				m_isFastFall = true;
 
-				// 押した瞬間に少し下への初速を与えるとより反応が良く見えます
 				if (move.y > 0.0f) move.y = 0.0f;
 			}
 		}
@@ -323,12 +329,16 @@ void CPlayer::Update(void)
 	D3DXVECTOR3 updatePos = GetPos();
 	D3DXVECTOR3 updateposold = GetOldPos();
 
+	// タイマーの更新
+	if (m_JumpWaitTimer > 0) m_JumpWaitTimer--;
+
 	// 地面(Y=0)との衝突判定
 	if (updatePos.y <= 0.0f)
 	{
 		m_isLanding = true;
 		m_isJump = false;
 		m_isStayPos = false;
+		m_JumpWaitTimer = 0; // 地面に付いたならリセット
 	}
 
 	// 球コライダー更新
@@ -425,7 +435,15 @@ void CPlayer::Update(void)
 	}
 
 	// フラグ処理
-	m_isLanding = isAnyHit;
+	if (m_JumpWaitTimer > 0)
+	{
+		m_isLanding = false;
+	}
+	else
+	{
+		m_isLanding = isAnyHit;
+	}
+
 	if (m_isLanding)
 	{
 		m_isJump = false;
@@ -817,6 +835,7 @@ void CPlayer::PlayAction(void)
 			SetMove(VECTOR3_NULL);
 			m_isWall = false; 
 			m_isStayPos = true;
+			m_isFastFall = false;  // 壁に張り付いたので、次の離脱ジャンプ後の空中アクションを許可する
 
 			// シリンダーの破棄
 			m_pCylinder->Uninit();

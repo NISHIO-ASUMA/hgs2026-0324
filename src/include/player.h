@@ -134,4 +134,5 @@ private:
 	int m_AroundTargetCount;							// ターゲットの取得インデックス
 	std::vector<CWallTargetPoint*> m_pNearbyTargets;	// 範囲内のターゲット一時保存用
 	int m_SelectIndex = 0;								// 現在何番目を選択中か
+	int m_JumpWaitTimer = 0; // ジャンプ後の着地禁止タイマー
 };
