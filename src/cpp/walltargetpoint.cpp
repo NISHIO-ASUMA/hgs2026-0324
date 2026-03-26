@@ -14,12 +14,14 @@
 // インクルードファイル
 //*********************************************************
 #include "spherecollider.h"
+#include "lockonui.h"
 
 //=========================================================
 // コンストラクタ
 //=========================================================
 CWallTargetPoint::CWallTargetPoint(int nPriority) : CObjectX(nPriority),
-m_pCollider(nullptr)
+m_pCollider(nullptr),
+m_pLockOnUi(nullptr)
 {
 
 }
@@ -65,6 +67,9 @@ HRESULT CWallTargetPoint::Init(void)
 	// コライダー生成
 	m_pCollider = CSphereCollider::Create(GetPos(), 600.0f);
 
+	// ui生成
+	m_pLockOnUi = CLockOnUi::Create(GetPos(), VECTOR3_NULL, D3DXVECTOR2(60.0f,60.0f), "crosshair.png");
+
 	return S_OK;
 }
 //=========================================================
@@ -95,7 +100,5 @@ void CWallTargetPoint::Update(void)
 //=========================================================
 void CWallTargetPoint::Draw(void)
 {
-#ifdef _DEBUG
-	CObjectX::Draw();
-#endif // _DEBUG
+	// CObjectX::Draw();
 }

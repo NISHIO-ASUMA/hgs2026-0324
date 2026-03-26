@@ -1,72 +1,87 @@
 //=========================================================
 //
-// リザルトシーン処理 [ result.cpp ]
+// ロックオンのビルボード [ lockonui.cpp ]
 // Author: Asuma Nishio
-// 
+//
 //=========================================================
 
 //*********************************************************
 // クラス定義ヘッダーファイル
 //*********************************************************
-#include "result.h"
-
-//*********************************************************
-// インクルードファイル
-//*********************************************************
-#include "resultmanager.h"
-#include "resultobject.h"
+#include "lockonui.h"
 
 //=========================================================
-// オーバーロードコンストラクタ
+// コンストラクタ
 //=========================================================
-CResult::CResult() : CScene(CScene::MODE_RESULT)
+CLockOnUi::CLockOnUi(int nPriority) : CBillboard(nPriority),
+m_isDraw(false)
 {
 
 }
 //=========================================================
 // デストラクタ
 //=========================================================
-CResult::~CResult()
+CLockOnUi::~CLockOnUi()
 {
-	
+
 }
 //=========================================================
 // 初期化処理
 //=========================================================
-HRESULT CResult::Init(void)
+HRESULT CLockOnUi::Init(void)
 {
-	//// リザルトマネージャーの初期化
-	//CResultManager::GetInstance()->Init();
+	CBillboard::Init();
 
-	//// リザルトオブジェクトの初期化
-	//CResultObject::GetInstance()->Init();
-
-	// 初期化結果を返す
 	return S_OK;
 }
 //=========================================================
 // 終了処理
 //=========================================================
-void CResult::Uninit(void)
+void CLockOnUi::Uninit(void)
 {
-	//// リザルトオブジェクトの破棄
-	//CResultObject::GetInstance()->Uninit();
-
-	//// リザルトマネージャーの終了処理
-	//CResultManager::GetInstance()->Uninit();
+	CBillboard::Uninit();
 }
 //=========================================================
 // 更新処理
 //=========================================================
-void CResult::Update(void)
+void CLockOnUi::Update(void)
 {
-	// リザルトマネージャーの更新処理
-	//CResultManager::GetInstance()->Update();
+	if (!m_isDraw) return;
+
+	CBillboard::Update();
 }
 //=========================================================
 // 描画処理
 //=========================================================
-void CResult::Draw(void)
+void CLockOnUi::Draw(void)
 {
+	if (!m_isDraw) return;
 
+	CBillboard::Draw();
+}
+//=========================================================
+// 生成処理
+//=========================================================
+CLockOnUi* CLockOnUi::Create
+(
+	const D3DXVECTOR3& pos, 
+	const D3DXVECTOR3& rot, 
+	const D3DXVECTOR2& size, 
+	const char* TexName
+)
+{
+	// 生成
+	CLockOnUi* pUi = new CLockOnUi;
+	if (pUi == nullptr) return nullptr;
+
+	// 設定
+	pUi->SetTexture(TexName);
+	pUi->SetPos(pos);
+	pUi->SetRot(rot);
+	pUi->SetSize(size.x, size.y);
+	
+	// 初期化失敗時
+	if (FAILED(pUi->Init())) return nullptr;
+
+	return pUi;
 }

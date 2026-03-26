@@ -139,6 +139,13 @@ void CScore::Update(void)
 //=========================================================
 void CScore::Draw(void)
 {
+	//for (auto number : m_apNumber)
+	//{
+	//	if (number != nullptr)
+	//	{
+	//		number->Draw();
+	//	}
+	//}
 }
 //=========================================================
 // ƒXƒRƒA‰ÁŽZˆ—

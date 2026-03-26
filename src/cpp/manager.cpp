@@ -67,7 +67,6 @@ m_pJsonManager(nullptr)
 //=========================================================
 CManager::~CManager()
 {
-	
 }
 //=========================================================
 // インスタンス取得処理
@@ -227,9 +226,6 @@ void CManager::Update()
 	// マウスの更新処理
 	if (m_pInputMouse) m_pInputMouse->Update();
 
-	// ジョイパッド振動の更新処理
-	m_pJoyPad->UpdateVibration();
-
 	// カメラ更新
 	if (m_pCamera) m_pCamera->Update();
 
@@ -270,9 +266,6 @@ void CManager::SetScene(std::unique_ptr<CScene> pNewScene)
 
 		// 全オブジェクト破棄
 		CObject::ReleaseAll();
-
-		// インスタンシング破棄
-		m_pRenderer->ClearDrawInstance();
 
 		// 古いシーンを破棄
 		m_pScene.reset();

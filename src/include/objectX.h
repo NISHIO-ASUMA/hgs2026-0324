@@ -69,7 +69,7 @@ private:
 	//*******************************
 	struct Config
 	{
-		static constexpr float OUTLINE_SIZE = 1.5f; // アウトラインの幅
+		static constexpr float OUTLINE_SIZE = 2.0f; // アウトラインの幅
 	};
 
 	D3DXVECTOR3 m_pos;		// 座標

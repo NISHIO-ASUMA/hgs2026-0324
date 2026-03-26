@@ -20,5 +20,7 @@
   { "XFile": "data/MODEL/STAGEOBJ/PointMaker.x" },
 
   { "XFile": "data/MODEL/ENEMY/Ant_Face.x" },
+  { "XFile": "data/MODEL/ENEMY/Otama.x" },
+  { "XFile": "data/MODEL/ENEMY/Spider.x" },
   { "XFile": "data/MODEL/ENEMY/butterfly.x" }
 ]

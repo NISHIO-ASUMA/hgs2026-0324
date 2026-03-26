@@ -105,9 +105,9 @@ private:
 	//******************************
 	struct Action
 	{
-		static constexpr float AUTOSPEED = 12.0f;	 // 移動速度固定値
-		static constexpr float CheckDistance = 7.0f; // 判定最小値
-		static constexpr float CYLINDER = 3.0f;		 // 生成半径
+		static constexpr float AUTOSPEED = 15.0f;		// 移動速度固定値
+		static constexpr float CheckDistance = 10.0f;	// 判定最小値
+		static constexpr float CYLINDER = 3.0f;			// 生成半径
 	};
 
 private:
@@ -116,20 +116,20 @@ private:
 	std::unique_ptr<CBoxCollider>m_pWorldBoxCollder;	// 世界との当たるボックスを作成
 	std::unique_ptr<CSphereCollider>m_pSphereCollider;	// 球形コライダー
 
-	bool m_isWall;								// 壁張り付きかどうか
-	bool m_isLanding;							// 着地したかどうか
-	bool m_isJump;								// ジャンプ
-	bool m_isStayPos;							// ステイ中か
+	bool m_isWall;										// 壁張り付きかどうか
+	bool m_isLanding;									// 着地したかどうか
+	bool m_isJump;										// ジャンプ
+	bool m_isStayPos;									// ステイ中か
 
 
-	D3DXVECTOR3 m_TargetPos;					// 目的座標設定用の入れ物
-	CEffectLaser* m_pLaser;						// レーザーエフェクト
-	CMeshCylinder* m_pCylinder;					// メッシュシリンダー
+	D3DXVECTOR3 m_TargetPos;							// 目的座標設定用の入れ物
+	CEffectLaser* m_pLaser;								// レーザーエフェクト
+	CMeshCylinder* m_pCylinder;							// メッシュシリンダー
 
 	//**************************
 	// ワープ関係
 	//**************************
-	int m_AroundTargetCount;					// ターゲットの取得インデックス
-	std::vector<CWallTargetPoint*> m_pNearbyTargets; // 範囲内のターゲット一時保存用
-	int m_SelectIndex = 0;						// 現在何番目を選択中か
+	int m_AroundTargetCount;							// ターゲットの取得インデックス
+	std::vector<CWallTargetPoint*> m_pNearbyTargets;	// 範囲内のターゲット一時保存用
+	int m_SelectIndex = 0;								// 現在何番目を選択中か
 };

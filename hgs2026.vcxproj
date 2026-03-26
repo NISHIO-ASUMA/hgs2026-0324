@@ -59,6 +59,7 @@
     <ClCompile Include="src\cpp\jsonmanager.cpp" />
     <ClCompile Include="src\cpp\light.cpp" />
     <ClCompile Include="src\cpp\load.cpp" />
+    <ClCompile Include="src\cpp\lockonui.cpp" />
     <ClCompile Include="src\cpp\loseresult.cpp" />
     <ClCompile Include="src\cpp\loseresultmanager.cpp" />
     <ClCompile Include="src\cpp\loseresultobject.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="src\include\jsonmanager.h" />
     <ClInclude Include="src\include\light.h" />
     <ClInclude Include="src\include\load.h" />
+    <ClInclude Include="src\include\lockonui.h" />
     <ClInclude Include="src\include\loseresult.h" />
     <ClInclude Include="src\include\loseresultmanager.h" />
     <ClInclude Include="src\include\loseresultobject.h" />

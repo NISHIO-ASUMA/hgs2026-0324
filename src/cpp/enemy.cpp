@@ -17,6 +17,11 @@
 #include "spherecollider.h"
 #include "template.h"
 #include "enemymanager.h"
+#include "gamesceneobject.h"
+#include "score.h"
+#include <string>
+#include <xfilemanager.h>
+#include <manager.h>
 
 //=========================================================
 // コンストラクタ
@@ -73,6 +78,37 @@ HRESULT CEnemy::Init(void)
 	SetOutLineColor(D3DXVECTOR4(1.0f, 1.0f, 0.0f, 1.0f));
 	m_nLife = Config::LIFE;
 
+	// Xファイルオブジェクト取得
+	CXfileManager* pXManager = CManager::GetInstance()->GetXManager();
+	if (pXManager == nullptr) return E_FAIL;
+
+	// インデックス番号を取得
+	int nModelIdx = GetModelIdx();
+
+	// モデルのパス取得
+	std::string str = pXManager->GetInfo(nModelIdx).FilePath;
+
+	// 種類の設定
+	if (str == "data/MODEL/ENEMY/Ant_Face.x") // 顔
+	{
+		SetType(TYPE::ANT);
+	}
+	else if (str == "data/MODEL/ENEMY/Otama.x") // じゃくし
+	{
+		SetType(TYPE::OTAMA);
+	}
+	else if (str == "data/MODEL/ENEMY/butterfly.x") // 蝶
+	{
+		SetType(TYPE::BUTTERFLY);
+	}
+	else if (str == "data/MODEL/ENEMY/Spider.x") // 蜘蛛
+	{
+		SetType(TYPE::SPIDER);
+	}
+
+	// コライダー生成
+	m_pCollider = CSphereCollider::Create(GetPos(), 40.0f);
+
 	return S_OK;
 }
 //=========================================================
@@ -126,6 +162,35 @@ void CEnemy::DecLife(const int& nDamage)
 
 		// 配列内の要素を削除
 		CEnemyManager::GetInstance()->Erase(this);
+
+		switch (m_nType)
+		{
+		case CEnemy::ANT:
+			// ゲーム内スコアを加算する
+			CGameSceneObject::GetInstance()->GetScore()->AddScore(1);
+			break;
+
+		case CEnemy::OTAMA:
+			// ゲーム内スコアを加算する
+			CGameSceneObject::GetInstance()->GetScore()->AddScore(3);
+			break;
+
+		case CEnemy::BUTTERFLY:
+			// ゲーム内スコアを加算する
+			CGameSceneObject::GetInstance()->GetScore()->AddScore(5);
+			break;
+
+		case CEnemy::SPIDER:
+			// ゲーム内スコアを加算する
+			CGameSceneObject::GetInstance()->GetScore()->AddScore(10);
+			break;
+
+		default:
+			// ゲーム内スコアを加算する
+			CGameSceneObject::GetInstance()->GetScore()->AddScore(0);
+			break;
+		}
+
 
 		// 自身の破棄
 		Uninit();

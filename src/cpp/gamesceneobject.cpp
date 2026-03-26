@@ -47,7 +47,7 @@ namespace GAMEOBJECT
 	const D3DXVECTOR3 QueenPos		= { 0.0f, 55.0f, 0.0f };		// 女王アリの座標
 	constexpr const char* LoadName	= "data/JSON/Gameobject.json";	// 読み込みjsonファイル名
 	constexpr const char* WallName	= "data/JSON/GameWall.json";	// 読み込みjsonファイル名
-	constexpr const char* ENEMYLOAD = "data/JSON/MapEnemy.json";	// 敵ファイル名
+	constexpr const char* ENEMYLOAD = "data/JSON/GameEnemy.json";	// 敵ファイル名
 	constexpr const char* POINTLOAD = "data/JSON/GameMaker.json";	// ワイヤーポイントファイル名
 
 	constexpr int INDEX = 4;
@@ -101,6 +101,9 @@ HRESULT CGameSceneObject::Init(void)
 	auto jsonmanager = CManager::GetInstance()->GetJsonManager();
 	jsonmanager->Load(GAMEOBJECT::LoadName);
 
+	// タイマー生成
+	m_pTimer = CGameTime::Create(GAMEOBJECT::TimerPos);
+	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f, -600.0f));
 	// 各種ポインタクラスの生成
 	CreatePointer();
 
@@ -110,10 +113,6 @@ HRESULT CGameSceneObject::Init(void)
 	// ゴール生成
 	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f,-600.0f));
 	CSimpleMeshCylinder::Create(D3DXVECTOR3(255.0f, 1480.0f, -600.0f), 80.0f);
-
-	//// 敵生成
-	//CEnemy::Create(GAMEOBJECT::EPos,VECTOR3_NULL,INITSCALE,"ENEMY/butterfly.x");
-	//CEnemy::Create(GAMEOBJECT::EPos, VECTOR3_NULL, INITSCALE, "ENEMY/Ant_Face.x");
 
 	// スコア初期化
 	m_pScore->DeleteScore();
@@ -125,8 +124,8 @@ HRESULT CGameSceneObject::Init(void)
 //=========================================================
 void CGameSceneObject::Uninit(void)
 {
-	//// 敵管理クラスの終了
-	//CEnemyManager::GetInstance()->Uninit();
+	// 敵管理クラスの終了
+	CEnemyManager::GetInstance()->Uninit();
 
 	// ターゲットポイント管理クラスの終了
 	CWallTargetManager::GetInstance()->Uninit();
@@ -146,6 +145,7 @@ void CGameSceneObject::Uninit(void)
 //=========================================================
 void CGameSceneObject::Update(void)
 {
+#if 1
 	// カウント加算
 	m_nParticleCreateCount++;
 
@@ -162,7 +162,13 @@ void CGameSceneObject::Update(void)
 	}
 
 #ifdef _DEBUG
+	if (CManager::GetInstance()->GetInputKeyboard()->GetTrigger(DIK_F7))
+	{
+		// 仮ですこあ書き出しを実行する
+		m_pScore->SaveScore();
+	}
 #endif // _DEBUG
+#endif
 }
 //=========================================================
 // 描画処理
@@ -193,6 +199,6 @@ void CGameSceneObject::CreatePointer(void)
 	// ターゲットポイントの初期化
 	 CWallTargetManager::GetInstance()->Init(GAMEOBJECT::POINTLOAD);
 
-	//// 敵管理クラスの初期化
-	//CEnemyManager::GetInstance()->Init(GAMEOBJECT::ENEMYLOAD);
+	// 敵管理クラスの初期化
+	CEnemyManager::GetInstance()->Init(GAMEOBJECT::ENEMYLOAD);
 }
