@@ -65,14 +65,14 @@ private:
 		static constexpr int SCORELISTNUM		  = 3;			// 配列の最大数
 		static constexpr int MAX_MATHSCORE		  = 2000000;	// 最大加算値
 		static constexpr int QUEEN_HP			  = 200;		// 基準の体力値
-		static constexpr const char* FEEDSCORE	  = "data/SCORE/GameScore.bin";		// ゲームのスコア
-		static constexpr const char* DEFENCESCORE = "data/SCORE/QueenLastHp.bin";	// 女王の体力スコア
-	};
+		static constexpr const char* EATSCORE	  = "data/SCORE/EnemyScore.bin";	
+		static constexpr const char* POINTSCORE = "data/SCORE/GameScore.bin";	
+	};	
 
 	int MathRateScore(void); // 計算関数
 
-	int m_nFeedScore;		// 餌スコアを格納
-	int m_nDefenceScore;	// 防衛スコアを格納
+	int m_nEatScore;		// 食べた数のスコアを格納
+	int m_nPointScore;		// ポイントスコアを格納
 	int m_nLastScore;		// 最終スコアを格納
 	int m_nMathScore;		// 計算用スコア
 

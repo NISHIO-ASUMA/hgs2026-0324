@@ -34,6 +34,7 @@
 #include "lockonui.h"
 #include "enemymanager.h"
 #include "enemy.h"
+#include "sound.h"
 
 //=========================================================
 // コンストラクタ
@@ -141,6 +142,7 @@ void CPlayer::Update(void)
 	// 入力クラス取得
 	CInputKeyboard* pKey = CManager::GetInstance()->GetInputKeyboard();
 	CJoyPad* pPad = CManager::GetInstance()->GetJoyPad();
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
 	// 過去座標を取得
 	auto oldPos = GetOldPos();
@@ -177,9 +179,16 @@ void CPlayer::Update(void)
 		&& m_isLanding 
 		&& (pKey->GetTrigger(DIK_SPACE) || pPad->GetTrigger(CJoyPad::JOYKEY_A)))
 	{
+		// ジャンプ処理
 		move.y = Config::JUMP;
 		m_isLanding = false;
 		m_isJump = true;
+
+		// サウンド再生
+		//auto Sound = CManager::GetInstance()->GetSound();
+		//Sound->Play(CSound::)
+		
+		// モーションセット
 		GetMotion()->SetMotion(MOTION::JUMP);
 	}
 
@@ -195,7 +204,7 @@ void CPlayer::Update(void)
 		if (!m_pNearbyTargets.empty())
 		{
 			// ターゲットを切り替える入力
-			if (pKey->GetTrigger(DIK_Q) || pPad->GetTrigger(CJoyPad::JOYKEY_RIGHT_B))
+			if (pKey->GetTrigger(DIK_Q) || pPad->GetTrigger(CJoyPad::JOYKEY_RIGHT_B) || pPad->GetTrigger(CJoyPad::JOYKEY_LEFT_B))
 			{
 				m_SelectIndex = (m_SelectIndex + 1) % m_pNearbyTargets.size();
 			}
@@ -224,11 +233,28 @@ void CPlayer::Update(void)
 			// 決定処理
 			CWallTargetPoint* pSelected = m_pNearbyTargets[m_SelectIndex];
 			
-			// ここ最終的に右クリックに変更する
+#ifdef _DEBUG
+			// アクション起動
 			if (pKey->GetTrigger(DIK_R) || pPad->GetTriggerRT())
 			{
+				// サウンド再生
+				auto Sound = CManager::GetInstance()->GetSound();
+				Sound->Play(CSound::SOUND_LABEL_FLOG);
+
 				ActionSetting(pSelected->GetPos());
 			}
+#else
+			// アクション起動
+			if (pMouse->GetTrigger(CInputMouse::MOUSE_LEFT) || pPad->GetTriggerRT())
+			{
+				// サウンド再生
+				auto Sound = CManager::GetInstance()->GetSound();
+				Sound->Play(CSound::SOUND_LABEL_FLOG);
+
+				ActionSetting(pSelected->GetPos());
+			}
+#endif // _DEBUG
+
 		}
 		else 
 		{

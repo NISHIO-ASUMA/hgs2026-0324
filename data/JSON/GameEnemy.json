@@ -460,5 +460,40 @@
     "rot": [ 0.0, 0.0, 0.0 ],
     "scale": [ 1.0, 1.0, 1.0 ],
     "filepath": "ENEMY/Ant_Face.x"
+  },
+  {
+    "ObjectTag": "Enemy",
+    "pos": [ -1608.0, 0.0, -3969.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ],
+    "filepath": "ENEMY/Otama.x"
+  },
+  {
+    "ObjectTag": "Enemy",
+    "pos": [ -602.0, 1612.0, 3371.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ],
+    "filepath": "ENEMY/Ant_Face.x"
+  },
+  {
+    "ObjectTag": "Enemy",
+    "pos": [ 115.0, 1230.0, 2022.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ],
+    "filepath": "ENEMY/butterfly.x"
+  },
+  {
+    "ObjectTag": "Enemy",
+    "pos": [ 854.0, 1252.0, 2049.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ],
+    "filepath": "ENEMY/Spider.x"
+  },
+  {
+    "ObjectTag": "Enemy",
+    "pos": [ 1211.0, 1674.0, 877.0 ],
+    "rot": [ 0.0, 0.0, 0.0 ],
+    "scale": [ 1.0, 1.0, 1.0 ],
+    "filepath": "ENEMY/butterfly.x"
   }
 ]
