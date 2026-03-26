@@ -70,6 +70,9 @@ HRESULT CWallTargetPoint::Init(void)
 	// ui生成
 	m_pLockOnUi = CLockOnUi::Create(GetPos(), VECTOR3_NULL, D3DXVECTOR2(60.0f,60.0f), "crosshair.png");
 
+	// サイズ変更
+	SetScale(D3DXVECTOR3(0.4f, 0.4f, 0.4f));
+
 	return S_OK;
 }
 //=========================================================
@@ -100,5 +103,5 @@ void CWallTargetPoint::Update(void)
 //=========================================================
 void CWallTargetPoint::Draw(void)
 {
-	// CObjectX::Draw();
+	CObjectX::Draw();
 }

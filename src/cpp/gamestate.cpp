@@ -88,7 +88,8 @@ void CGameState::OnUpdate()
 			m_Progress = PROGRESS_NONE; 
 
 			// スコア情報の書き出し
-			CGameSceneObject::GetInstance()->GetScore()->SaveScore();
+			CGameSceneObject::GetInstance()->GetScore()->SaveScore("data/SCORE/GameScore.bin");
+			CGameSceneObject::GetInstance()->GetEatNum()->SaveScore("data/SCORE/EnemyScore.bin");
 
 			// フェードが取得できたら
 			if (pFade != nullptr)

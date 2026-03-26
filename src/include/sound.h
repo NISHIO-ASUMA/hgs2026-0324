@@ -47,6 +47,8 @@ public:
 		SOUND_LABEL_PAUSESTART,		// 開始音
 		SOUND_LABEL_QUEEN,			// 女王ヒット
 		SOUND_LABEL_START,			// ゲーム開始音
+		SOUND_LABEL_EAT,			// 食べる音
+		SOUND_LABEL_FLOG,			// 声
 		SOUND_LABEL_MAX
 	};
 
@@ -103,6 +105,8 @@ private:
 		{"data/SE/pausekey.wav",0},			 // ポーズキー
 		{"data/SE/QueenHit.wav",0},			 // 女王ヒット
 		{"data/SE/Startbgm.wav",0},			 // ゲーム開始画面音
+		{"data/SE/Laser.wav",0},			 // 食べる音
+		{"data/SE/frogvoice.wav",0}			 // カエル
 	};
 
 	IXAudio2* m_pXAudio2;									// XAudio2オブジェクトへのインターフェイス

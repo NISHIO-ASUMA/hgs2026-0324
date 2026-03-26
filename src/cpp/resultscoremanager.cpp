@@ -29,8 +29,8 @@
 // コンストラクタ
 //=========================================================
 CResultScoreManager::CResultScoreManager() : m_pResultScore{},
-m_nDefenceScore(NULL),
-m_nFeedScore(NULL),
+m_nEatScore(NULL),
+m_nPointScore(NULL),
 m_nLastScore(NULL), 
 m_nMathScore(NULL)
 {
@@ -65,22 +65,24 @@ HRESULT CResultScoreManager::Init(void)
 	Load();
 
 	// スコアを生成する
-	m_pResultScore[info.IDX_FEED]  = CResultScore::Create(D3DXVECTOR3(1250.0f, 230.0f, 0.0f), 140.0f, 50.0f);	// 餌スコア
-	m_pResultScore[info.IDX_QUEEN] = CResultScore::Create(D3DXVECTOR3(1250.0f, 400.0f, 0.0f), 140.0f, 50.0f);	// 防衛スコア
+	m_pResultScore[info.IDX_FEED]  = CResultScore::Create(D3DXVECTOR3(1250.0f, 230.0f, 0.0f), 140.0f, 50.0f);	// 食べたスコア
+	m_pResultScore[info.IDX_QUEEN] = CResultScore::Create(D3DXVECTOR3(1250.0f, 400.0f, 0.0f), 140.0f, 50.0f);	// ポイントスコア
 	m_pResultScore[info.IDX_ALL]   = CResultScore::Create(D3DXVECTOR3(1255.0f, 630.0f, 0.0f), 160.0f, 60.0f);	// 最終スコア
 
-	// 餌スコアをセットする
-	m_pResultScore[info.IDX_FEED]->SetAnimScore(m_nFeedScore);
+	// 食べた数のスコアをセットする
+	m_pResultScore[info.IDX_FEED]->SetAnimScore(m_nEatScore);
 
-	// 防衛スコアをセットする
-	m_pResultScore[info.IDX_QUEEN]->SetAnimScore(m_nDefenceScore);
-	m_nMathScore = MathRateScore();
+	// スコアをセットする
+	m_pResultScore[info.IDX_QUEEN]->SetAnimScore(m_nPointScore);
 
-	// 足し算する
-	int nLastScore = m_nFeedScore + m_nMathScore;
+	// クリア
+	m_nMathScore = 0;
+
+	// 合計を出す
+	m_nMathScore = m_nEatScore + m_nPointScore;
 
 	// 最終スコアをセットする
-	m_pResultScore[info.IDX_ALL]->SetAnimScore(nLastScore);
+	m_pResultScore[info.IDX_ALL]->SetAnimScore(m_nMathScore);
 
 	return S_OK;
 }
@@ -108,20 +110,21 @@ void CResultScoreManager::Update(void)
 void CResultScoreManager::Load(void)
 {
 	// 読み取った値を格納するメンバ変数
-	m_nDefenceScore = NULL;
-	m_nFeedScore = NULL;
+	m_nPointScore = NULL;
+	m_nEatScore = NULL;
 
-	// 餌スコアを読み込む
-	m_nFeedScore = m_pLoad->LoadInt(Config::FEEDSCORE);
+	// 食べた数のスコアを読み込む
+	m_nEatScore = m_pLoad->LoadInt(Config::EATSCORE);
 
 	// 防衛スコアを読み込む
-	m_nDefenceScore = m_pLoad->LoadInt(Config::DEFENCESCORE);
+	m_nPointScore = m_pLoad->LoadInt(Config::POINTSCORE);
 }
 //=======================================================
 // 率の値をスコアに変換する関数
 //=======================================================
 int CResultScoreManager::MathRateScore(void)
 {
+#if 0
 	// 念のためガード
 	if (m_nDefenceScore <= NULL)
 	{
@@ -136,6 +139,6 @@ int CResultScoreManager::MathRateScore(void)
 
 	// 最終計算のスコアを出す
 	int resultScore = static_cast<int>(rate * Config::MAX_MATHSCORE);
-
-	return resultScore;
+#endif
+	return 0;
 }

@@ -92,7 +92,7 @@ void CResultManager::Update(void)
 		if (pFade != nullptr)
 		{
 			// ランキングシーン遷移
-			pFade->SetFade(std::make_unique <CTitle>());
+			pFade->SetFade(std::make_unique<CTitle>());
 			return;
 		}
 	}

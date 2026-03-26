@@ -35,11 +35,11 @@ CResult::~CResult()
 //=========================================================
 HRESULT CResult::Init(void)
 {
-	//// リザルトマネージャーの初期化
-	//CResultManager::GetInstance()->Init();
+	// リザルトマネージャーの初期化
+	CResultManager::GetInstance()->Init();
 
-	//// リザルトオブジェクトの初期化
-	//CResultObject::GetInstance()->Init();
+	// リザルトオブジェクトの初期化
+	CResultObject::GetInstance()->Init();
 
 	// 初期化結果を返す
 	return S_OK;
@@ -49,11 +49,11 @@ HRESULT CResult::Init(void)
 //=========================================================
 void CResult::Uninit(void)
 {
-	//// リザルトオブジェクトの破棄
-	//CResultObject::GetInstance()->Uninit();
+	// リザルトオブジェクトの破棄
+	CResultObject::GetInstance()->Uninit();
 
-	//// リザルトマネージャーの終了処理
-	//CResultManager::GetInstance()->Uninit();
+	// リザルトマネージャーの終了処理
+	CResultManager::GetInstance()->Uninit();
 }
 //=========================================================
 // 更新処理
@@ -61,7 +61,7 @@ void CResult::Uninit(void)
 void CResult::Update(void)
 {
 	// リザルトマネージャーの更新処理
-	//CResultManager::GetInstance()->Update();
+	CResultManager::GetInstance()->Update();
 }
 //=========================================================
 // 描画処理

@@ -50,12 +50,6 @@ CResultObject::~CResultObject()
 //=========================================================
 HRESULT CResultObject::Init(void)
 {
-	//// マップ読み込み
-	//m_pBlock = std::make_unique<CBlockManager>();
-	//auto jsonManager = CManager::GetInstance()->GetJsonManager();
-	//jsonManager->SetBlockManager(m_pBlock.get());
-	//m_pBlock->Init();
-
 	// リザルトシーンオブジェクトの読み込み
 	auto jsonmanager = CManager::GetInstance()->GetJsonManager();
 	jsonmanager->Load(RESULTOBJECT::LoadName);
@@ -72,9 +66,6 @@ void CResultObject::Uninit(void)
 {
 	// リザルトのスコア破棄
 	CResultScoreManager::GetInstancce()->Uninit();
-
-	// ステージマップの破棄
-	//m_pBlock.reset();
 
 	// インスタンスの破棄
 	if (m_pInstance)
