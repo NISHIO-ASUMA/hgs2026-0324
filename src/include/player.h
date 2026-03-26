@@ -30,6 +30,7 @@ class CJoyPad;
 class CEffectLaser;
 class CMeshCylinder;
 class CWallTargetPoint;
+class CLockOnUi;
 
 //*********************************************************
 // プレイヤークラスを定義
@@ -125,6 +126,7 @@ private:
 	D3DXVECTOR3 m_TargetPos;							// 目的座標設定用の入れ物
 	CEffectLaser* m_pLaser;								// レーザーエフェクト
 	CMeshCylinder* m_pCylinder;							// メッシュシリンダー
+	CLockOnUi* m_pLockOnTarget;							// ターゲットの座標に飛ぶui
 
 	//**************************
 	// ワープ関係

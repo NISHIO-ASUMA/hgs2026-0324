@@ -106,14 +106,14 @@ HRESULT CGameSceneObject::Init(void)
 	// タイマー生成
 	m_pTimer = CGameTime::Create(GAMEOBJECT::TimerPos);
 	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f, -600.0f));
+
 	// 各種ポインタクラスの生成
 	CreatePointer();
 
 	// プレイヤー生成
 	m_pPlayer = CPlayer::Create(GAMEOBJECT::PlayerPos, VECTOR3_NULL);
 
-	// ゴール生成
-	m_pGoal = CGoal::Create(D3DXVECTOR3(255.0f, 1570.0f,-600.0f));
+	// メッシュシリンダーをゴールに作成
 	CSimpleMeshCylinder::Create(D3DXVECTOR3(255.0f, 1480.0f, -600.0f), 80.0f);
 
 	// ビルボード生成
@@ -121,6 +121,7 @@ HRESULT CGameSceneObject::Init(void)
 	CBillboard::Create(D3DXVECTOR3(-2638.0f, 140.0f, -3500.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Tongue.png");
 	CBillboard::Create(D3DXVECTOR3(-1605.0f, 150.0f, -3974.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Jump.png");
 	CBillboard::Create(D3DXVECTOR3(-1990.0f, 150.0f, -3572.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Camera.png");
+	CBillboard::Create(D3DXVECTOR3(-1858.0f, 460.0f, -3768.0f), VECTOR3_NULL, 240.0f, 120.0f, "Manual_Target.png");
 
 
 	// スコア初期化

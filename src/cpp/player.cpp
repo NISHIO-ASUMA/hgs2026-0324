@@ -49,6 +49,7 @@ m_pLaser(nullptr),
 m_pCylinder(nullptr),
 m_pWorldBoxCollder(nullptr),
 m_pSphereCollider(nullptr),
+m_pLockOnTarget(nullptr),
 m_TargetPos(VECTOR3_NULL),
 m_AroundTargetCount(NULL),
 m_SelectIndex(NULL),
@@ -113,6 +114,10 @@ HRESULT CPlayer::Init(void)
 
 	// 球形を生成する
 	m_pSphereCollider = CSphereCollider::Create(GetPos(), Config::SPHERECOLLISION);
+
+	// "目標に向かうui"を生成する
+	m_pLockOnTarget = CLockOnUi::Create(VECTOR3_NULL, VECTOR3_NULL, D3DXVECTOR2(80.0f, 55.0f), "MoveTarget.jpg");
+
 	return S_OK;
 }
 //=========================================================
@@ -220,6 +225,20 @@ void CPlayer::Update(void)
 
 					// ビルボードを表示する
 					m_pNearbyTargets[i]->GetLockUi()->SetIsDraw(true);
+
+					// uiの座標を変更する
+					m_pLockOnTarget->SetPos
+					(
+						D3DXVECTOR3
+						(
+							m_pNearbyTargets[i]->GetPos().x,
+							m_pNearbyTargets[i]->GetPos().y,
+							m_pNearbyTargets[i]->GetPos().z
+						)
+					);
+
+					// uiの表示
+					m_pLockOnTarget->SetIsDraw(true);
 				}
 				else
 				{
