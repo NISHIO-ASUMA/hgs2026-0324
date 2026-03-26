@@ -113,13 +113,6 @@
   },
   {
     "ObjectTag": "Maker",
-    "pos": [ 956.0, 496.0, -2339.0 ],
-    "rot": [ 0.0, 0.0, 0.0 ],
-    "scale": [ 1.0, 1.0, 1.0 ],
-    "filepath": "STAGEOBJ/PointMaker.x"
-  },
-  {
-    "ObjectTag": "Maker",
     "pos": [ 1969.0, 0.0, -1648.0 ],
     "rot": [ 0.0, 0.0, 0.0 ],
     "scale": [ 1.0, 1.0, 1.0 ],
@@ -163,13 +156,6 @@
   {
     "ObjectTag": "Maker",
     "pos": [ 260.0, 1330.0, -1264.0 ],
-    "rot": [ 0.0, 0.0, 0.0 ],
-    "scale": [ 1.0, 1.0, 1.0 ],
-    "filepath": "STAGEOBJ/PointMaker.x"
-  },
-  {
-    "ObjectTag": "Maker",
-    "pos": [ -1078.0, 896.0, -190.0 ],
     "rot": [ 0.0, 0.0, 0.0 ],
     "scale": [ 1.0, 1.0, 1.0 ],
     "filepath": "STAGEOBJ/PointMaker.x"

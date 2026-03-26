@@ -186,24 +186,24 @@ void CRenderer::Update(void)
 	// 全オブジェクト更新処理
 	CObject::UpdateAll();
 
-//#ifdef _DEBUG
-//
-//	// キー入力情報取得
-//	CInputKeyboard* pInput = CManager::GetInstance()->GetInputKeyboard();
-//
-//	// ワイヤーフレーム設定
-//	if (pInput->GetTrigger(DIK_F3))
-//	{
-//		// ワイヤーフレームON
-//		OnWireFrame();
-//	}
-//	else if (pInput->GetTrigger(DIK_F4))
-//	{
-//		// ワイヤーフレームOFF
-//		OffWireFrame();
-//	}
-//
-//#endif // _DEBUG
+#ifdef _DEBUG
+
+	// キー入力情報取得
+	CInputKeyboard* pInput = CManager::GetInstance()->GetInputKeyboard();
+
+	// ワイヤーフレーム設定
+	if (pInput->GetTrigger(DIK_F3))
+	{
+		// ワイヤーフレームON
+		OnWireFrame();
+	}
+	else if (pInput->GetTrigger(DIK_F4))
+	{
+		// ワイヤーフレームOFF
+		OffWireFrame();
+	}
+
+#endif // _DEBUG
 }
 //=========================================================
 // レンダラー描画処理
