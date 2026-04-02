@@ -279,8 +279,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -304,7 +304,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>C:\Users\student\OneDrive - yoshida-g.ac.jp\デスクトップ\ミッカソン\hgs2026-0324\src\cpp;C:\Users\student\OneDrive - yoshida-g.ac.jp\デスクトップ\ミッカソン\hgs2026-0324\src\include;C:\Users\student\OneDrive - yoshida-g.ac.jp\デスクトップ\ミッカソン\hgs2026-0324\src\include\nlohmann;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\cpp;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\include;src\include\nlohmann;src\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -324,7 +324,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>src\include;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\include\nlohmann;C:\Users\student\Desktop\Gitまとめ\HGS\hgs2026-0324\src\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src\include;src\include\nlohmann;src\cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
